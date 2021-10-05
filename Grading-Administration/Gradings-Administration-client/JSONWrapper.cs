@@ -30,7 +30,7 @@ namespace GradingAdmin_client
             };
         }
 
-        public static object WrapGetModules(User user)
+        public static object WrapUser(User user)
         {
             return new
             {
@@ -38,15 +38,7 @@ namespace GradingAdmin_client
             };
         }
 
-        public static object WrapGetAllGrade(User user)
-        {
-            return new
-            {
-                user
-            };
-        }
-
-        public static object WrapGetGrade(Module module, User user)
+        public static object WrapModuleUser(Module module, User user)
         {
             return new
             {
@@ -55,7 +47,7 @@ namespace GradingAdmin_client
             };
         }
 
-        public static object WrapTeachersFromModule(Module module)
+        public static object WrapModule(Module module)
         {
             return new
             {
@@ -63,7 +55,7 @@ namespace GradingAdmin_client
             };
         }
 
-        public static object WrapAddGrade(Grade grade)
+        public static object WrapGrade(Grade grade)
         {
             return new
             {

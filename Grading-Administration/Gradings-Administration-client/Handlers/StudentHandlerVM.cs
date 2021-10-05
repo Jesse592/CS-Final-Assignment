@@ -19,7 +19,7 @@ namespace GradingAdmin_client.Handlers
 
         public void GetModules(User u)
         {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetModules", JSONWrapper.WrapGetModules(u))), ModulesCallback);
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetModules", JSONWrapper.WrapUser(u))), ModulesCallback);
         }
 
         public void ModulesCallback(JObject jObject)
@@ -29,7 +29,7 @@ namespace GradingAdmin_client.Handlers
 
         public void GetGrade(Module m, User u)
         {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetGrade", JSONWrapper.WrapGetGrade(m, u))), tGradeCallback);
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetGrade", JSONWrapper.WrapModuleUser(m, u))), tGradeCallback);
         }
 
         public void tGradeCallback(JObject jObject)
@@ -39,7 +39,7 @@ namespace GradingAdmin_client.Handlers
 
         public void GetAllGrades(User u)
         {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetAllGrades", JSONWrapper.WrapGetAllGrade(u))), AllGradesCallback);
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetAllGrades", JSONWrapper.WrapUser(u))), AllGradesCallback);
         }
 
         public void AllGradesCallback(JObject jObject)
@@ -49,7 +49,7 @@ namespace GradingAdmin_client.Handlers
 
         public void GetTeachersFromModule(Module m)
         {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetTeachers", JSONWrapper.WrapTeachersFromModule(m))), TeachersCallback);
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetTeachers", JSONWrapper.WrapModule(m))), TeachersCallback);
         }
 
         public void TeachersCallback(JObject jObject)
