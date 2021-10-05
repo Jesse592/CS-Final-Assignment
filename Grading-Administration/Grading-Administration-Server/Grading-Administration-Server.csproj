@@ -6,4 +6,13 @@
     <RootNamespace>Grading_Administration_Server</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Communication\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
 </Project>

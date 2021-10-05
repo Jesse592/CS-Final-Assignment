@@ -7,7 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grading-Administration-Serv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gradings-Administration-client", "Gradings-Administration-client\Gradings-Administration-client.csproj", "{8F87A378-1CA2-4699-A4A5-2F39E4001157}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Grading-Administration-Shared", "Grading-Administration-Shared\Grading-Administration-Shared.shproj", "{83999EFB-2594-47B2-886D-2770BAEBB31E}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Grading-Administration-Shared\Grading-Administration-Shared.projitems*{83999efb-2594-47b2-886d-2770baebb31e}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

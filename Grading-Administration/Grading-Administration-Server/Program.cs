@@ -6,7 +6,10 @@ namespace Grading_Administration_Server
     {
         static void Main(string[] args)
         {
+
             Console.WriteLine("Hello World!");
+
+
         }
     }
 }
