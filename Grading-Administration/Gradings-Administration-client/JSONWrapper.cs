@@ -1,5 +1,4 @@
-﻿using GradingAdmin_Shared;
-using GradingAdministration_server;
+﻿using Grading_Administration_Server.EntityFramework.models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +63,7 @@ namespace GradingAdmin_client
             };
         }
 
-        public static object WrapAddGrade(IGrade grade)
+        public static object WrapAddGrade(Grade grade)
         {
             return new
             {

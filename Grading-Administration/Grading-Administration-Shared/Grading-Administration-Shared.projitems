@@ -9,5 +9,11 @@
     <Import_RootNamespace>Grading_Administration_Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Communication\TCPHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Grade.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\LoginDetail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Module.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ModuleContribution.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\User.cs" />
   </ItemGroup>
 </Project>

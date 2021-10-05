@@ -1,4 +1,5 @@
-﻿using Grading_Administration_Server.EntityFramework.models;
+﻿
+using Grading_Administration_Server.EntityFramework.models;
 using System.Data.Entity;
 
 namespace Grading_Administration_Server.EntityFramework
