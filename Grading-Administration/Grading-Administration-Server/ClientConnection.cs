@@ -1,4 +1,4 @@
-﻿using Grading_Administration_Server.data;
+﻿using Grading_Administration_Server.EntityFramework;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GradingAdministration_server.models
+namespace Grading_Administration_Server.EntityFramework.models
 {
     public class LoginDetail
     {

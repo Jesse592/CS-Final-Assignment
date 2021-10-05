@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GradingAdministration_server.models
+namespace Grading_Administration_Server.EntityFramework.models
 {
     public class User
     {

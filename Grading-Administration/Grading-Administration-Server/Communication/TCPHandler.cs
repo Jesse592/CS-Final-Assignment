@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GradingAdministration_server
+namespace Grading_Administration_Server.Communication
 {
     class TCPHandler
     {

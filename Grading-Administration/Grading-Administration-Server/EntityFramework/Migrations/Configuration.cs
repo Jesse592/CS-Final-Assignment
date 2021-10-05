@@ -1,6 +1,6 @@
 ﻿namespace GradingAdministration_server.Migrations
 {
-    using Grading_Administration_Server.data;
+    using Grading_Administration_Server.EntityFramework;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;

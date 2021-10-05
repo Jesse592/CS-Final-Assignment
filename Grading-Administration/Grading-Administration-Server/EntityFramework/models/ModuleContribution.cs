@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GradingAdministration_server.models
+namespace Grading_Administration_Server.EntityFramework.models
 {
     public class ModuleContribution
     {

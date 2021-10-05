@@ -1,7 +1,7 @@
-﻿using GradingAdministration_server.models;
+﻿using Grading_Administration_Server.EntityFramework.models;
 using System.Data.Entity;
 
-namespace Grading_Administration_Server.data
+namespace Grading_Administration_Server.EntityFramework
 {
 
     public class GradingDBContext : DbContext
