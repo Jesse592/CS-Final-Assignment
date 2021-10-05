@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31605.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grading-Administration-Server", "Grading-Administration-Server\Grading-Administration-Server.csproj", "{0DC24BC0-C617-48E1-B5D5-E183259ECB18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grading-Administration-Server", "Grading-Administration-Server\Grading-Administration-Server.csproj", "{0DC24BC0-C617-48E1-B5D5-E183259ECB18}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gradings-Admin-client", "Gradings-Administration-client\Gradings-Admin-client.csproj", "{8F87A378-1CA2-4699-A4A5-2F39E4001157}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gradings-Administration-client", "Gradings-Administration-client\Gradings-Administration-client.csproj", "{8F87A378-1CA2-4699-A4A5-2F39E4001157}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Grading-Administration-Shared", "Grading-Administration-Shared\Grading-Administration-Shared.shproj", "{83999EFB-2594-47B2-886D-2770BAEBB31E}"
 EndProject
@@ -13,7 +13,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Grading-Administration-Shared\Grading-Administration-Shared.projitems*{0dc24bc0-c617-48e1-b5d5-e183259ecb18}*SharedItemsImports = 5
 		Grading-Administration-Shared\Grading-Administration-Shared.projitems*{83999efb-2594-47b2-886d-2770baebb31e}*SharedItemsImports = 13
-		Grading-Administration-Shared\Grading-Administration-Shared.projitems*{8f87a378-1ca2-4699-a4a5-2f39e4001157}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

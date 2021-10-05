@@ -4,40 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using GradingAdministration_server;
 
-namespace GradingAdministration_server
+namespace Grading_Administration_Server
 {
     class Server
     {
-        private bool Running;
-        private string Ip { get; set; }
-        private int Port { get; set; }
+        private bool running;
+
+        private string ip { get; set; }
+        private int port { get; set; }
+
         private TcpListener tcpListner;
         private List<ClientConnection> clients;
 
         public Server(string ip, int port)
         {
-            this.Running = true;
-            this.Ip = ip;
-            this.Port = port;
-            this.tcpListner = new TcpListener(System.Net.IPAddress.Parse(this.Ip), this.Port);
-            this.clients = new List<ClientConnection>();
+            this.ip = ip;
+            this.port = port;
+            tcpListner = new TcpListener(System.Net.IPAddress.Parse(ip), port);
+            clients = new List<ClientConnection>();
         }
 
         public void RunServer()
         {
-            this.tcpListner.Start();
-            this.tcpListner.BeginAcceptTcpClient(new AsyncCallback(HandleClient), null);
+            running = true;
+
+            Console.WriteLine("Server: started listening for clients");
+
+            tcpListner.Start();
+            tcpListner.BeginAcceptTcpClient(new AsyncCallback(HandleClient), null);
         }
 
         private void HandleClient(IAsyncResult result)
         {
             try
             {
-                TcpClient tcpClient = this.tcpListner.EndAcceptTcpClient(result);
+                TcpClient tcpClient = tcpListner.EndAcceptTcpClient(result);
                 ClientConnection client = new ClientConnection(tcpClient);
-                this.clients.Add(client);
-            } catch (Exception e)
+                clients.Add(client);
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -45,10 +52,9 @@ namespace GradingAdministration_server
 
         public void StopServer()
         {
-            foreach (ClientConnection client in this.clients)
-            {
+            foreach (ClientConnection client in clients)
                 client.Stop();
-            }
+
         }
     }
 }
