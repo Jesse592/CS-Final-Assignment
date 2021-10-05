@@ -52,6 +52,8 @@ namespace Grading_Administration_Server
 
         public void StopServer()
         {
+            this.running = false;
+
             foreach (ClientConnection client in clients)
                 client.Stop();
 
