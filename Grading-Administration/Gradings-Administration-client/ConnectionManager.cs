@@ -29,7 +29,7 @@ namespace GradingAdmin_client
 
         }
 
-        public void SendCommand(JObject jObject)
+        public void SendCommand(JObject jObject, object addTeacherToModule)
         {
 
         }
