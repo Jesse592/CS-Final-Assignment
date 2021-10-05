@@ -14,9 +14,29 @@ namespace GradingAdmin_client
         private Dictionary<int, Action<JObject>> SerialCodes;
         private Action<JObject> HandleUnwantedData;
 
-        public ConnectionManager(TCPHandler handler)
+        public ConnectionManager()
         {
-            Handler = handler;
+            Handler = new TCPHandler();
+        }
+
+        public void OnMessageReceived()
+        {
+
+        }
+
+        public void HandleReceived()
+        {
+
+        }
+
+        public void SendCommand(JObject jObject)
+        {
+
+        }
+
+        public void SendCommand(JObject jObject, Action<JObject> callback)
+        {
+
         }
     }
 }
