@@ -93,6 +93,11 @@ namespace GradingAdministration_server
         private void HandleLogin(JObject LoginDetails)
         {
             Console.WriteLine(LoginDetails.ToString());
+
+            string userName = LoginDetails.SelectToken("data.username").ToString();
+            string passWord = LoginDetails.SelectToken("data.password").ToString();
+
+            Console.WriteLine($"{userName}, {passWord}");
         }
 
         public void SendMessage(JObject data)
