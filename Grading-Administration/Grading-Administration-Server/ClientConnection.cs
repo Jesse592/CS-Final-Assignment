@@ -84,8 +84,8 @@ namespace GradingAdministration_server
             // This class only handles login
             if (command.ToString() == "login")
                 HandleLogin(data);
-            else
-                this.handler?.Invoke(command.ToString(), data);
+            
+            this.handler?.Invoke(command.ToString(), data);
         }
 
         /// <summary>
@@ -97,13 +97,25 @@ namespace GradingAdministration_server
             Console.WriteLine(LoginDetails.ToString());
 
             string userName = LoginDetails.SelectToken("data.username").ToString();
-            string passWord = LoginDetails.SelectToken("data.password").ToString();
+            string passWord = LoginDetails.SelectToken("data.password").ToString(); // is sended in plain text, not yet hashed
 
+            // query for user that mathes the username and password
             User user = await (from dt in this.GradingDBContext.LoginDetails
                          where dt.UserName == userName && dt.Password == passWord
                          select dt.User).FirstOrDefaultAsync();
 
-            Console.WriteLine(user.FirstName);
+            if (user != null)
+            {
+                // login succes
+                Console.WriteLine(user.FirstName);
+
+            } else
+            {
+                // login failed
+                
+            }
+
+            
         }
 
         public void SendMessage(JObject data)

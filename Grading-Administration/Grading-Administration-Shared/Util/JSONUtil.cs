@@ -27,8 +27,9 @@ namespace Grading_Administration_Shared.Util
             {
                 parsedObject = JsonConvert.DeserializeObject(message) as JObject;
                 return true;
-            } catch (JsonReaderException e)
+            } catch (JsonSerializationException e)
             {
+                Console.WriteLine("Error in parsing json, not valid");
                 return false;
             }
         }
