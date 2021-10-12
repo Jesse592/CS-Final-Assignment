@@ -17,6 +17,17 @@ namespace Grading_Administration_Server.Handlers
             Init();
         }
 
+        /// <summary>
+        /// Method checks if this handles has the command, if so the action is performed
+        /// </summary>
+        /// <param name="command">The command that is called to the handler</param>
+        /// <param name="data">The data given</param>
+        public void Invoke(string command, JObject data)
+        {
+            if (this.Actions.ContainsKey(command))
+                this.Actions[command].Invoke(data);
+        }
+
         private void Init()
         {
             //Fill the actions dicitionary

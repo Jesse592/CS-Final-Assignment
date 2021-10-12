@@ -1,5 +1,6 @@
 ﻿using Grading_Administration_Server.Communication;
 using Grading_Administration_Server.EntityFramework;
+using Grading_Administration_Server.Handlers;
 using Grading_Administration_Shared.Util;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,6 +16,8 @@ namespace GradingAdministration_server
     class ClientConnection
     {
         private GradingDBContext GradingDBContext;
+
+        private Handler handler;
 
         private TcpClient client;
         private TCPHandler TCPHandler;
@@ -61,7 +64,10 @@ namespace GradingAdministration_server
         }
 
         /// <summary>
-        /// Method handles the incoming data from the OnMessageReceived method
+        /// Method handles the incoming data from the OnMessageReceived method.
+        /// Where the OnMessageReceived method handles converting the message to a JObject, this method wil check if the object has
+        /// the correct format.
+        /// It handles the login command, all other commands all send to the this.handler
         /// </summary>
         private void HandleData(JObject data)
         {
@@ -70,9 +76,14 @@ namespace GradingAdministration_server
 
             bool correctCommand = data.TryGetValue("command", StringComparison.InvariantCulture, out command);
 
+            // returning when JSON has wron format
             if (!correctCommand) return;
- 
+
             // This class only handles login
+            if (command.ToString() == "login")
+                HandleLogin(data);
+            else
+
         }
 
         private void HandleLogin(JObject LoginDetails)
