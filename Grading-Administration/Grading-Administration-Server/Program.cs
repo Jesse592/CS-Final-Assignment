@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Grading_Administration_Server.Settings;
+using System;
 
 namespace Grading_Administration_Server
 {
@@ -7,9 +8,12 @@ namespace Grading_Administration_Server
         static void Main(string[] args)
         {
 
-            Console.WriteLine("Hello World!");
+           Server server = new Server(Setting.IPAdress, Setting.PortNumber);
+
+           server.RunServer();
 
 
+           Console.ReadKey();
         }
     }
 }

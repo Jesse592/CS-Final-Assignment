@@ -15,5 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Module.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\ModuleContribution.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\UserType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\JSONUtil.cs" />
   </ItemGroup>
 </Project>
