@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -11,6 +12,8 @@ namespace Grading_Administration_Server.Communication
     class TCPHandler
     {
         public event EventHandler<string> OnDataReceived;
+        public event EventHandler<string> OnConectionError;
+
         private NetworkStream stream;
 
         private bool running;
@@ -24,9 +27,8 @@ namespace Grading_Administration_Server.Communication
 
         public void SendMessage(string message)
         {
-            int length = Encoding.ASCII.GetBytes(message).Length;
-            byte[] MessageArray = ConvertMessage(message);
-            stream.Write(MessageArray, 0, length + 4);
+            byte[] messageArray = ConvertMessage(message);
+            stream.Write(messageArray, 0, messageArray.Length);
             stream.Flush();
         }
 
@@ -35,7 +37,10 @@ namespace Grading_Administration_Server.Communication
             // 4 bytes long == 32 bits, always positive unsigned
             byte[] lengthArray = new byte[4];
 
-            stream.Read(lengthArray, 0, 4);
+            // First checking if we can read from the stream
+            if (!stream.CanRead) return null;
+            
+            stream?.Read(lengthArray, 0, 4);
             int length = BitConverter.ToInt32(lengthArray, 0);
 
             Console.WriteLine(length);
@@ -61,14 +66,17 @@ namespace Grading_Administration_Server.Communication
                 {
 
                     while (running)
-                    {
-                        // Call the event with the message received
-                        if (stream != null)
+                    {try
                         {
                             string message = ReadMessage();
-                            OnDataReceived.Invoke(this, message);
+                            OnDataReceived?.Invoke(this, message);
                         }
-
+                        catch (IOException e) 
+                        {
+                            // Client has dissconnected, calling the error command
+                            this.running = false;
+                            this.OnConectionError?.Invoke(this, e.Message);
+                        }
                     }
 
                     // Shutting down

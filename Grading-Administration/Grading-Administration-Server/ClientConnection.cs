@@ -29,8 +29,10 @@ namespace GradingAdministration_server
 
             this.TCPHandler = new TCPHandler(this.client.GetStream());
 
-            // Setting the onMessage event
+            // Setting the onMessage and onError event
             this.TCPHandler.OnDataReceived += OnMessageReceived;
+            this.TCPHandler.OnConectionError += (s, d) => Console.WriteLine($"Error in the connection: {d}");
+
             this.TCPHandler.SetRunning(true);
 
             this.running = true;
