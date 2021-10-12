@@ -22,7 +22,7 @@ namespace Grading_Administration_Server.Communication
             this.running = false;
         }
 
-        public static void SendMessage(string message, NetworkStream stream)
+        public void SendMessage(string message)
         {
             int length = Encoding.ASCII.GetBytes(message).Length;
             byte[] MessageArray = ConvertMessage(message);
@@ -93,7 +93,7 @@ namespace Grading_Administration_Server.Communication
             length = BitConverter.GetBytes(payload.Length);
 
             byte[] final = new byte[length.Length + payload.Length];
-            Buffer.BlockCopy(length, 0, final, 0, payload.Length);
+            Buffer.BlockCopy(length, 0, final, 0, length.Length);
             Buffer.BlockCopy(payload, 0, final, length.Length, payload.Length);
 
             return final;

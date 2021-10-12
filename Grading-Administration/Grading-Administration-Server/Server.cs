@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using GradingAdministration_server;
+using Grading_Administration_Server.Communication;
 
 namespace Grading_Administration_Server
 {
@@ -41,6 +42,7 @@ namespace Grading_Administration_Server
             try
             {
                 TcpClient tcpClient = tcpListner.EndAcceptTcpClient(result);
+
                 ClientConnection client = new ClientConnection(tcpClient);
                 clients.Add(client);
             }

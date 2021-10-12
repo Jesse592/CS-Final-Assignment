@@ -36,22 +36,23 @@ namespace GradingAdministration_server
             this.running = true;
         }
 
-        public static void OnMessageReceived(object sender, string message)
+        public void OnMessageReceived(object sender, string message)
         {
             Console.WriteLine($"Received message on client: {message}");
+            this.TCPHandler.SendMessage($"Received message on client: {message}");
         }
 
-        public static void HandleData()
+        public void HandleData()
         {
 
         }
 
-        public static void HandleLogin(JObject LoginDetails)
+        public void HandleLogin(JObject LoginDetails)
         {
 
         }
 
-        public static void SendMessage(JObject data)
+        public void SendMessage(JObject data)
         {
 
         }
