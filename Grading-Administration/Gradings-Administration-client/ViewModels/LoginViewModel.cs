@@ -1,5 +1,6 @@
 ﻿using Grading_Administraton_Shared.Entities;
 using Gradings_Administration_client;
+using Gradings_Administration_client.ViewModels;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Windows.Input;
 
 namespace GradingAdmin_client.ViewModels
 {
-    class LoginViewModel
+    class LoginViewModel : BaseViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -73,6 +74,11 @@ namespace GradingAdmin_client.ViewModels
             {
                 _User = value;
             }
+        }
+        
+        public void SendError(string message)
+        {
+            MessageBox.Show(message);
         }
     }
 }

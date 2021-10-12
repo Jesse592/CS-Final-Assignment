@@ -13,24 +13,6 @@
     <Window.DataContext>
         <viewmodelone:MainViewModel/>
     </Window.DataContext>
-    <Window.Resources>
-        <DataTemplate x:Name="StudentView" DataType="{x:Type viewmodels:StudentViewModel}">
-            <viewsone:StudentView/>
-        </DataTemplate>
-
-        <DataTemplate x:Name="TeacherView" DataType="{x:Type viewmodels:TeacherViewModel}">
-            <views:TeacherView/>
-        </DataTemplate>
-
-        <DataTemplate x:Name="AdminView" DataType="{x:Type viewmodels:AdminViewModel}">
-            <views:AdminView/>
-        </DataTemplate>
-
-        <DataTemplate x:Name="LoginView" DataType="{x:Type viewmodels:LoginViewModel}">
-            <views:LoginView/>
-        </DataTemplate>
-
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -39,6 +21,6 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="1" Content="{Binding}"/>
+        <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="1" Content="{Binding SelectedViewModel}"/>
     </Grid>
 </Window>

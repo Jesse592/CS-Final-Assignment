@@ -1,5 +1,6 @@
 ﻿using Grading_Administraton_Shared.Entities;
 using GradingAdmin_client.Handlers;
+using Gradings_Administration_client.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GradingAdmin_client.ViewModels
 {
-    class StudentViewModel
+    class StudentViewModel : BaseViewModel
     {
         public User student;
         private StudentHandlerVM handler;

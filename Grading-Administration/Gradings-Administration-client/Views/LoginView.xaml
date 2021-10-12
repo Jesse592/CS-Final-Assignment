@@ -13,7 +13,7 @@
 
         <Label Content="Wachtwoord:" HorizontalAlignment="Left" Margin="278,165,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="283,193,0,0" Text="{Binding Password}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Login" HorizontalAlignment="Left" Margin="385,266,0,0" VerticalAlignment="Top" Command="{Binding Path=SendLoginCommand}"/>
+        <Button Content="Login" HorizontalAlignment="Left" Margin="385,266,0,0" VerticalAlignment="Top" Command="{Binding UpdateViewCommand}" CommandParameter="Login"/>
 
     </Grid>
 </UserControl>
