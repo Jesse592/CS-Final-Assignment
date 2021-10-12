@@ -38,5 +38,15 @@ namespace GradingAdmin_client.ViewModels
                 _Grades = value;
             }
         }
+
+        private ICollection<Module> _Modules;
+        public ICollection<Module> Modules
+        {
+            get { return _Modules; }
+            set
+            {
+                Modules = value;
+            }
+        }
     }
 }

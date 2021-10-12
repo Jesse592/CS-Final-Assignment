@@ -31,23 +31,34 @@ namespace GradingAdmin_client.Handlers
 
         public void GetModules(User u)
         {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetModules", JSONWrapper.WrapUser(u))), ModulesCallback);
+            this.manager.SendCommand(
+                JObject.FromObject(
+                    JSONWrapper.WrapHeader("GetModules", JSONWrapper.WrapUser(u))
+                    ), ModulesCallback);
         }
 
         public void ModulesCallback(JObject jObject)
         {
+            List<Module> modules = new List<Module>();
 
+            JArray array = (JArray)jObject.GetValue("data");
+            foreach (JObject o in array)
+            {
+                modules.Add(new Module(o));
+            }
+
+            this.vm.Modules = modules;
         }
 
         public void GetGrade(Module m, User u)
         {
             // Sends the command to get all the grades from a given module and the current user
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetGrade", JSONWrapper.WrapModuleUser(m, u))), tGradeCallback);
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetGrade", JSONWrapper.WrapModuleUser(m, u))), GradeCallback);
         }
 
-        public void tGradeCallback(JObject jObject)
+        public void GradeCallback(JObject jObject)
         {
-
+            
         }
 
         public void GetAllGrades()
