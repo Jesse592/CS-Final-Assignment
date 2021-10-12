@@ -1,11 +1,13 @@
 ﻿using Grading_Administration_Server.Communication;
 using Grading_Administration_Server.EntityFramework;
+using Grading_Administration_Server.EntityFramework.models;
 using Grading_Administration_Server.Handlers;
 using Grading_Administration_Shared.Util;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -90,14 +92,18 @@ namespace GradingAdministration_server
         /// Handles the login command send by the user
         /// </summary>
         /// <param name="LoginDetails">The command sent by the client to login</param>
-        private void HandleLogin(JObject LoginDetails)
+        private async void HandleLogin(JObject LoginDetails)
         {
             Console.WriteLine(LoginDetails.ToString());
 
             string userName = LoginDetails.SelectToken("data.username").ToString();
             string passWord = LoginDetails.SelectToken("data.password").ToString();
 
-            Console.WriteLine($"{userName}, {passWord}");
+            User user = await (from dt in this.GradingDBContext.LoginDetails
+                         where dt.UserName == userName && dt.Password == passWord
+                         select dt.User).FirstOrDefaultAsync();
+
+            Console.WriteLine(user.FirstName);
         }
 
         public void SendMessage(JObject data)
