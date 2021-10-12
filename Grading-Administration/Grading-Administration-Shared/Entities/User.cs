@@ -13,7 +13,7 @@ namespace Grading_Administration_Server.EntityFramework.models
         public DateTime DateOfBirth { get; set; }
 
         public string Email { get; set; }
-        public string UserType { get; set; }
+        public UserType UserType { get; set; }
 
         public ICollection<ModuleContribution> Modules { get; set; }
     }

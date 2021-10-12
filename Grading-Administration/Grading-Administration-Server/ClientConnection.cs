@@ -83,12 +83,16 @@ namespace GradingAdministration_server
             if (command.ToString() == "login")
                 HandleLogin(data);
             else
-
+                this.handler?.Invoke(command.ToString(), data);
         }
 
+        /// <summary>
+        /// Handles the login command send by the user
+        /// </summary>
+        /// <param name="LoginDetails">The command sent by the client to login</param>
         private void HandleLogin(JObject LoginDetails)
         {
-
+            Console.WriteLine(LoginDetails.ToString());
         }
 
         public void SendMessage(JObject data)
