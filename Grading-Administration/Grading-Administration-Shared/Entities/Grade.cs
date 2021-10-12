@@ -10,6 +10,14 @@ namespace Grading_Administraton_Shared.Entities
 {
     public class Grade
     {
+        public Grade(DateTime time, double numericalGrade, string letterGrade, double delimiter)
+        {
+            Time = time;
+            NumericalGrade = numericalGrade;
+            LetterGrade = letterGrade;
+            Delimiter = delimiter;
+        }
+
         public DateTime Time { get; set; }
 
         public double NumericalGrade { get; set; }

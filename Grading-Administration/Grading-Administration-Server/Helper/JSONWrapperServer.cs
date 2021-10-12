@@ -24,8 +24,16 @@ namespace Grading_Administration_Server.Helper
         {
             return WrapHeader("login", new
             {
+                message = "Failed login"
+            });
+        }
 
-
+        public static object LoginCorrect(Grading_Administraton_Shared.Entities.User user)
+        {
+            return WrapHeader("login", new
+            {
+                message = "Succesfull login",
+                user = user
             });
         }
 

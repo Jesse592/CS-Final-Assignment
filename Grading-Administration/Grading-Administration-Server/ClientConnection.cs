@@ -2,6 +2,7 @@
 using Grading_Administration_Server.EntityFramework;
 using Grading_Administration_Server.EntityFramework.models;
 using Grading_Administration_Server.Handlers;
+using Grading_Administration_Server.Helper;
 using Grading_Administration_Shared.Util;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -108,11 +109,12 @@ namespace GradingAdministration_server
             {
                 // login succes
                 Console.WriteLine(user.FirstName);
+                SendMessage(JObject.FromObject(JSONWrapperServer.LoginCorrect(user.ToSharedUser())));
 
             } else
             {
                 // login failed
-                
+                SendMessage(JObject.FromObject(JSONWrapperServer.LoginFailed()));
             }
 
             

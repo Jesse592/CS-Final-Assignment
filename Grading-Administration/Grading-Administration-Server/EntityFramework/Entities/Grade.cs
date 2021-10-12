@@ -28,5 +28,10 @@ namespace Grading_Administration_Server.EntityFramework.models
             return NumericalGrade >= Delimiter;
         }
 
+
+        public Grading_Administraton_Shared.Entities.Grade ToSharedGrade()
+        {
+            return new Grading_Administraton_Shared.Entities.Grade(this.Time, this.NumericalGrade, this.LetterGrade, this.Delimiter);
+        }
     }
 }

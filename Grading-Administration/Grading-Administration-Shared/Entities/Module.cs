@@ -10,6 +10,16 @@ namespace Grading_Administraton_Shared.Entities
 {
     public class Module
     {
+        public Module(int moduleId, string name, DateTime startDate, DateTime endDate, int eTC, bool isNumerical)
+        {
+            ModuleId = moduleId;
+            Name = name;
+            StartDate = startDate;
+            EndDate = endDate;
+            ETC = eTC;
+            IsNumerical = isNumerical;
+        }
+
         public int ModuleId { get; set; }
         public string Name { get; set; }
 
