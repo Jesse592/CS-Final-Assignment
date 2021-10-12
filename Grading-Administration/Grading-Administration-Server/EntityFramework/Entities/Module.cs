@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Grading_Administraton_Shared.Entities
+namespace Grading_Administration_Server.EntityFramework.models
 {
     public class Module
     {
@@ -18,5 +18,12 @@ namespace Grading_Administraton_Shared.Entities
 
         public int ETC { get; set; }
         public bool IsNumerical { get; set; }
+
+        public ICollection<ModuleContribution> Participants { get; set; }
+
+        public override string ToString()
+        {
+            return $"{ModuleId} - {Name}";
+        }
     }
 }

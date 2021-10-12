@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Grading_Administraton_Shared.Entities
+namespace Grading_Administration_Server.EntityFramework.models
 {
     public class User
     {
@@ -14,6 +14,8 @@ namespace Grading_Administraton_Shared.Entities
 
         public string Email { get; set; }
         public string UserType { get; set; }
+
+        public ICollection<ModuleContribution> Modules { get; set; }
     }
 
 }
