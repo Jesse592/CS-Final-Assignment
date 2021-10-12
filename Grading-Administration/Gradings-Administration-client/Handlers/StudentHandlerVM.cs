@@ -1,4 +1,7 @@
 ﻿using Grading_Administration_Server.EntityFramework.models;
+using GradingAdmin_client.ViewModels;
+using Gradings_Administration_client;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -11,10 +14,18 @@ namespace GradingAdmin_client.Handlers
     class StudentHandlerVM
     {
         private ConnectionManager manager;
+        private StudentViewModel vm;
 
-        public StudentHandlerVM()
+        private User currentUser;
+
+        public StudentHandlerVM(User student, StudentViewModel view)
         {
             this.manager = new ConnectionManager();
+            this.vm = view;
+
+            this.currentUser = student;
+
+            GetAllGrades();
         }
 
         public void GetModules(User u)
@@ -29,6 +40,7 @@ namespace GradingAdmin_client.Handlers
 
         public void GetGrade(Module m, User u)
         {
+            // Sends the command to get all the grades from a given module and the current user
             this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetGrade", JSONWrapper.WrapModuleUser(m, u))), tGradeCallback);
         }
 
@@ -37,14 +49,26 @@ namespace GradingAdmin_client.Handlers
 
         }
 
-        public void GetAllGrades(User u)
+        public void GetAllGrades()
         {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetAllGrades", JSONWrapper.WrapUser(u))), AllGradesCallback);
+            this.manager.SendCommand(
+                JObject.FromObject(
+                    JSONWrapper.WrapHeader("GetAllGrades", JSONWrapper.WrapUser(this.currentUser))
+                    ), AllGradesCallback);
+
         }
 
         public void AllGradesCallback(JObject jObject)
         {
+            List<TesdtGrade> grades = new List<TesdtGrade>();
 
+            JArray array = (JArray)jObject.GetValue("data");
+            foreach (JObject o in array)
+            {
+                grades.Add(new TesdtGrade(o));
+            }
+
+            this.vm.Grades = (ICollection<Grade>)grades;
         }
 
         public void GetTeachersFromModule(Module m)

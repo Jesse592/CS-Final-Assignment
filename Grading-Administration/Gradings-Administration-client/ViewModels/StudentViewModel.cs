@@ -11,11 +11,12 @@ namespace GradingAdmin_client.ViewModels
     class StudentViewModel
     {
         public User student;
-        private StudentHandlerVM handler = new StudentHandlerVM();
+        private StudentHandlerVM handler;
 
         public StudentViewModel(User student)
         {
             this.student = student;
+            this.handler = new StudentHandlerVM(student, this);
         }
 
         public string StudentName
@@ -34,13 +35,8 @@ namespace GradingAdmin_client.ViewModels
             get{ return _Grades; }
             set
             {
-                _Grades = GetAllGrades();
+                _Grades = value;
             }
-        }
-
-        private ICollection<Grade> GetAllGrades()
-        {
-            handler.GetAllGrades(student);
         }
     }
 }
