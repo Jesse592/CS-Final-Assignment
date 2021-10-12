@@ -1,19 +1,18 @@
-﻿namespace GradingAdministration_server.Migrations
+﻿namespace Grading_Administration_Server.Migrations
 {
-    using Grading_Administration_Server.EntityFramework;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<GradingDBContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Grading_Administration_Server.EntityFramework.GradingDBContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(GradingDBContext context)
+        protected override void Seed(Grading_Administration_Server.EntityFramework.GradingDBContext context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -11,12 +11,10 @@ namespace Gradings_Administration_client.Commands
 {
     class UpdateViewCommand : ICommand
     {
-        private MainViewModel MainView;
         private LoginViewModel LginView;
 
-        public UpdateViewCommand(MainViewModel viewModel, LoginViewModel loginModel)
+        public UpdateViewCommand(LoginViewModel loginModel)
         {
-            this.MainView = viewModel;
             this.LginView = loginModel;
         }
 
@@ -29,24 +27,23 @@ namespace Gradings_Administration_client.Commands
 
         public void Execute(object parameter)
         {
-            if (parameter.ToString() == "Login")
-            {
+
                 switch (LginView.User.UserType)
                 {
                     case "Student":
-                        this.MainView.SelectedViewModel = new StudentViewModel(LginView.User);
+                        this.LginView.SelectedViewModel = new StudentViewModel(LginView.User);
                         break;
                     case "Teacher":
-                        this.MainView.SelectedViewModel = new TeacherViewModel(LginView.User);
+                        this.LginView.SelectedViewModel = new TeacherViewModel(LginView.User);
                         break;
                     case "Admin":
-                        this.MainView.SelectedViewModel = new AdminViewModel();
+                        this.LginView.SelectedViewModel = new AdminViewModel();
                         break;
                     default:
                         this.LginView.SendError("Onjuiste gebruiker");
                         break;
                 }
-            }
+
         }
     }
 }
