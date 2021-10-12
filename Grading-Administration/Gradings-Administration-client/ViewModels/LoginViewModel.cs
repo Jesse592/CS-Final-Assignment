@@ -1,4 +1,5 @@
-﻿using Gradings_Administration_client;
+﻿using Grading_Administraton_Shared.Entities;
+using Gradings_Administration_client;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,16 @@ namespace GradingAdmin_client.ViewModels
             //string message = "User " + UserName + " Pass " + Password;
             //MessageBox.Show(message);
 
+        }
+
+        private User _User;
+        public User User
+        {
+            get { return _User; }
+            set
+            {
+                _User = value;
+            }
         }
     }
 }

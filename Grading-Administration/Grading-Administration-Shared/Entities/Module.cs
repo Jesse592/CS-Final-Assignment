@@ -13,6 +13,12 @@ namespace Grading_Administraton_Shared.Entities
     {
         public Module(JObject jObject)
         {
+            this.ModuleId = jObject.GetValue("ModuleID").Value<Int32>();
+            this.Name = jObject.GetValue("Name").Value<String>();
+            this.StartDate = jObject.GetValue("StartDate").Value<DateTime>();
+            this.EndDate = jObject.GetValue("EndDate").Value<DateTime>();
+            this.ETC = jObject.GetValue("ETC").Value<Int32>();
+            this.IsNumerical = jObject.GetValue("IsNumerical").Value<Boolean>();
         }
 
         public int ModuleId { get; set; }
