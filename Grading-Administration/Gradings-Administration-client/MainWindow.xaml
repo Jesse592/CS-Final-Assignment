@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gradings_Administration_client"
         xmlns:views="clr-namespace:GradingAdmin_client.Views"
+        xmlns:viewsone="clr-namespace:Gradings_Administration_client.Views"
         xmlns:viewmodelone="clr-namespace:Gradings_Administration_client.ViewModels"
         xmlns:viewmodels="clr-namespace:GradingAdmin_client.ViewModels"
         mc:Ignorable="d"
@@ -14,7 +15,7 @@
     </Window.DataContext>
     <Window.Resources>
         <DataTemplate x:Name="StudentView" DataType="{x:Type viewmodels:StudentViewModel}">
-            <views:StudentView/>
+            <viewsone:StudentView/>
         </DataTemplate>
 
         <DataTemplate x:Name="TeacherView" DataType="{x:Type viewmodels:TeacherViewModel}">

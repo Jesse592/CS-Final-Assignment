@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GradingAdmin_client.Views
+namespace Gradings_Administration_client.Views
 {
     /// <summary>
     /// Interaction logic for StudentView.xaml
