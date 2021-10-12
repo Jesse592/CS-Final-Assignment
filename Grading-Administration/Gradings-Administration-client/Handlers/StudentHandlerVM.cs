@@ -1,6 +1,7 @@
 ﻿using Grading_Administration_Server.EntityFramework.models;
 using GradingAdmin_client.ViewModels;
 using Gradings_Administration_client;
+using Grading_Administraton_Shared.Entities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -60,15 +61,15 @@ namespace GradingAdmin_client.Handlers
 
         public void AllGradesCallback(JObject jObject)
         {
-            List<TesdtGrade> grades = new List<TesdtGrade>();
+            List<Grade> grades = new List<Grade>();
 
             JArray array = (JArray)jObject.GetValue("data");
             foreach (JObject o in array)
             {
-                grades.Add(new TesdtGrade(o));
+                grades.Add(new Grade(o));
             }
 
-            this.vm.Grades = (ICollection<Grade>)grades;
+            this.vm.Grades = grades;
         }
 
         public void GetTeachersFromModule(Module m)

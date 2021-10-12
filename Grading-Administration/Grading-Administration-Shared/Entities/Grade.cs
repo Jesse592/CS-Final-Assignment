@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,6 +11,10 @@ namespace Grading_Administraton_Shared.Entities
 {
     public class Grade
     {
+        public Grade(JObject jObject)
+        {
+        }
+
         public DateTime Time { get; set; }
 
         public double NumericalGrade { get; set; }

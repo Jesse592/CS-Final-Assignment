@@ -1,4 +1,4 @@
-﻿using Grading_Administration_Server.EntityFramework.models;
+﻿using Grading_Administraton_Shared.Entities;
 using GradingAdmin_client.Handlers;
 using System;
 using System.Collections.Generic;
