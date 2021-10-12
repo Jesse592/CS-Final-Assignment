@@ -39,17 +39,13 @@ namespace Grading_Administration_Server
 
         private void HandleClient(IAsyncResult result)
         {
-            try
-            {
-                TcpClient tcpClient = tcpListner.EndAcceptTcpClient(result);
+            TcpClient tcpClient = tcpListner.EndAcceptTcpClient(result);
 
-                ClientConnection client = new ClientConnection(tcpClient);
-                clients.Add(client);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            ClientConnection client = new ClientConnection(tcpClient);
+            clients.Add(client);
+
+            //Start listening for clients again
+            tcpListner.BeginAcceptTcpClient(new AsyncCallback(HandleClient), null);
         }
 
         public void StopServer()
