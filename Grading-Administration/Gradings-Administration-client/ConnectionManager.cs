@@ -16,7 +16,7 @@ namespace GradingAdmin_client
 
         public ConnectionManager()
         {
-            Handler = new TCPHandler();
+            //Handler = new TCPHandler();
         }
 
         public void OnMessageReceived()
