@@ -18,7 +18,7 @@ namespace GradingAdmin_client.Views
     /// <summary>
     /// Interaction logic for TeacherView.xaml
     /// </summary>
-    public partial class TeacherView : Page
+    public partial class TeacherView : UserControl
     {
         public TeacherView()
         {

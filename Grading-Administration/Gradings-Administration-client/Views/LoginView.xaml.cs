@@ -18,7 +18,7 @@ namespace GradingAdmin_client.Views
     /// <summary>
     /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class LoginView : Page
+    public partial class LoginView : UserControl
     {
         public LoginView()
         {
