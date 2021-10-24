@@ -16,6 +16,13 @@ namespace Grading_Administration_Server.EntityFramework.models
 
         public ICollection<Grade> grades { get; set; }
 
+        public ModuleContribution(int contributionId, User user, Module module, ICollection<Grade> grades)
+        {
+            ContributionId = contributionId;
+            User = user;
+            Module = module;
+            this.grades = grades;
+        }
     }
 
 }

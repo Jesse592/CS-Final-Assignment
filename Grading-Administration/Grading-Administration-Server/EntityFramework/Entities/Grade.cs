@@ -28,6 +28,14 @@ namespace Grading_Administration_Server.EntityFramework.models
             return NumericalGrade >= Delimiter;
         }
 
+        public Grade(ModuleContribution contribution, DateTime time, double numericalGrade, string letterGrade, double delimiter)
+        {
+            Contribution = contribution;
+            Time = time;
+            NumericalGrade = numericalGrade;
+            LetterGrade = letterGrade;
+            Delimiter = delimiter;
+        }
 
         public Grading_Administraton_Shared.Entities.Grade ToSharedGrade()
         {

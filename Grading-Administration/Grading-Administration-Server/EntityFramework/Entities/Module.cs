@@ -26,6 +26,17 @@ namespace Grading_Administration_Server.EntityFramework.models
             return $"{ModuleId} - {Name}";
         }
 
+        public Module(int moduleId, string name, DateTime startDate, DateTime endDate, int eTC, bool isNumerical, ICollection<ModuleContribution> participants)
+        {
+            ModuleId = moduleId;
+            Name = name;
+            StartDate = startDate;
+            EndDate = endDate;
+            ETC = eTC;
+            IsNumerical = isNumerical;
+            Participants = participants;
+        }
+
         public Grading_Administraton_Shared.Entities.Module ToSharedModule()
         {
             return new Grading_Administraton_Shared.Entities.Module(this.ModuleId, this.Name, this.StartDate, this.EndDate, this.ETC, this.IsNumerical);

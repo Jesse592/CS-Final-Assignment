@@ -1,5 +1,4 @@
-﻿using Grading_Administration_Server.EntityFramework.models;
-using GradingAdmin_client.ViewModels;
+﻿using GradingAdmin_client.ViewModels;
 using Gradings_Administration_client;
 using Grading_Administraton_Shared.Entities;
 using Newtonsoft.Json;
@@ -44,7 +43,7 @@ namespace GradingAdmin_client.Handlers
             JArray array = (JArray)jObject.GetValue("data");
             foreach (JObject o in array)
             {
-                modules.Add(new Module(o));
+                //modules.Add(new Module(o));
             }
 
             this.vm.Modules = modules;
@@ -77,7 +76,7 @@ namespace GradingAdmin_client.Handlers
             JArray array = (JArray)jObject.GetValue("data");
             foreach (JObject o in array)
             {
-                grades.Add(new Grade(o));
+                //grades.Add(new Grade(o));
             }
 
             this.vm.Grades = grades;

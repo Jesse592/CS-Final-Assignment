@@ -1,5 +1,8 @@
-﻿using Grading_Administration_Server.Settings;
+﻿using Grading_Administration_Server.EntityFramework;
+using Grading_Administration_Server.EntityFramework.models;
+using Grading_Administration_Server.Settings;
 using System;
+using System.Collections.Generic;
 
 namespace Grading_Administration_Server
 {
@@ -13,7 +16,7 @@ namespace Grading_Administration_Server
            server.RunServer();
 
 
-           Console.ReadKey();
+            Console.ReadKey();
         }
     }
 }
