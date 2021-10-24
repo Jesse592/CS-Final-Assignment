@@ -14,7 +14,7 @@ namespace Grading_Administration_Server.Handlers
 
         public void GetGrades(JObject student)
         {
-
+            Console.WriteLine("FUCKYEAH");
         }
 
         public void GetModules(JObject student)

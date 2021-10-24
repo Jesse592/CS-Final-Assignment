@@ -86,7 +86,7 @@ namespace GradingAdmin_client.ViewModels
                 win.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 win.WindowState = WindowState.Maximized;
 
-                switch (Enum.GetName(typeof(UserType), Int32.Parse(u.UserType)))
+                switch (Enum.GetName(typeof(UserType), int.Parse(u.UserType)))
                 {
                     case "STUDENT":
                         win.Content = new StudentViewModel(u);

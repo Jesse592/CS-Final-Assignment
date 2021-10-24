@@ -17,6 +17,8 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         protected Handler()
         {
+            this.Actions = new Dictionary<string, Action<JObject>>();
+
             Init();
         }
 

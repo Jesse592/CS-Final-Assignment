@@ -125,11 +125,13 @@ namespace GradingAdministration_server
         /// <param name="user">The user the handler is based on</param>
         private void SetupLoginHandler(User user)
         {
-            switch (user.UserType)
+            UserType userType = (UserType)(int.Parse(user.UserType));
+
+            switch (userType)
             {
-                case "Student": this.handler = new StudentHandler(); break;
-                case "Teacher": this.handler = new TeacherHandler(); break;
-                case "Admin": this.handler = new AdminHandler(); break;
+                case UserType.STUDENT: this.handler = new StudentHandler(); break;
+                case UserType.TEACHER: this.handler = new TeacherHandler(); break;
+                case UserType.ADMIN: this.handler = new AdminHandler(); break;
             }
                  
         }
