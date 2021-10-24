@@ -92,13 +92,15 @@ namespace GradingAdministration_server
         /// <summary>
         /// Handles the login command send by the user
         /// </summary>
-        /// <param name="LoginDetails">The command sent by the client to login</param>
-        private async void HandleLogin(JObject LoginDetails)
+        /// <param name="loginDetails">The command sent by the client to login</param>
+        private async void HandleLogin(JObject loginDetails)
         {
-            Console.WriteLine(LoginDetails.ToString());
+            Console.WriteLine(loginDetails.ToString());
 
-            string userName = LoginDetails.SelectToken("data.username").ToString();
-            string passWord = LoginDetails.SelectToken("data.password").ToString(); // is sended in plain text, not yet hashed
+            string userName = loginDetails.SelectToken("data.username").ToString();
+            string passWord = loginDetails.SelectToken("data.password").ToString(); // is sended in plain text, not yet hashed
+
+            int serial = loginDetails.SelectToken("serial").ToObject<int>();
 
             // query for user that mathes the username and password
             User user = await (from dt in this.GradingDBContext.LoginDetails
@@ -109,12 +111,12 @@ namespace GradingAdministration_server
             {
                 // login succes
                 Console.WriteLine(user.FirstName);
-                SendMessage(JObject.FromObject(JSONWrapperServer.LoginCorrect(user.ToSharedUser())));
+                SendMessage(JObject.FromObject(JSONWrapperServer.LoginCorrect(user.ToSharedUser(), serial)));
 
             } else
             {
                 // login failed
-                SendMessage(JObject.FromObject(JSONWrapperServer.LoginFailed()));
+                SendMessage(JObject.FromObject(JSONWrapperServer.LoginFailed(serial)));
             }
 
             
