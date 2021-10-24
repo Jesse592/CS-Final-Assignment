@@ -16,7 +16,7 @@ namespace Grading_Administration_Server
            server.RunServer();
 
 
-            Console.ReadKey();
+           Console.ReadKey();
         }
     }
 }
