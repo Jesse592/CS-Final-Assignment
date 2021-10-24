@@ -13,10 +13,7 @@ namespace Grading_Administration_Server.Helper
             return new
             {
                 command = command,
-                data = new
-                {
-                    data
-                },
+                data = data,
                 serial = serial
             };
         }
@@ -26,10 +23,7 @@ namespace Grading_Administration_Server.Helper
             return new
             {
                 command = command,
-                data = new
-                {
-                    data
-                }
+                data = data
             };
         }
 
