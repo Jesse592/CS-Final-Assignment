@@ -1,4 +1,5 @@
 ﻿using GradingAdmin_client.ViewModels;
+using Gradings_Administration_client.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Gradings_Administration_client
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new LoginViewModel();
+            DataContext = new MainViewModel();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Grading_Administration_Server.Communication
+namespace Grading_Administration_Shared.Communication
 {
     class TCPHandler
     {
