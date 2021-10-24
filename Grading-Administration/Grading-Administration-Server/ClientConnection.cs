@@ -18,12 +18,12 @@ namespace GradingAdministration_server
 {
     class ClientConnection
     {
-        private GradingDBContext GradingDBContext;
+        private readonly GradingDBContext GradingDBContext;
 
         private Handler handler;
 
-        private TcpClient client;
-        private TCPHandler TCPHandler;
+        private readonly TcpClient client;
+        private readonly TCPHandler TCPHandler;
 
         private bool running = false;
 
@@ -86,6 +86,7 @@ namespace GradingAdministration_server
             if (command.ToString() == "login")
                 HandleLogin(data);
             
+            // Sending this command to the handler, if client is not logged in handler will be null
             this.handler?.Invoke(command.ToString(), data);
         }
 
@@ -110,18 +111,33 @@ namespace GradingAdministration_server
             if (user != null)
             {
                 // login succes
-                Console.WriteLine(user.FirstName);
                 SendMessage(JObject.FromObject(JSONWrapperServer.LoginCorrect(user.ToSharedUser(), serial)));
-
-            } else
-            {
+                SetupLoginHandler(user);
+            }
+            else
                 // login failed
                 SendMessage(JObject.FromObject(JSONWrapperServer.LoginFailed(serial)));
-            }
-
-            
         }
 
+        /// <summary>
+        /// Creates the correct handler based on the user credentials the client logged in with.
+        /// </summary>
+        /// <param name="user">The user the handler is based on</param>
+        private void SetupLoginHandler(User user)
+        {
+            switch (user.UserType)
+            {
+                case "Student": this.handler = new StudentHandler(); break;
+                case "Teacher": this.handler = new TeacherHandler(); break;
+                case "Admin": this.handler = new AdminHandler(); break;
+            }
+                 
+        }
+
+        /// <summary>
+        /// Sends the given JObject to the TCPHandler
+        /// </summary>
+        /// <param name="data">The data to be send</param>
         public void SendMessage(JObject data)
         {
             string dataString = data.ToString();
@@ -129,7 +145,9 @@ namespace GradingAdministration_server
             this.TCPHandler?.SendMessage(dataString);
         }
 
-
+        /// <summary>
+        /// Stops the connection with the client, stops: TCPHandler, socket and this object
+        /// </summary>
         public void Stop()
         {
             this.running = false;
