@@ -8,6 +8,19 @@ namespace Grading_Administration_Server.Helper
 {
     public static class JSONWrapperServer
     {
+        public static object WrapHeader(string command, object data, int serial)
+        {
+            return new
+            {
+                command = command,
+                data = new
+                {
+                    data
+                },
+                serial = serial
+            };
+        }
+
         public static object WrapHeader(string command, object data)
         {
             return new
@@ -20,13 +33,21 @@ namespace Grading_Administration_Server.Helper
             };
         }
 
-        public static object LoginFailed()
+        public static object LoginFailed(int serial)
         {
             return WrapHeader("login", new
             {
+                message = "Failed login"
+            }, serial);
+        }
 
-
-            });
+        public static object LoginCorrect(Grading_Administraton_Shared.Entities.User user, int serial)
+        {
+            return WrapHeader("login", new
+            {
+                message = "Succesfull login",
+                user = user
+            }, serial);
         }
 
     }

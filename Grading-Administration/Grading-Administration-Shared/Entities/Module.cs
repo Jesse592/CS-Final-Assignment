@@ -11,7 +11,7 @@ namespace Grading_Administraton_Shared.Entities
 {
     public class Module
     {
-        public Module(JObject jObject)
+        public Module(int moduleId, string name, DateTime startDate, DateTime endDate, int eTC, bool isNumerical)
         {
             this.ModuleId = jObject.GetValue("ModuleID").Value<Int32>();
             this.Name = jObject.GetValue("Name").Value<String>();
@@ -19,6 +19,16 @@ namespace Grading_Administraton_Shared.Entities
             this.EndDate = jObject.GetValue("EndDate").Value<DateTime>();
             this.ETC = jObject.GetValue("ETC").Value<Int32>();
             this.IsNumerical = jObject.GetValue("IsNumerical").Value<Boolean>();
+        }
+        
+        public Module(int moduleId, string name, DateTime startDate, DateTime endDate, int eTC, bool isNumerical)
+        {
+            ModuleId = moduleId;
+            Name = name;
+            StartDate = startDate;
+            EndDate = endDate;
+            ETC = eTC;
+            IsNumerical = isNumerical;
         }
 
         public int ModuleId { get; set; }

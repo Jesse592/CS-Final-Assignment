@@ -25,5 +25,10 @@ namespace Grading_Administration_Server.EntityFramework.models
         {
             return $"{ModuleId} - {Name}";
         }
+
+        public Grading_Administraton_Shared.Entities.Module ToSharedModule()
+        {
+            return new Grading_Administraton_Shared.Entities.Module(this.ModuleId, this.Name, this.StartDate, this.EndDate, this.ETC, this.IsNumerical);
+        }
     }
 }
