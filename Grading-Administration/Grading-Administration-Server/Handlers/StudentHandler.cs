@@ -21,5 +21,11 @@ namespace Grading_Administration_Server.Handlers
         {
 
         }
+
+        protected override void Init()
+        {
+            this.Actions.Add("GetGrades", GetGrades);
+            this.Actions.Add("GetModules", GetModules);
+        }
     }
 }

@@ -8,5 +8,9 @@ namespace Grading_Administration_Server.Handlers
 {
     class TeacherHandler : Handler
     {
+        protected override void Init()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
