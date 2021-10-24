@@ -14,9 +14,14 @@ namespace Grading_Administration_Server.Handlers
 
         public void GetGrades(JObject student)
         {
-            Console.WriteLine("FUCKYEAH");
+
         }
 
+        public void GetAllGrades(JObject student)
+        {
+            Console.WriteLine("FUCKYEAH");
+        }
+        
         public void GetModules(JObject student)
         {
 
@@ -25,6 +30,7 @@ namespace Grading_Administration_Server.Handlers
         protected override void Init()
         {
             this.Actions.Add("GetGrades", GetGrades);
+            this.Actions.Add("GetAllGrades", GetAllGrades);
             this.Actions.Add("GetModules", GetModules);
         }
     }

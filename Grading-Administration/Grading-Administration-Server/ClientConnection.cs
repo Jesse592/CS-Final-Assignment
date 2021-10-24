@@ -31,7 +31,7 @@ namespace GradingAdministration_server
         {
             Console.WriteLine("Connected to client");
 
-            // Creating a new DB Context per client, te ensure the context is not open 24/7
+            // Creating a new DB Context per client, to ensure the context is not open 24/7
             this.GradingDBContext = new GradingDBContext();
 
             this.client = client;
@@ -111,8 +111,8 @@ namespace GradingAdministration_server
             if (user != null)
             {
                 // login succes
-                SendMessage(JObject.FromObject(JSONWrapperServer.LoginCorrect(user.ToSharedUser(), serial)));
                 SetupLoginHandler(user);
+                SendMessage(JObject.FromObject(JSONWrapperServer.LoginCorrect(user.ToSharedUser(), serial)));
             }
             else
                 // login failed
@@ -129,9 +129,15 @@ namespace GradingAdministration_server
 
             switch (userType)
             {
-                case UserType.STUDENT: this.handler = new StudentHandler(); break;
-                case UserType.TEACHER: this.handler = new TeacherHandler(); break;
-                case UserType.ADMIN: this.handler = new AdminHandler(); break;
+                case UserType.STUDENT: 
+                    this.handler = new StudentHandler();
+                    break;
+                case UserType.TEACHER: 
+                    this.handler = new TeacherHandler(); 
+                    break;
+                case UserType.ADMIN: 
+                    this.handler = new AdminHandler(); 
+                    break;
             }
                  
         }
