@@ -27,7 +27,7 @@ namespace Gradings_Administration_client.Commands
 
         public void Execute(object parameter)
         {
-
+            /*
                 switch (LginView.User.UserType)
                 {
                     case "Student":
@@ -43,6 +43,7 @@ namespace Gradings_Administration_client.Commands
                         this.LginView.SendError("Onjuiste gebruiker");
                         break;
                 }
+            */
 
         }
     }

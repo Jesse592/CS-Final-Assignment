@@ -18,22 +18,19 @@ namespace GradingAdmin_client.Handlers
     {
         private ConnectionManager manager;
         private LoginViewModel vm;
-        private User currentUser;
         public ICommand UpdateViewCommand { get; set; }
 
-        public LoginHandlerVM(LoginViewModel view, User currentUser)
+        public LoginHandlerVM(LoginViewModel view)
         {
             this.manager = new ConnectionManager();
             this.vm = view;
             UpdateViewCommand = new UpdateViewCommand(view);
-
-            this.currentUser = currentUser;
+            this.manager = ConnectionManager.GetConnectionManager();
         }
 
         public void Login(string username, string password)
         {
-            manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("Login", JSONWrapper.WrapLogin(password, username))), LoginCallback);
-            this.vm.SelectedViewModel = new StudentViewModel(currentUser);
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("Login", JSONWrapper.WrapLogin(password, username))), LoginCallback);
         }
 
         public void LoginCallback(JObject Jobject)
@@ -50,15 +47,13 @@ namespace GradingAdmin_client.Handlers
 
             User u = new User(UserID.Value<Int32>(), FirstName.Value<String>(), LastName.Value<String>(), DateOfBirth.Value<DateTime>(), Email.Value<String>(), stringtype);
 
-            vm.User = u;
-
-            switch (currentUser.UserType)
+            switch (u.UserType)
             {
                 case "Student":
-                    this.vm.SelectedViewModel = new StudentViewModel(currentUser);
+                    this.vm.SelectedViewModel = new StudentViewModel(u);
                     break;
                 case "Teacher":
-                    this.vm.SelectedViewModel = new TeacherViewModel(currentUser);
+                    this.vm.SelectedViewModel = new TeacherViewModel(u);
                     break;
                 case "Admin":
                     this.vm.SelectedViewModel = new AdminViewModel();

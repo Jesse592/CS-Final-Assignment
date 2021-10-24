@@ -5,15 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GradingAdmin_client.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800">
+      d:DesignHeight="250" d:DesignWidth="350">
 
     <Grid Background="White">
-        <Label Content="Gebruikersnaam:" HorizontalAlignment="Left" Margin="279,87,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="282,119,0,0" Text="{Binding UserName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Gebruikersnaam:" HorizontalAlignment="Left" Margin="115,39,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="119,69,0,0" Text="{Binding UserName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
-        <Label Content="Wachtwoord:" HorizontalAlignment="Left" Margin="278,165,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="283,193,0,0" Text="{Binding Password}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Login" HorizontalAlignment="Left" Margin="385,266,0,0" VerticalAlignment="Top" Command="{Binding SendLoginCommand}" CommandParameter="Login"/>
+        <Label Content="Wachtwoord:" HorizontalAlignment="Left" Margin="115,0,0,0" VerticalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Left" Margin="119,115,0,0" Text="{Binding Password}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Login" HorizontalAlignment="Left" Margin="155,160,0,0" VerticalAlignment="Top" Command="{Binding SendLoginCommand}" CommandParameter="Login"/>
 
     </Grid>
 </UserControl>

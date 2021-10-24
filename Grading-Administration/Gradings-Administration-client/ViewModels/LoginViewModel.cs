@@ -23,7 +23,10 @@ namespace GradingAdmin_client.ViewModels
 
         public LoginViewModel()
         {
-            this.LoginHandler = new LoginHandlerVM(this, User);
+            this.LoginHandler = new LoginHandlerVM(this);
+
+            Application.Current.MainWindow.Height = 250;
+            Application.Current.MainWindow.Width = 350;
         }
 
         public BaseViewModel SelectedViewModel
@@ -79,16 +82,6 @@ namespace GradingAdmin_client.ViewModels
             //string message = "User " + UserName + " Pass " + Password;
             //MessageBox.Show(message);
             LoginHandler.Login(UserName, Password);
-        }
-
-        private User _User;
-        public User User
-        {
-            get { return _User; }
-            set
-            {
-                _User = value;
-            }
         }
         
         public void SendError(string message)
