@@ -14,19 +14,16 @@ namespace GradingAdmin_client
             return new
             {
                 command = command,
-                data = new
-                {
-                    data
-                }
+                data = data
             };
         }
 
-        public static object WrapLogin(string pasword, string username)
+        public static object WrapLogin(string password, string username)
         {
             return new
             {
                 username,
-                pasword
+                password
             };
         }
 

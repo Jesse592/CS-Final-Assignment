@@ -31,6 +31,7 @@ namespace GradingAdmin_client
         {
             TcpClient connection = new TcpClient("127.0.0.1", 6969);
             this.TCPHandler = new TCPHandler(connection.GetStream());
+            this.TCPHandler.SetRunning(true);
 
             this.SerialCodes = new Dictionary<int, Action<JObject>>();
             this.TCPHandler.OnDataReceived += OnMessageReceived;
@@ -51,7 +52,7 @@ namespace GradingAdmin_client
         {
             JToken serial;
 
-            bool canParse = data.TryGetValue("Serial", out serial);
+            bool canParse = data.TryGetValue("serial", out serial);
 
             if (!canParse || serial == null)
                 return;
@@ -70,6 +71,9 @@ namespace GradingAdmin_client
         public void SendCommand(JObject jObject, Action<JObject> callback)
         {
             this.SerialCodes.Add(this.Serialcode, callback);
+
+            jObject.Add("serial", JToken.FromObject(this.Serialcode));
+
             this.Serialcode++;
 
             SendCommand(jObject);

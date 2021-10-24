@@ -29,7 +29,7 @@ namespace Gradings_Administration_client.ViewModels
         public MainViewModel()
         {
             this._selectedViewModel = login;
-            //UpdateViewCommand = new UpdateViewCommand(this, login);
+            //UpdateViewCommand = new UpdateViewCommand(login);
         }
     }
 }

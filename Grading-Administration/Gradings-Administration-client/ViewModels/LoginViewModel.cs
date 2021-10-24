@@ -1,4 +1,5 @@
-﻿using Grading_Administraton_Shared.Entities;
+﻿using Grading_Administration_Server.EntityFramework.models;
+using Grading_Administraton_Shared.Entities;
 using GradingAdmin_client.Handlers;
 using Gradings_Administration_client;
 using Gradings_Administration_client.Commands;
@@ -35,7 +36,7 @@ namespace GradingAdmin_client.ViewModels
             set
             {
                 _selectedViewModel = value;
-                OnPropertyChanged(nameof(SelectedViewModel));
+                OnPropertyChanged("SelectedViewModel");
             }
         }
 
@@ -75,6 +76,38 @@ namespace GradingAdmin_client.ViewModels
                 return _SendLoginCommand;
             }
 
+        }
+
+        internal void UpdateViewModel(User u)
+        {
+            Application.Current.Dispatcher?.Invoke(() =>
+            {
+                var win = new Window();
+                win.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                win.WindowState = WindowState.Maximized;
+
+                switch (Enum.GetName(typeof(UserType), Int32.Parse(u.UserType)))
+                {
+                    case "STUDENT":
+                        win.Content = new StudentViewModel(u);
+                        break;
+                    case "TEACHER":
+                        win.Content = new TeacherViewModel(u);
+                        break;
+                    case "ADMIN":
+                        win.Content = new AdminViewModel();
+                        break;
+                    default:
+                        SendError("Onjuiste gebruiker");
+                        break;
+                }
+
+                win.Show();
+
+                Application.Current.MainWindow.Close();
+            });
+
+            
         }
 
         public void Login(string UserName, string Password)

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GradingAdmin_client.Handlers
@@ -22,7 +23,6 @@ namespace GradingAdmin_client.Handlers
 
         public LoginHandlerVM(LoginViewModel view)
         {
-            this.manager = new ConnectionManager();
             this.vm = view;
             UpdateViewCommand = new UpdateViewCommand(view);
             this.manager = ConnectionManager.GetConnectionManager();
@@ -30,38 +30,23 @@ namespace GradingAdmin_client.Handlers
 
         public void Login(string username, string password)
         {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("Login", JSONWrapper.WrapLogin(password, username))), LoginCallback);
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("login", JSONWrapper.WrapLogin(password, username))), LoginCallback);
         }
 
         public void LoginCallback(JObject Jobject)
-        {
-            JToken UserID = Jobject.GetValue("UserID");
-            JToken FirstName = Jobject.GetValue("FirstName");
-            JToken LastName = Jobject.GetValue("LastName");
-            JToken DateOfBirth = Jobject.GetValue("DateOfBirth");
-            JToken Email = Jobject.GetValue("Email");
-            JToken type = Jobject.GetValue("UserType");
+       {
+            JToken UserID = Jobject.SelectToken("data.user.UserId");
+            JToken FirstName = Jobject.SelectToken("data.user.FirstName");
+            JToken LastName = Jobject.SelectToken("data.user.LastName");
+            JToken DateOfBirth = Jobject.SelectToken("data.user.DateOfBirth");
+            JToken Email = Jobject.SelectToken("data.user.Email");
+            JToken type = Jobject.SelectToken("data.user.UserType");
 
-            UserType UType = (UserType)type.Value<Int32>();
-            string stringtype = UType.ToString();
+            string stringtype = type.Value<String>();
 
             User u = new User(UserID.Value<Int32>(), FirstName.Value<String>(), LastName.Value<String>(), DateOfBirth.Value<DateTime>(), Email.Value<String>(), stringtype);
 
-            switch (u.UserType)
-            {
-                case "Student":
-                    this.vm.SelectedViewModel = new StudentViewModel(u);
-                    break;
-                case "Teacher":
-                    this.vm.SelectedViewModel = new TeacherViewModel(u);
-                    break;
-                case "Admin":
-                    this.vm.SelectedViewModel = new AdminViewModel();
-                    break;
-                default:
-                    this.vm.SendError("Onjuiste gebruiker");
-                    break;
-            }
+            this.vm.UpdateViewModel(u);
         }
     }
 }
