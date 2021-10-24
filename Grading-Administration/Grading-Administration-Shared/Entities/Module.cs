@@ -11,7 +11,7 @@ namespace Grading_Administraton_Shared.Entities
 {
     public class Module
     {
-        public Module(int moduleId, string name, DateTime startDate, DateTime endDate, int eTC, bool isNumerical)
+        public Module(JObject jObject)
         {
             this.ModuleId = jObject.GetValue("ModuleID").Value<Int32>();
             this.Name = jObject.GetValue("Name").Value<String>();
