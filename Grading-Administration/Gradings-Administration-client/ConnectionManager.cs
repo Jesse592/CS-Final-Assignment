@@ -27,7 +27,7 @@ namespace GradingAdmin_client
         private Action<JObject> HandleUnwantedData;
         private int Serialcode = 0;
 
-        public ConnectionManager()
+        private ConnectionManager()
         {
             TcpClient connection = new TcpClient("127.0.0.1", 6969);
             this.TCPHandler = new TCPHandler(connection.GetStream());

@@ -12,6 +12,11 @@ namespace Grading_Administration_Server.Handlers
     {
         private readonly GradingDBContext GradingDBContext;
 
+        public StudentHandler(GradingDBContext gradingDBContext) : base()
+        {
+            GradingDBContext = gradingDBContext;
+        }
+
         public void GetGrades(JObject student)
         {
 

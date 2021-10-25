@@ -21,7 +21,7 @@ namespace GradingAdmin_client.Handlers
 
         public StudentHandlerVM(User student, StudentViewModel view)
         {
-            this.manager = new ConnectionManager();
+            this.manager = ConnectionManager.GetConnectionManager();
             this.vm = view;
 
             this.currentUser = student;
