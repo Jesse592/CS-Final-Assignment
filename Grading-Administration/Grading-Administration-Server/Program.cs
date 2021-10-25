@@ -10,7 +10,7 @@ namespace Grading_Administration_Server
     {
         static void Main(string[] args)
         {
-            Server server = new Server(Setting.IPAdress, Setting.PortNumber);
+           Server server = new Server(Setting.IPAdress, Setting.PortNumber);
 
            server.RunServer();
 

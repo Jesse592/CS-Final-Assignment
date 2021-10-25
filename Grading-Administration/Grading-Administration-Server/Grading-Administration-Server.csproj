@@ -11,10 +11,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="EntityFramework\Migrations\" />
-  </ItemGroup>
-
   <Import Project="..\Grading-Administration-Shared\Grading-Administration-Shared.projitems" Label="Shared" />
 
 </Project>
