@@ -11,6 +11,7 @@ namespace Grading_Administration_Server.EntityFramework
         public DbSet<User> Users { get; set; }
         public DbSet<LoginDetail> LoginDetails { get; set; }
         public DbSet<ModuleContribution> moduleContributions { get; set; }
+        public DbSet<Grade> grades { get; set; }
 
         private const string connectionString = "Server=(localdb)\\mssqllocaldb;Database=EFCore;Trusted_Connection=True;";
 

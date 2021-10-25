@@ -1,5 +1,6 @@
 ﻿using Grading_Administration_Server.EntityFramework;
 using Grading_Administration_Server.EntityFramework.models;
+using Grading_Administration_Server.Helper;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Grading_Administration_Server.Handlers
         private readonly GradingDBContext GradingDBContext;
         private User user;
 
-        public StudentHandler(GradingDBContext gradingDBContext, User user) : base()
+        public StudentHandler(GradingDBContext gradingDBContext, User user, Action<JObject> sendAction) : base(sendAction)
         {
             GradingDBContext = gradingDBContext;
             this.user = user;
@@ -45,12 +46,13 @@ namespace Grading_Administration_Server.Handlers
             // filling the dictionary with the shared (save) version of the objects
             foreach(ModuleContribution mc in grades)
             {
-                var mcGrades = gradesToShared(mc.grades.ToList());
+                var mcGrades = gradesToShared(mc.grades?.ToList());
 
-                gradesList.Add(new Grading_Administraton_Shared.Entities.Module(mc.Module), mcGrades);
+                gradesList.Add(mc.Module?.ToSharedModule(), mcGrades);
             }
 
-
+            // Converting to json and sending to client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
         }
         
         public void GetModules(JObject student, int serial)
@@ -75,7 +77,7 @@ namespace Grading_Administration_Server.Handlers
         {
             // converting the grades to shared and filling the list
             var newGrades = new List<Grading_Administraton_Shared.Entities.Grade>();
-            grades.ForEach(g => newGrades.Add(new Grading_Administraton_Shared.Entities.Grade(g)));
+            grades.ForEach(g => newGrades.Add(g.ToSharedGrade()));
 
             return newGrades;
         }

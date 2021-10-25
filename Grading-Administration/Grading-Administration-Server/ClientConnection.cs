@@ -139,13 +139,13 @@ namespace GradingAdministration_server
             switch (userType)
             {
                 case UserType.STUDENT: 
-                    this.handler = new StudentHandler(this.GradingDBContext, user);
+                    this.handler = new StudentHandler(this.GradingDBContext, user, SendMessage);
                     break;
                 case UserType.TEACHER: 
-                    this.handler = new TeacherHandler(); 
+                    this.handler = new TeacherHandler(SendMessage); 
                     break;
                 case UserType.ADMIN: 
-                    this.handler = new AdminHandler(); 
+                    this.handler = new AdminHandler(SendMessage); 
                     break;
             }
                  

@@ -44,5 +44,11 @@ namespace Grading_Administration_Server.Helper
             }, serial);
         }
 
+        public static object GetAllGrades(Dictionary<Grading_Administraton_Shared.Entities.Module, List<Grading_Administraton_Shared.Entities.Grade>> data, int serial)
+        {
+            return WrapHeader("GetAllGrades", data, serial);
+        }
+
+
     }
 }

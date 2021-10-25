@@ -10,14 +10,15 @@ namespace Grading_Administration_Server.Handlers
     abstract class Handler
     {
         protected Dictionary<string, Action<JObject, int>> Actions;
-        protected Action<JObject> CurrentAction;
+        protected Action<JObject> SendAction;
 
         /// <summary>
         /// Constructor for abstract Handler, calls the Init method
         /// </summary>
-        protected Handler()
+        protected Handler(Action<JObject> sendAction)
         {
             this.Actions = new Dictionary<string, Action<JObject, int>>();
+            this.SendAction = sendAction;
 
             Init();
         }

@@ -17,6 +17,8 @@ namespace Grading_Administration_Server.EntityFramework.models
 
         public ICollection<ModuleContribution> Modules { get; set; }
 
+
+
         public Grading_Administraton_Shared.Entities.User ToSharedUser()
         {
             return new Grading_Administraton_Shared.Entities.User(this.UserId, this.FirstName, this.LastName, this.DateOfBirth, this.Email, this.UserType);
