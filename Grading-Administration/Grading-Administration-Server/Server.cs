@@ -40,6 +40,8 @@ namespace Grading_Administration_Server
         {
             TcpClient tcpClient = tcpListner.EndAcceptTcpClient(result);
 
+            Console.WriteLine("NIEUWE CLIENT");
+
             ClientConnection client = new ClientConnection(tcpClient);
             clients.Add(client);
 

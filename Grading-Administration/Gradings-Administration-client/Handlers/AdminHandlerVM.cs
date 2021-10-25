@@ -15,7 +15,7 @@ namespace GradingAdmin_client.Handlers
 
         public AdminHandlerVM()
         {
-            this.manager = new ConnectionManager();
+            this.manager = ConnectionManager.GetConnectionManager();
         }
 
         public void NewUser(User u)

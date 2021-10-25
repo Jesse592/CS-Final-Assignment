@@ -9,11 +9,16 @@ namespace Grading_Administration_Server.Handlers
 {
     abstract class Handler
     {
-        private Dictionary<string, Action<JObject>> Actions;
-        private Action<JObject> CurrentAction;
+        protected Dictionary<string, Action<JObject>> Actions;
+        protected Action<JObject> CurrentAction;
 
+        /// <summary>
+        /// Constructor for abstract Handler, calls the Init method
+        /// </summary>
         protected Handler()
         {
+            this.Actions = new Dictionary<string, Action<JObject>>();
+
             Init();
         }
 
@@ -28,9 +33,9 @@ namespace Grading_Administration_Server.Handlers
                 this.Actions[command].Invoke(data);
         }
 
-        private void Init()
-        {
-            //Fill the actions dicitionary
-        }
+        /// <summary>
+        /// Init method inserts all the commands in the handler
+        /// </summary>
+        protected abstract void Init();
     }
 }

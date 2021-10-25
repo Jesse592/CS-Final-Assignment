@@ -18,12 +18,12 @@ namespace GradingAdministration_server
 {
     class ClientConnection
     {
-        private GradingDBContext GradingDBContext;
+        private readonly GradingDBContext GradingDBContext;
 
         private Handler handler;
 
-        private TcpClient client;
-        private TCPHandler TCPHandler;
+        private readonly TcpClient client;
+        private readonly TCPHandler TCPHandler;
 
         private bool running = false;
 
@@ -31,7 +31,7 @@ namespace GradingAdministration_server
         {
             Console.WriteLine("Connected to client");
 
-            // Creating a new DB Context per client, te ensure the context is not open 24/7
+            // Creating a new DB Context per client, to ensure the context is not open 24/7
             this.GradingDBContext = new GradingDBContext();
 
             this.client = client;
@@ -86,6 +86,7 @@ namespace GradingAdministration_server
             if (command.ToString() == "login")
                 HandleLogin(data);
             
+            // Sending this command to the handler, if client is not logged in handler will be null
             this.handler?.Invoke(command.ToString(), data);
         }
 
@@ -110,18 +111,41 @@ namespace GradingAdministration_server
             if (user != null)
             {
                 // login succes
-                Console.WriteLine(user.FirstName);
+                SetupLoginHandler(user);
                 SendMessage(JObject.FromObject(JSONWrapperServer.LoginCorrect(user.ToSharedUser(), serial)));
-
-            } else
-            {
+            }
+            else
                 // login failed
                 SendMessage(JObject.FromObject(JSONWrapperServer.LoginFailed(serial)));
-            }
-
-            
         }
 
+        /// <summary>
+        /// Creates the correct handler based on the user credentials the client logged in with.
+        /// </summary>
+        /// <param name="user">The user the handler is based on</param>
+        private void SetupLoginHandler(User user)
+        {
+            UserType userType = (UserType)(int.Parse(user.UserType));
+
+            switch (userType)
+            {
+                case UserType.STUDENT: 
+                    this.handler = new StudentHandler(this.GradingDBContext);
+                    break;
+                case UserType.TEACHER: 
+                    this.handler = new TeacherHandler(); 
+                    break;
+                case UserType.ADMIN: 
+                    this.handler = new AdminHandler(); 
+                    break;
+            }
+                 
+        }
+
+        /// <summary>
+        /// Sends the given JObject to the TCPHandler
+        /// </summary>
+        /// <param name="data">The data to be send</param>
         public void SendMessage(JObject data)
         {
             string dataString = data.ToString();
@@ -129,7 +153,9 @@ namespace GradingAdministration_server
             this.TCPHandler?.SendMessage(dataString);
         }
 
-
+        /// <summary>
+        /// Stops the connection with the client, stops: TCPHandler, socket and this object
+        /// </summary>
         public void Stop()
         {
             this.running = false;
