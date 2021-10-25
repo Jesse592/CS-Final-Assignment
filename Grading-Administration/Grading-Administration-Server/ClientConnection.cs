@@ -74,20 +74,22 @@ namespace GradingAdministration_server
         /// </summary>
         private void HandleData(JObject data)
         {
-            // command value always gives the action 
+            // command and data value always gives in the action
             JToken command;
+            JToken dataField;
 
             bool correctCommand = data.TryGetValue("command", StringComparison.InvariantCulture, out command);
+            bool correctData = data.TryGetValue("data", StringComparison.InvariantCulture, out dataField);
 
             // returning when JSON has wron format
-            if (!correctCommand) return;
+            if (!correctCommand || !correctData) return;
 
             // This class only handles login
             if (command.ToString() == "login")
                 HandleLogin(data);
             
             // Sending this command to the handler, if client is not logged in handler will be null
-            this.handler?.Invoke(command.ToString(), data);
+            this.handler?.Invoke(command.ToString(), dataField as JObject);
         }
 
         /// <summary>
