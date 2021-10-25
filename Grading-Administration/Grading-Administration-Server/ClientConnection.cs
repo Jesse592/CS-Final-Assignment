@@ -75,21 +75,28 @@ namespace GradingAdministration_server
         private void HandleData(JObject data)
         {
             // command and data value always gives in the action
-            JToken command;
-            JToken dataField;
+            // serial is optional
+            JToken commandJson;
+            JToken dataJson;
+            JToken serialJson;
 
-            bool correctCommand = data.TryGetValue("command", StringComparison.InvariantCulture, out command);
-            bool correctData = data.TryGetValue("data", StringComparison.InvariantCulture, out dataField);
+            bool correctCommand = data.TryGetValue("command", StringComparison.InvariantCulture, out commandJson);
+            bool correctData = data.TryGetValue("data", StringComparison.InvariantCulture, out dataJson);
+            bool correctSerial = data.TryGetValue("serial", StringComparison.InvariantCulture, out serialJson);
 
             // returning when JSON has wron format
             if (!correctCommand || !correctData) return;
 
+            int serial;
+            // Checking if serial is given, -1 if not
+            serial = correctSerial ? (int)serialJson : -1;
+
             // This class only handles login
-            if (command.ToString() == "login")
+            if (commandJson.ToString() == "login")
                 HandleLogin(data);
             
             // Sending this command to the handler, if client is not logged in handler will be null
-            this.handler?.Invoke(command.ToString(), dataField as JObject);
+            this.handler?.Invoke(commandJson.ToString(), dataJson as JObject, serial);
         }
 
         /// <summary>
@@ -132,7 +139,7 @@ namespace GradingAdministration_server
             switch (userType)
             {
                 case UserType.STUDENT: 
-                    this.handler = new StudentHandler(this.GradingDBContext);
+                    this.handler = new StudentHandler(this.GradingDBContext, user);
                     break;
                 case UserType.TEACHER: 
                     this.handler = new TeacherHandler(); 

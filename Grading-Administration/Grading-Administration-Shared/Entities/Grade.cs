@@ -27,6 +27,14 @@ namespace Grading_Administraton_Shared.Entities
             Delimiter = delimiter;
         }
 
+        public Grade(Grading_Administration_Server.EntityFramework.models.Grade grade)
+        {
+            Time = grade.Time;
+            NumericalGrade = grade.NumericalGrade;
+            LetterGrade = grade.LetterGrade;
+            Delimiter = grade.Delimiter;
+        }
+
         public DateTime Time { get; set; }
 
         public double NumericalGrade { get; set; }

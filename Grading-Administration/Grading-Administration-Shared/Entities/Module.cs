@@ -31,6 +31,16 @@ namespace Grading_Administraton_Shared.Entities
             IsNumerical = isNumerical;
         }
 
+        public Module(Grading_Administration_Server.EntityFramework.models.Module module)
+        {
+            ModuleId = module.ModuleId;
+            Name = module.Name;
+            StartDate = module.StartDate;
+            EndDate = module.EndDate;
+            ETC = module.ETC;
+            IsNumerical = module.IsNumerical;
+        }
+
         public int ModuleId { get; set; }
         public string Name { get; set; }
 
