@@ -93,13 +93,22 @@ namespace Grading_Administration_Server.Handlers
         }
 
         /// <summary>
-        /// Returns all the students this teacher shares a module with
+        /// Returns all the students
         /// </summary>
         /// <param name="data">The request object</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void GetStudents(JObject data, int serial)
+        private async void GetStudents(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting all the students
+            List<User> students = await (from user in this.GradingDBContext.Users
+                                         where user.UserType == ((int)UserType.STUDENT).ToString()
+                                         select user).ToListAsync();
+
+            // transforming the list to shared users
+            var studentsShared = JSONHelperServer.UserToShared(students);
+
+            // Sending it to the client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllUsers(studentsShared, serial)));
         }
 
         /// <summary>
