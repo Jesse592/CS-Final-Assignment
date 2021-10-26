@@ -27,6 +27,8 @@ namespace Grading_Administration_Shared.Communication
 
         public void SendMessage(string message)
         {
+            Console.WriteLine(message);
+
             byte[] messageArray = ConvertMessage(message);
             stream.Write(messageArray, 0, messageArray.Length);
             stream.Flush();

@@ -57,18 +57,23 @@ namespace Grading_Administration_Server.Handlers
             {
                 var mcGrades = GradesToShared(mc.grades?.ToList());
                 List<User> teachers = await GetTeachersWithModule(mc);
+
+                // transforming the list to shared users
+                var sharedTeachers = new List<Grading_Administraton_Shared.Entities.User>();
+                teachers.ForEach(t => sharedTeachers.Add(t.ToSharedUser()));
+
                 // The objects in the list follow this structure:
                 // first module, than a list of the grades
                 gradesList.Add(new
                 {
                     module = mc.Module.ToSharedModule(),
-                    mcGrades
+                    teachers = sharedTeachers,
+                    mcGrades = mcGrades
                 }
                 ); ;
             }
 
             // Converting to json and sending to client
-            Console.WriteLine(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
             this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
         }
         
@@ -103,13 +108,11 @@ namespace Grading_Administration_Server.Handlers
         /// <param name="module">The module to get the teachers of</param>
         private async Task<List<User>> GetTeachersWithModule(ModuleContribution module)
         {
-            List<User> teachers = await (from tc in this.GradingDBContext.Users
-                                         join m in this.GradingDBContext.moduleContributions on tc.UserId equals m.UserId
-                                         where tc.UserType == "1" && m.ModuleId == module.ModuleId  
-                                         select tc).ToListAsync();
-
-            Console.WriteLine(teachers);
-            return teachers;
+            // getting all the users that are in the module AND are marked as teacher
+            return await (from tc in this.GradingDBContext.Users
+                          join m in this.GradingDBContext.moduleContributions on tc.UserId equals m.UserId
+                          where tc.UserType == ((int)UserType.TEACHER).ToString() && m.ModuleId == module.ModuleId  
+                          select tc).ToListAsync();            
         }
 
         /// <summary>
