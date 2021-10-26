@@ -49,18 +49,26 @@ namespace Grading_Administration_Server.Handlers
                                                      where dt.User.UserId == userID
                                                      select dt).ToListAsync();
 
-            // We need to send all grades per module, so a dictionary
-            var gradesList = new Dictionary<string, List<Grading_Administraton_Shared.Entities.Grade>>();
+            // We need to send all grades per module + the module id, so a dictionary
+            var gradesList = new List<object>();
 
             // filling the dictionary with the shared (save) version of the objects
             foreach(ModuleContribution mc in grades)
             {
                 var mcGrades = GradesToShared(mc.grades?.ToList());
-
-                gradesList.Add(mc.Module?.Name, mcGrades);
+                List<User> teachers = await GetTeachersWithModule(mc);
+                // The objects in the list follow this structure:
+                // first module, than a list of the grades
+                gradesList.Add(new
+                {
+                    module = mc.Module.ToSharedModule(),
+                    mcGrades
+                }
+                ); ;
             }
 
             // Converting to json and sending to client
+            Console.WriteLine(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
             this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
         }
         
@@ -92,11 +100,16 @@ namespace Grading_Administration_Server.Handlers
         /// <summary>
         /// Returns all the teachers connected to a given module
         /// </summary>
-        /// <param name="data">The json object given</param>
-        /// <param name="serial">the ID-code given by the client</param>
-        public void GetTeachersWithModule(JObject data, int serial)
+        /// <param name="module">The module to get the teachers of</param>
+        private async Task<List<User>> GetTeachersWithModule(ModuleContribution module)
         {
+            List<User> teachers = await (from tc in this.GradingDBContext.Users
+                                         join m in this.GradingDBContext.moduleContributions on tc.UserId equals m.UserId
+                                         where tc.UserType == "1" && m.ModuleId == module.ModuleId  
+                                         select tc).ToListAsync();
 
+            Console.WriteLine(teachers);
+            return teachers;
         }
 
         /// <summary>
