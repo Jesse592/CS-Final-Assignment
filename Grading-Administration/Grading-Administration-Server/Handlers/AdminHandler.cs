@@ -28,7 +28,6 @@ namespace Grading_Administration_Server.Handlers
         /// <param name="serial">The ID-code from the client</param>
         private async void GetUsers(int serial)
         {
- 
             // transforming to shared users
             var studentsShared = JSONHelperServer.UserToShared(await this.GradingDBContext.Users.ToListAsync());
 
@@ -54,9 +53,31 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The data for the new user, shared.User</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void CreateNewUser(JObject data, int serial)
+        private async void CreateNewUser(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting the values from the json data
+            string fname = data.SelectToken("user.FirstName")?.ToString();
+            string lname = data.SelectToken("user.LastName")?.ToString();
+            string email = data.SelectToken("user.Email")?.ToString();
+            string userType = data.SelectToken("user.UserType")?.ToString();
+            DateTime dob = DateTime.Parse(data.SelectToken("user.DateOfBirth")?.ToString());
+
+            // Checking if all required data is retreived
+            if (fname == null || lname == null || email == null || userType == null) return;
+
+            User user = new User()
+            {
+                FirstName = fname,
+                LastName = lname,
+                Email = email,
+                UserType = userType,
+                DateOfBirth = dob
+            };
+
+            this.GradingDBContext.Users.Add(user);
+
+            // Saving the user
+            await this.GradingDBContext.SaveChangesAsync();
         }
 
         /// <summary>
