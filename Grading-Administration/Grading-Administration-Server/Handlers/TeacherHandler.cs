@@ -139,8 +139,8 @@ namespace Grading_Administration_Server.Handlers
         private async void AddGrade(JObject data, int serial)
         {
             // Getting the ID's
-            int userID = JSONHelperServer.GetIDFromJSON(data, "StudentID");
-            int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleID");
+            int userID = JSONHelperServer.GetIDFromJSON(data, "StudentId");
+            int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
 
             JObject gradeJSON = data.SelectToken("Grade") as JObject;
 

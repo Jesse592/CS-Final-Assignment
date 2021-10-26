@@ -128,9 +128,22 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The user ID to be deleted</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void DeleteUser(JObject data, int serial)
+        private async  void DeleteUser(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting the userID
+            int userID = JSONHelperServer.GetIDFromJSON(data, "StudentId");
+
+            // Checking if the value is oke
+            if (userID == -1) return;
+
+            // Getting the user from the databse if exists
+            User user = await this.GradingDBContext.Users.FindAsync(userID);
+
+            if (user == null) return;
+
+            this.GradingDBContext.Users.Remove(user);
+            
+            await this.GradingDBContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -138,9 +151,22 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The module data to be deleted</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void DeleteModule(JObject data, int serial)
+        private async void DeleteModule(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting the moduleID
+            int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
+
+            // Checking if the value is oke
+            if (moduleID == -1) return;
+
+            // Getting the module from the databse if exists
+            Module module = await this.GradingDBContext.Modules.FindAsync(moduleID);
+
+            if (module == null) return;
+
+            this.GradingDBContext.Modules.Remove(module);
+
+            await this.GradingDBContext.SaveChangesAsync();
         }
 
         /// <summary>
