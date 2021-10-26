@@ -157,7 +157,9 @@ namespace Grading_Administration_Server.Handlers
             var sharedGrade = new Grading_Administraton_Shared.Entities.Grade(gradeJSON);
             Grade grade = new Grade(moduleContribution, sharedGrade.Time, sharedGrade.NumericalGrade, sharedGrade.LetterGrade, sharedGrade.Delimiter);
 
-            // returning the 
+            // Adding the grade to the database
+            moduleContribution.grades.Add(grade);
+            await this.GradingDBContext.SaveChangesAsync();
         }
 
 

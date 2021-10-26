@@ -123,10 +123,10 @@ namespace GradingAdministration_server
                 SetupLoginHandler(user);
                 SendMessage(JObject.FromObject(JSONWrapperServer.LoginCorrect(user.ToSharedUser(), serial)));
 
-                // TEST REMOVE PLEASE REMOVE, forcing creating teacher handler + command
+                /*// TEST REMOVE PLEASE REMOVE, forcing creating teacher handler + command
                 this.handler = new TeacherHandler(this.GradingDBContext, user, SendMessage);
-                this.handler?.Invoke("AddGrade", JObject.FromObject(new { StudentID =  8, ModuleID = 12, Grade = new Grading_Administraton_Shared.Entities.Grade(DateTime.Now, 8.1, "G", 5.5)} ), 8);
-            }
+                this.handler?.Invoke("AddGrade", JObject.FromObject(new { StudentID =  9, ModuleID = 12, Grade = new Grading_Administraton_Shared.Entities.Grade(DateTime.Now, 8.1, "G", 5.5)} ), 8);
+            */}
             else
                 // login failed
                 SendMessage(JObject.FromObject(JSONWrapperServer.LoginFailed(serial)));
