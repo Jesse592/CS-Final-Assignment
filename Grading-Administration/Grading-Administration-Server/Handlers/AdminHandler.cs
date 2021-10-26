@@ -118,9 +118,28 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The data for he module and user</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void AddUserToModule(JObject data, int serial)
+        private async void AddUserToModule(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting the module and user IDs
+            int userID = JSONHelperServer.GetIDFromJSON(data, "UserId");
+            int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
+
+            // Chechking is they are valid (not -1)
+            if (userID == -1 || moduleID == -1) return;
+
+            // Getting the objects from the database
+            User user = await this.GradingDBContext.Users.FindAsync(userID);
+            Module module = await this.GradingDBContext.Modules.FindAsync(moduleID);
+
+            // Checking if the objects can be found
+            if (user == null || module == null) return;
+
+            // Creating the contribution object
+            ModuleContribution contribution = new ModuleContribution(user, module, new List<Grade>());
+
+            this.GradingDBContext.moduleContributions.Add(contribution);
+
+            await this.GradingDBContext.SaveChangesAsync();
         }
 
         /// <summary>
