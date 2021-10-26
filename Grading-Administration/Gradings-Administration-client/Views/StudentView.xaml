@@ -11,18 +11,20 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="80">
-                        <TextBlock Text="{Binding NumericalGrade}" Padding="15" Background="LightGray" Width="50" Height="50"/>
-                        <Label Content="{Binding Name}"/>
+                        <Border CornerRadius="25" BorderBrush="LightGray" BorderThickness="1" Height="50" Background="LightGray" Margin="10">
+                            <Label Height="50" Content="{Binding NumericalGrade}" Margin="11" FontWeight="Bold"/>
+                        </Border>
+                        <Label Content="{Binding Name}" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="15" FontWeight="Bold"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView Margin="1058,138,84,100" ItemsSource="{Binding Modules}">
+        <ListView Margin="1058,138,84,100" ItemsSource="{Binding Modules}" SelectedItem="{Binding SelectedModule}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="80">
-                        <TextBlock Text="{Binding Name}" Padding="15" Background="LightGray" Width="50" Height="50"/>
+                        <TextBlock Text="{Binding Name}" Padding="15" Width="50" Height="50"/>
                         
                     </StackPanel>
                 </DataTemplate>

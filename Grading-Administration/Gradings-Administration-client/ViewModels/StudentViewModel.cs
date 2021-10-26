@@ -73,5 +73,19 @@ namespace GradingAdmin_client.ViewModels
                 popup.Show();
             }
         }
+
+        private Module _SelectedModule;
+        public Module SelectedModule
+        {
+            get { return _SelectedModule; }
+            set
+            {
+                _SelectedModule = value;
+                ModulePopUp popup = new ModulePopUp(SelectedModule);
+                popup.Show();
+            }
+        }
+
+        
     }
 }

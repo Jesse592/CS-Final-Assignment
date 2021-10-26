@@ -51,7 +51,7 @@ namespace GradingAdmin_client.Handlers
 
             foreach (JObject o in array)
             {
-                this.vm.Modules.Add(new Module(o.SelectToken("module") as JObject));
+                this.vm.Modules.Add(new Module(o.SelectToken("module") as JObject, o.SelectToken("teachers") as JArray));
 
                 foreach(JObject g in o.SelectToken("mcGrades") as JArray)
                 {
@@ -60,7 +60,7 @@ namespace GradingAdmin_client.Handlers
             }
 
             this.vm.Grades = new ObservableCollection<Grade>(this.vm.Grades.OrderByDescending(grade => grade.Time).ToList());
-            this.vm.Modules.OrderBy(module => module.Name);
+            this.vm.Modules = new ObservableCollection<Module>(this.vm.Modules.OrderBy(module => module.Name));
         }
 
         public void GetTeachersFromModule(Module m)

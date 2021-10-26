@@ -26,6 +26,7 @@ namespace Gradings_Administration_client
         {
             InitializeComponent();
             DataContext = new MainViewModel();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
     }
 }

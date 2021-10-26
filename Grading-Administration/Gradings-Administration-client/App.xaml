@@ -24,8 +24,12 @@
             <views:LoginView/>
         </DataTemplate>
 
-        <DataTemplate x:Name="PopUpView" DataType="{x:Type viewmodelsone:PopUpViewModel}">
+        <DataTemplate x:Name="PopUpGradeView" DataType="{x:Type viewmodelsone:PopUpViewModel}">
             <viewsone:PopUpView/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="PopUpModuleView" DataType="{x:Type viewmodelsone:ModulePopUpViewModel}">
+            <viewsone:ModulePopUpView/>
         </DataTemplate>
     </Application.Resources>
 </Application>

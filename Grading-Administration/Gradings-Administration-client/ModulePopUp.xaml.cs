@@ -17,14 +17,14 @@ using System.Windows.Shapes;
 namespace Gradings_Administration_client
 {
     /// <summary>
-    /// Interaction logic for GradePopUp.xaml
+    /// Interaction logic for ModulePopUp.xaml
     /// </summary>
-    public partial class GradePopUp : Window
+    public partial class ModulePopUp : Window
     {
-        public GradePopUp(Grade grade)
+        public ModulePopUp(Module module)
         {
             InitializeComponent();
-            this.Content = new PopUpViewModel(grade);
+            this.Content = new ModulePopUpViewModel(module);
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
     }

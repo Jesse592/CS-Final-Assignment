@@ -15,7 +15,7 @@ namespace Grading_Administration_Server.Handlers
 
         protected override void Init()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

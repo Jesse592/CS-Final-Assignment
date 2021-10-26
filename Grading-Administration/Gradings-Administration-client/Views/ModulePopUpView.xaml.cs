@@ -1,6 +1,4 @@
-﻿using Grading_Administraton_Shared.Entities;
-using Gradings_Administration_client.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Gradings_Administration_client
+namespace Gradings_Administration_client.Views
 {
     /// <summary>
-    /// Interaction logic for GradePopUp.xaml
+    /// Interaction logic for ModulePopUpView.xaml
     /// </summary>
-    public partial class GradePopUp : Window
+    public partial class ModulePopUpView : Page
     {
-        public GradePopUp(Grade grade)
+        public ModulePopUpView()
         {
             InitializeComponent();
-            this.Content = new PopUpViewModel(grade);
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
     }
 }
