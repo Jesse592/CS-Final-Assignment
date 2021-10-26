@@ -145,7 +145,11 @@ namespace Grading_Administration_Server.Handlers
             JObject gradeJSON = data.SelectToken("Grade") as JObject;
 
             // Chechking is they are valid (not -1)
-            if (userID == -1 || moduleID == -1 || gradeJSON == null) return;
+            if (userID == -1 || moduleID == -1 || gradeJSON == null)
+            {
+                this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
+                return;
+            }
 
             // Getting the user and module and moduleconstribution from the database
             ModuleContribution moduleContribution = await (from mc in this.GradingDBContext.moduleContributions
@@ -160,6 +164,9 @@ namespace Grading_Administration_Server.Handlers
             // Adding the grade to the database
             moduleContribution.grades.Add(grade);
             await this.GradingDBContext.SaveChangesAsync();
+
+            // Sending acknowledgement of succes to client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeSucces(serial)));
         }
 
 

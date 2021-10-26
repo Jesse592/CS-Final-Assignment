@@ -59,5 +59,14 @@ namespace Grading_Administration_Server.Helper
             return WrapHeader("GetAllUsers", data, serial);
         }
 
+        public static object AcknowledgeSucces(int serial)
+        {
+            return WrapHeader("Acknowledge", "Succes", serial);
+        }
+
+        public static object AcknowledgeFailed(int serial)
+        {
+            return WrapHeader("Acknowledge", "Failed", serial);
+        }
     }
 }

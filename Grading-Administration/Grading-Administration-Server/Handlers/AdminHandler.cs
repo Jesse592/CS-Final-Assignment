@@ -62,8 +62,12 @@ namespace Grading_Administration_Server.Handlers
             string userType = data.SelectToken("UserType")?.ToString();
             DateTime dob = DateTime.Parse(data.SelectToken("DateOfBirth")?.ToString());
 
-            // Checking if all required data is retreived
-            if (fname == null || lname == null || email == null || userType == null) return;
+            // Checking if all required data is retreived, send failed if not
+            if (fname == null || lname == null || email == null || userType == null)
+            {
+                this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
+                return;
+            }
 
             User user = new User()
             {
@@ -78,6 +82,9 @@ namespace Grading_Administration_Server.Handlers
 
             // Saving the user to the database
             await this.GradingDBContext.SaveChangesAsync();
+
+            // Sending acknowledgement of succes to client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeSucces(serial)));
         }
 
         /// <summary>
@@ -96,7 +103,11 @@ namespace Grading_Administration_Server.Handlers
             bool numerical = bool.Parse(data.SelectToken("IsNumerical").ToString());
 
             // Checking if all required data is retreived
-            if (name == null) return;
+            if (name == null)
+            {
+                this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
+                return;
+            }
 
             Module module = new Module()
             {
@@ -111,6 +122,9 @@ namespace Grading_Administration_Server.Handlers
 
             // Saving the user to the database
             await this.GradingDBContext.SaveChangesAsync();
+
+            // Sending acknowledgement of succes to client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeSucces(serial)));
         }
 
         /// <summary>
@@ -118,14 +132,15 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The data for he module and user</param>
         /// <param name="serial">The ID-code from the client</param>
-        private async void AddUserToModule(JObject data, int serial)
+        private async void AddUserToModule(JObject data, int serial)    
         {
             // Getting the module and user IDs
             int userID = JSONHelperServer.GetIDFromJSON(data, "UserId");
             int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
 
             // Chechking is they are valid (not -1)
-            if (userID == -1 || moduleID == -1) return;
+            if (userID == -1 || moduleID == -1) {
+                return;
 
             // Getting the objects from the database
             User user = await this.GradingDBContext.Users.FindAsync(userID);
