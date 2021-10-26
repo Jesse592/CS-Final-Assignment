@@ -11,6 +11,18 @@ namespace Grading_Administraton_Shared.Entities
 {
     public class Module
     {
+        public Module(JObject jObject)
+        {
+            this.teachers = new List<User>();
+
+            this.ModuleId = jObject.SelectToken("ModuleId").Value<Int32>();
+            this.Name = jObject.SelectToken("Name").Value<String>();
+            this.StartDate = jObject.SelectToken("StartDate").Value<DateTime>();
+            this.EndDate = jObject.SelectToken("EndDate").Value<DateTime>();
+            this.ETC = jObject.SelectToken("ETC").Value<Int32>();
+            this.IsNumerical = jObject.SelectToken("IsNumerical").Value<Boolean>();
+        }
+
         public Module(JObject jObject, JArray teachers)
         {
             this.teachers = new List<User>();
