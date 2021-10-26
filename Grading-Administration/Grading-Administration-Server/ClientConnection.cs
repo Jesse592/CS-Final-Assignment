@@ -125,7 +125,7 @@ namespace GradingAdministration_server
 
                 // TEST REMOVE PLEASE REMOVE, forcing creating teacher handler + command
                 this.handler = new AdminHandler(this.GradingDBContext, user, SendMessage);
-                this.handler?.Invoke("CreateNewUser", JObject.FromObject(new { user = new Grading_Administraton_Shared.Entities.User(12, "Ewout", "Baars", DateTime.Parse("2002/04/03"), "e.Baars@student.avans.nl", "0")} ), 8);
+                this.handler?.Invoke("CreateNewModule", JObject.FromObject(new Grading_Administraton_Shared.Entities.Module(0, "Wiskunde1", DateTime.Parse("2021/08/12"), DateTime.Parse("2020/11/2"), 1, true) ), 8);
             }
             else
                 // login failed

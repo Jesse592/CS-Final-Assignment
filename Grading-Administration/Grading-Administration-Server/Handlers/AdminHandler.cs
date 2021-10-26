@@ -56,11 +56,11 @@ namespace Grading_Administration_Server.Handlers
         private async void CreateNewUser(JObject data, int serial)
         {
             // Getting the values from the json data
-            string fname = data.SelectToken("user.FirstName")?.ToString();
-            string lname = data.SelectToken("user.LastName")?.ToString();
-            string email = data.SelectToken("user.Email")?.ToString();
-            string userType = data.SelectToken("user.UserType")?.ToString();
-            DateTime dob = DateTime.Parse(data.SelectToken("user.DateOfBirth")?.ToString());
+            string fname = data.SelectToken("FirstName")?.ToString();
+            string lname = data.SelectToken("LastName")?.ToString();
+            string email = data.SelectToken("Email")?.ToString();
+            string userType = data.SelectToken("UserType")?.ToString();
+            DateTime dob = DateTime.Parse(data.SelectToken("DateOfBirth")?.ToString());
 
             // Checking if all required data is retreived
             if (fname == null || lname == null || email == null || userType == null) return;
@@ -76,7 +76,7 @@ namespace Grading_Administration_Server.Handlers
 
             this.GradingDBContext.Users.Add(user);
 
-            // Saving the user
+            // Saving the user to the database
             await this.GradingDBContext.SaveChangesAsync();
         }
 
@@ -85,9 +85,32 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data"></param>
         /// <param name="serial">The ID-code from the client</param>
-        private void CreateNewModule(JObject data, int serial)
+        private async void CreateNewModule(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting the values from the json data
+            string name = data.SelectToken("Name")?.ToString();
+            DateTime startDate = DateTime.Parse(data.SelectToken("StartDate")?.ToString());
+            DateTime endDate = DateTime.Parse(data.SelectToken("EndDate")?.ToString());
+
+            int etc = data.SelectToken("ETC").ToObject<int>();
+            bool numerical = bool.Parse(data.SelectToken("IsNumerical").ToString());
+
+            // Checking if all required data is retreived
+            if (name == null) return;
+
+            Module module = new Module()
+            {
+                Name = name,
+                StartDate = startDate,
+                EndDate = endDate,
+                ETC = etc,
+                IsNumerical = numerical
+            };
+
+            this.GradingDBContext.Modules.Add(module);
+
+            // Saving the user to the database
+            await this.GradingDBContext.SaveChangesAsync();
         }
 
         /// <summary>
