@@ -40,13 +40,13 @@ namespace Grading_Administration_Server.Handlers
         /// Returns all the modules that are saved in the database
         /// </summary>
         /// <param name="serial">The ID-code from the client</param>
-        private void GetModules(int serial)
+        private async void GetModules(int serial)
         {
             // transforming to shared modules
-            var studentsShared = JSONHelperServer.UserToShared(await this.GradingDBContext.Modules.ToListAsync());
+            var studentsShared = JSONHelperServer.ModulesToShared(await this.GradingDBContext.Modules.ToListAsync());
 
             // Sending it to the client
-            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllUsers(studentsShared, serial)));
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllModules(studentsShared, serial)));
         }
 
         /// <summary>
