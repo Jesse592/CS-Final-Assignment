@@ -1,6 +1,4 @@
-﻿using GradingAdmin_client.ViewModels;
-using Gradings_Administration_client.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Gradings_Administration_client
+namespace Gradings_Administration_client.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ModulePopUpView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ModulePopUpView : Page
     {
-        public MainWindow()
+        public ModulePopUpView()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
     }
 }

@@ -5,33 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Gradings_Administration_client.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="1080" d:DesignWidth="1920">
     <Grid Background="White">
-        <Rectangle HorizontalAlignment="Left" Margin="0,0,0,0" Stroke="Black" VerticalAlignment="Top" Width="150" Height="450"/>
-        <Button Content="Dashboard" HorizontalAlignment="Left" Margin="0,150,0,0" VerticalAlignment="Top" Width="150" Height="40"/>
-        <Button Content="Grades" HorizontalAlignment="Left" Margin="0,190,0,0" VerticalAlignment="Top" Width="150" Height="40"/>
-        <Button Content="Modules" HorizontalAlignment="Left" Margin="0,230,0,0" VerticalAlignment="Top" Width="150" Height="40"/>
-        <Label Content="{Binding StudentName}" HorizontalAlignment="Left" Margin="68,96,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding StudentId}" HorizontalAlignment="Left" Margin="56,111,0,0" VerticalAlignment="Top"/>
-        <ListView Height="200" Width="250" Margin="181,36,369,214" ItemsSource="{Binding Grades}">
+        <ListView Margin="42,138,987,100" ItemsSource="{Binding Grades}" SelectedItem="{Binding SelectedGrade}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-
+                    <StackPanel Orientation="Horizontal" Height="80">
+                        <Border CornerRadius="25" BorderBrush="LightGray" BorderThickness="1" Height="50" Background="LightGray" Margin="10">
+                            <Label Height="50" Content="{Binding NumericalGrade}" Margin="11" FontWeight="Bold"/>
+                        </Border>
+                        <Label Content="{Binding Name}" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="15" FontWeight="Bold"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
-        <ListView Width="250" Height="200" Margin="498,37,52,213" ItemsSource="{Binding Modules}">
+
+        <ListView Margin="1058,138,84,100" ItemsSource="{Binding Modules}" SelectedItem="{Binding SelectedModule}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-
+                    <StackPanel Orientation="Horizontal" Height="80">
+                        <TextBlock Text="{Binding Name}" Padding="15" Width="50" Height="50"/>
+                        
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Label Content="Cijfers" HorizontalAlignment="Left" Margin="48,72,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
+        <Label Content="Modules" HorizontalAlignment="Left" Margin="1065,72,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
 
 
 

@@ -13,12 +13,31 @@ namespace Grading_Administraton_Shared.Entities
     {
         public Module(JObject jObject)
         {
-            this.ModuleId = jObject.SelectToken("module.ModuleID").Value<Int32>();
-            this.Name = jObject.SelectToken("module.Name").Value<String>();
-            this.StartDate = jObject.SelectToken("module.StartDate").Value<DateTime>();
-            this.EndDate = jObject.SelectToken("module.EndDate").Value<DateTime>();
-            this.ETC = jObject.SelectToken("module.ETC").Value<Int32>();
-            this.IsNumerical = jObject.SelectToken("module.IsNumerical").Value<Boolean>();
+            this.teachers = new List<User>();
+
+            this.ModuleId = jObject.SelectToken("ModuleId").Value<Int32>();
+            this.Name = jObject.SelectToken("Name").Value<String>();
+            this.StartDate = jObject.SelectToken("StartDate").Value<DateTime>();
+            this.EndDate = jObject.SelectToken("EndDate").Value<DateTime>();
+            this.ETC = jObject.SelectToken("ETC").Value<Int32>();
+            this.IsNumerical = jObject.SelectToken("IsNumerical").Value<Boolean>();
+        }
+
+        public Module(JObject jObject, JArray teachers)
+        {
+            this.teachers = new List<User>();
+
+            this.ModuleId = jObject.SelectToken("ModuleId").Value<Int32>();
+            this.Name = jObject.SelectToken("Name").Value<String>();
+            this.StartDate = jObject.SelectToken("StartDate").Value<DateTime>();
+            this.EndDate = jObject.SelectToken("EndDate").Value<DateTime>();
+            this.ETC = jObject.SelectToken("ETC").Value<Int32>();
+            this.IsNumerical = jObject.SelectToken("IsNumerical").Value<Boolean>();
+
+            foreach (JObject o in teachers)
+            {
+                this.teachers.Add(new User(o.SelectToken("UserId").Value<Int32>(), o.SelectToken("FirstName").Value<string>(), o.SelectToken("LastName").Value<string>(), o.SelectToken("DateOfBirth").Value<DateTime>(), o.SelectToken("Email").Value<string>(), o.SelectToken("UserType").Value<string>()));
+            }
         }
         
         public Module(int moduleId, string name, DateTime startDate, DateTime endDate, int eTC, bool isNumerical)
@@ -39,5 +58,7 @@ namespace Grading_Administraton_Shared.Entities
 
         public int ETC { get; set; }
         public bool IsNumerical { get; set; }
+
+        public List<User> teachers { get; set; }
     }
 }
