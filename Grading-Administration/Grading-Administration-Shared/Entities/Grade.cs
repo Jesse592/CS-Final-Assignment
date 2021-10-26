@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +12,13 @@ namespace Grading_Administraton_Shared.Entities
 {
     public class Grade
     {
-        public Grade(JObject jObject)
+        public Grade(JObject jObject, JToken name)
         {
-            this.Time = jObject.SelectToken("mcGrades.Time").Value<DateTime>();
-            this.NumericalGrade = jObject.SelectToken("mcGrades.NumericalGrade").Value<Double>();
-            this.LetterGrade = jObject.SelectToken("mcGrades.LetterGrade").Value<String>();
-            this.Delimiter = jObject.SelectToken("mcGrades.Delimiter").Value<Double>();
+            this.Time = jObject.SelectToken("Time").Value<DateTime>();
+            this.NumericalGrade = jObject.SelectToken("NumericalGrade").Value<Double>();
+            this.LetterGrade = jObject.SelectToken("LetterGrade").Value<String>();
+            this.Delimiter = jObject.SelectToken("Delimiter").Value<Double>();
+            this.Name = name.Value<string>();
         }
         
         public Grade(DateTime time, double numericalGrade, string letterGrade, double delimiter)
@@ -28,6 +30,7 @@ namespace Grading_Administraton_Shared.Entities
         }
 
         public DateTime Time { get; set; }
+        public string Name { get; set; }
 
         public double NumericalGrade { get; set; }
         public string LetterGrade { get; set; }

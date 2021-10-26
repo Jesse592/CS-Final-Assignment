@@ -1,21 +1,31 @@
 ﻿using Grading_Administraton_Shared.Entities;
 using GradingAdmin_client.Handlers;
+using Gradings_Administration_client;
 using Gradings_Administration_client.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace GradingAdmin_client.ViewModels
 {
-    class StudentViewModel : BaseViewModel
+    class StudentViewModel : BaseViewModel, INotifyPropertyChanged
     {
         public User student;
         private StudentHandlerVM handler;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public StudentViewModel(User student)
         {
+
+            this.Grades = new ObservableCollection<Grade>();
+            this.Modules = new ObservableCollection<Module>();
+
             this.student = student;
             this.handler = new StudentHandlerVM(student, this);
         }
@@ -30,23 +40,37 @@ namespace GradingAdmin_client.ViewModels
             get { return this.student.UserId; }
         }
 
-        private ICollection<Grade> _Grades;
-        public ICollection<Grade> Grades
+        private ObservableCollection<Grade> _Grades;
+        public ObservableCollection<Grade> Grades
         {
             get{ return _Grades; }
             set
             {
                 _Grades = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Grades"));
             }
         }
 
-        private ICollection<Module> _Modules;
-        public ICollection<Module> Modules
+        private ObservableCollection<Module> _Modules;
+        public ObservableCollection<Module> Modules
         {
             get { return _Modules; }
             set
             {
-                Modules = value;
+                _Modules = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Modules"));
+            }
+        }
+
+        private Grade _SelectedGrade;
+        public Grade SelectedGrade
+        {
+            get { return _SelectedGrade; }
+            set
+            {
+                _SelectedGrade = value;
+                GradePopUp popup = new GradePopUp(SelectedGrade);
+                popup.Show();
             }
         }
     }
