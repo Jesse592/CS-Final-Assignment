@@ -41,17 +41,18 @@ namespace Grading_Administration_Server.Handlers
                                                      select dt).ToListAsync();
 
             // We need to send all grades per module, so a dictionary
-            var gradesList = new Dictionary<Grading_Administraton_Shared.Entities.Module, List<Grading_Administraton_Shared.Entities.Grade>>();
+            var gradesList = new Dictionary<string, List<Grading_Administraton_Shared.Entities.Grade>>();
 
             // filling the dictionary with the shared (save) version of the objects
             foreach(ModuleContribution mc in grades)
             {
                 var mcGrades = gradesToShared(mc.grades?.ToList());
 
-                gradesList.Add(mc.Module?.ToSharedModule(), mcGrades);
+                gradesList.Add(mc.Module?.Name, mcGrades);
             }
 
             // Converting to json and sending to client
+            Console.WriteLine(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
             this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
         }
         
