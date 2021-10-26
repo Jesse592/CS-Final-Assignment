@@ -122,6 +122,10 @@ namespace GradingAdministration_server
                 // login succes
                 SetupLoginHandler(user);
                 SendMessage(JObject.FromObject(JSONWrapperServer.LoginCorrect(user.ToSharedUser(), serial)));
+
+                // TEST REMOVE PLEASE REMOVE, forcing creating teacher handler + command
+                this.handler = new TeacherHandler(this.GradingDBContext, user, SendMessage);
+                this.handler?.Invoke("GetStudents", JObject.FromObject(new { user = GradingDBContext.Modules.Find(10).ToSharedModule() } ), 8);
             }
             else
                 // login failed
@@ -142,7 +146,7 @@ namespace GradingAdministration_server
                     this.handler = new StudentHandler(this.GradingDBContext, user, SendMessage);
                     break;
                 case UserType.TEACHER: 
-                    this.handler = new TeacherHandler(SendMessage); 
+                    this.handler = new TeacherHandler(this.GradingDBContext, user, SendMessage); 
                     break;
                 case UserType.ADMIN: 
                     this.handler = new AdminHandler(SendMessage); 
@@ -157,6 +161,7 @@ namespace GradingAdministration_server
         /// <param name="data">The data to be send</param>
         public void SendMessage(JObject data)
         {
+            Console.WriteLine(data);
             string dataString = data.ToString();
 
             this.TCPHandler?.SendMessage(dataString);
