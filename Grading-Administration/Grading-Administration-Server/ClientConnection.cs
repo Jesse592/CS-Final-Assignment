@@ -125,7 +125,7 @@ namespace GradingAdministration_server
 
                 // TEST REMOVE PLEASE REMOVE, forcing creating teacher handler + command
                 this.handler = new TeacherHandler(this.GradingDBContext, user, SendMessage);
-                this.handler?.Invoke("GetStudents", JObject.FromObject(new { user = GradingDBContext.Modules.Find(10).ToSharedModule() } ), 8);
+                this.handler?.Invoke("AddGrade", JObject.FromObject(new { StudentID =  8, ModuleID = 12, Grade = new Grading_Administraton_Shared.Entities.Grade(DateTime.Now, 8.1, "G", 5.5)} ), 8);
             }
             else
                 // login failed
