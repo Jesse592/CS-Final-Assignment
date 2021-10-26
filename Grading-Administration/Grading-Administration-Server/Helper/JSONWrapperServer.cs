@@ -49,6 +49,11 @@ namespace Grading_Administration_Server.Helper
             return WrapHeader("GetAllGrades", data, serial);
         }
 
+        public static object GetAllModules(List<Grading_Administraton_Shared.Entities.Module> data, int serial)
+        {
+            return WrapHeader("GetAllModules", data, serial);
+        }
+
 
     }
 }

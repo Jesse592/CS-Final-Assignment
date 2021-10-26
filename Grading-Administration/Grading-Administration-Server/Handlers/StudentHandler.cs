@@ -11,26 +11,35 @@ using System.Threading.Tasks;
 
 namespace Grading_Administration_Server.Handlers
 {
+    /// <summary>
+    /// Class that extends Handler. It handles all the command for the STUDENT usertype
+    /// </summary>
     class StudentHandler : Handler
     {
         private readonly GradingDBContext GradingDBContext;
         private User user;
 
+        /// <summary>
+        /// Constructor for the StudentHandler
+        /// </summary>
+        /// <param name="gradingDBContext">The database context the class can use</param>
+        /// <param name="user">The user that was connected to this handler</param>
+        /// <param name="sendAction">The action where the results are send to</param>
         public StudentHandler(GradingDBContext gradingDBContext, User user, Action<JObject> sendAction) : base(sendAction)
         {
             GradingDBContext = gradingDBContext;
             this.user = user;
         }
 
-        public void GetGrades(JObject student, int serial)
-        {
-
-        }
-
+        /// <summary>
+        /// Method that gives all the modules with all the grades of a given user
+        /// </summary>
+        /// <param name="data">The json data that has the user</param>
+        /// <param name="serial">The id-code given by the client</param>
         public async void GetAllGrades(JObject data, int serial)
         {
             // Getting the userID
-            int userID = jsonToUser(data);
+            int userID = JsonToUser(data);
 
             // Ignoring if the userID is -1 and given user is not the correct user
             if (userID == -1 || userID != this.user?.UserId) return;
@@ -46,22 +55,56 @@ namespace Grading_Administration_Server.Handlers
             // filling the dictionary with the shared (save) version of the objects
             foreach(ModuleContribution mc in grades)
             {
-                var mcGrades = gradesToShared(mc.grades?.ToList());
+                var mcGrades = GradesToShared(mc.grades?.ToList());
 
                 gradesList.Add(mc.Module?.Name, mcGrades);
             }
 
             // Converting to json and sending to client
-            Console.WriteLine(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
             this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
         }
         
-        public void GetModules(JObject student, int serial)
+        /// <summary>
+        /// This method will get all the modules a user is enrroled in.
+        /// Checks is the userIDs match before fetching the data
+        /// </summary>
+        /// <param name="student">The json that contains the student</param>
+        /// <param name="serial">The ID-code given by the client</param>
+        public void GetModules(JObject data, int serial)
+        {
+            // Getting the userID
+            int userID = JsonToUser(data);
+
+            // Ignoring if the userID is -1 and given user is not the correct user
+            if (userID == -1 || userID != this.user?.UserId) return;
+
+            // Create a list with shared Modules to be sent to the user
+            var modules = new List<Grading_Administraton_Shared.Entities.Module>();
+
+            foreach(ModuleContribution m in this.user?.Modules)
+            {
+                modules.Add(m.Module.ToSharedModule());
+            };
+
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllModules(modules, serial)));
+        }
+
+        /// <summary>
+        /// Returns all the teachers connected to a given module
+        /// </summary>
+        /// <param name="data">The json object given</param>
+        /// <param name="serial">the ID-code given by the client</param>
+        public void GetTeachersWithModule(JObject data, int serial)
         {
 
         }
 
-        private int jsonToUser(JObject json)
+        /// <summary>
+        /// Converst a json object and retreives the userID
+        /// </summary>
+        /// <param name="json">The json object</param>
+        /// <returns>The user id in the json</returns>
+        private static int JsonToUser(JObject json)
         {
 
             //Try to get the userID value from the JObject
@@ -74,7 +117,13 @@ namespace Grading_Administration_Server.Handlers
             return (int)userIDToken;
         } 
 
-        private List<Grading_Administraton_Shared.Entities.Grade> gradesToShared(List<Grade> grades)
+        /// <summary>
+        /// Transforms a list grades to a list of sharedGrades.
+        /// Sharedgrades are needed to prevent sending the client sensitive data
+        /// </summary>
+        /// <param name="grades">the grades to ben converted</param>
+        /// <returns>The list of shared grades</returns>
+        private static List<Grading_Administraton_Shared.Entities.Grade> GradesToShared(List<Grade> grades)
         {
             // converting the grades to shared and filling the list
             var newGrades = new List<Grading_Administraton_Shared.Entities.Grade>();
@@ -83,9 +132,11 @@ namespace Grading_Administration_Server.Handlers
             return newGrades;
         }
 
+        /// <summary>
+        /// Sets up all the commands this handler can handle
+        /// </summary>
         protected override void Init()
         {
-            this.Actions.Add("GetGrades", GetGrades);
             this.Actions.Add("GetAllGrades", GetAllGrades);
             this.Actions.Add("GetModules", GetModules);
         }
