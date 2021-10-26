@@ -38,7 +38,7 @@ namespace Grading_Administration_Server.Handlers
             Console.WriteLine(data);
 
             // Getting the student user
-            int studentID = JSONHelperServer.JsonToUser(data);
+            int studentID = JSONHelperServer.GetIDFromJSON(data, "user.UserId");
 
             // Ignoring if the userID is -1
             if (studentID == -1) return;
@@ -70,9 +70,26 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The module to get the students from</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void GetStudentsFromModule(JObject data, int serial)
+        private async void GetDataFromModule(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting the moduleID from the data
+            int moduleID = JSONHelperServer.GetIDFromJSON(data, "module.ModuleId");
+
+            // returning if the module ID is not correct (-1)
+            if (moduleID == -1) return;
+
+            // Getting all the students that participate in this module
+            List<User> students = await (from user in this.GradingDBContext.Users
+                                         join con in this.GradingDBContext.moduleContributions on user.UserId equals con.UserId
+                                         where con.ModuleId == moduleID &&
+                                         user.UserType == ((int)UserType.STUDENT).ToString()
+                                         select user).ToListAsync();
+
+            // transforming the list to shared users
+            var studentsShared = JSONHelperServer.UserToShared(students);
+
+            // Sending it to the client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllUsers(studentsShared, serial)));
         }
 
         /// <summary>
@@ -124,7 +141,7 @@ namespace Grading_Administration_Server.Handlers
             this.Actions.Add("AddGrade", AddGrade);
             this.Actions.Add("GetModules", GetModules);
             this.Actions.Add("GetStudents", GetStudents);
-            this.Actions.Add("GetDataFromModule", GetStudentsFromModule);
+            this.Actions.Add("GetDataFromModule", GetDataFromModule);
             this.Actions.Add("GetGradesFromStudent", GetGradesFromStudent);
         }
     }

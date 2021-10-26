@@ -39,7 +39,7 @@ namespace Grading_Administration_Server.Handlers
         public async void GetAllGrades(JObject data, int serial)
         {
             // Getting the userID
-            int userID = JSONHelperServer.JsonToUser(data);
+            int userID = JSONHelperServer.GetIDFromJSON(data, "user.UserId");
 
             // Ignoring if the userID is -1 and given user is not the correct user
             if (userID == -1 || userID != this.user?.UserId) return;
@@ -86,7 +86,7 @@ namespace Grading_Administration_Server.Handlers
         public void GetModules(JObject data, int serial)
         {
             // Getting the userID
-            int userID = JSONHelperServer.JsonToUser(data);
+            int userID = JSONHelperServer.GetIDFromJSON(data, "user.UserId");
 
             // Ignoring if the userID is -1 and given user is not the correct user
             if (userID == -1 || userID != this.user?.UserId) return;

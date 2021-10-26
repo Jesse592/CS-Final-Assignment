@@ -54,6 +54,10 @@ namespace Grading_Administration_Server.Helper
             return WrapHeader("GetAllModules", data, serial);
         }
 
+        public static object GetAllUsers(List<Grading_Administraton_Shared.Entities.User> data, int serial)
+        {
+            return WrapHeader("GetAllUsers", data, serial);
+        }
 
     }
 }

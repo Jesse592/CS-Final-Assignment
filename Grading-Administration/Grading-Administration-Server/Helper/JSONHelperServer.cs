@@ -16,17 +16,32 @@ namespace Grading_Administration_Server.Helper
         /// </summary>
         /// <param name="json">The json object</param>
         /// <returns>The user id in the json</returns>
-        public static int JsonToUser(JObject json)
+        public static int GetIDFromJSON(JObject json, string path)
         {
 
-            //Try to get the userID value from the JObject
+            //Try to get the ID value from the JObject
             //Returns null when token not found
-            JToken userIDToken = json.SelectToken("user.UserId");
+            JToken userIDToken = json.SelectToken(path);
 
             // Ignoring message when not correct format, -1 selected as false format
             if (userIDToken == null) return -1;
 
             return (int)userIDToken;
+        }
+
+        /// <summary>
+        /// Transforms a list of users to a list of sharedusers.
+        /// Sharedusers are needed to prevent sending the client sensitive data
+        /// </summary>
+        /// <param name="users">the users to convert</param>
+        /// <returns>The list of shared grades</returns>
+        public static List<Grading_Administraton_Shared.Entities.User> UserToShared(List<User> users)
+        {
+            // converting the users to shared and filling the list
+            var newUsers = new List<Grading_Administraton_Shared.Entities.User>();
+            users.ForEach(u=> newUsers.Add(u.ToSharedUser()));
+
+            return newUsers;
         }
 
 
