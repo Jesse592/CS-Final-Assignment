@@ -57,10 +57,11 @@ namespace Grading_Administration_Server.Handlers
             {
                 var mcGrades = GradesToShared(mc.grades?.ToList());
 
-                gradesList.Add(mc.Module?.Name, mcGrades);
+                gradesList.Add(mc.Module?.ModuleId.ToString(), mcGrades);
             }
 
             // Converting to json and sending to client
+            Console.WriteLine(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
             this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
         }
         
@@ -68,7 +69,7 @@ namespace Grading_Administration_Server.Handlers
         /// This method will get all the modules a user is enrroled in.
         /// Checks is the userIDs match before fetching the data
         /// </summary>
-        /// <param name="student">The json that contains the student</param>
+        /// <param name="data">The json that contains the student</param>
         /// <param name="serial">The ID-code given by the client</param>
         public void GetModules(JObject data, int serial)
         {
