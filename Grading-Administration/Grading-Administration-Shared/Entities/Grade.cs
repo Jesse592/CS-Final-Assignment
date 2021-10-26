@@ -12,6 +12,14 @@ namespace Grading_Administraton_Shared.Entities
 {
     public class Grade
     {
+        public Grade(JObject jObject) {
+            this.Time = jObject.SelectToken("Time").Value<DateTime>();
+            this.NumericalGrade = jObject.SelectToken("NumericalGrade").Value<Double>();
+            this.LetterGrade = jObject.SelectToken("LetterGrade").Value<String>();
+            this.Delimiter = jObject.SelectToken("Delimiter").Value<Double>();
+            this.Name = "-";
+        }
+
         public Grade(JObject jObject, JToken name)
         {
             this.Time = jObject.SelectToken("Time").Value<DateTime>();

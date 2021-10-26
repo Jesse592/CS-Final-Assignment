@@ -136,9 +136,30 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The object that contains: the user, module and grade</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void AddGrade(JObject data, int serial)
+        private async void AddGrade(JObject data, int serial)
         {
-            
+            // Getting the ID's
+            int userID = JSONHelperServer.GetIDFromJSON(data, "StudentID");
+            int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleID");
+
+            JObject gradeJSON = data.SelectToken("Grade") as JObject;
+
+            // Chechking is they are valid (not -1)
+            if (userID == -1 || moduleID == -1 || gradeJSON == null) return;
+
+            // Getting the user and module and moduleconstribution from the database
+            ModuleContribution moduleContribution = await (from mc in this.GradingDBContext.moduleContributions
+                                                           where mc.ModuleId == moduleID &&
+                                                           mc.UserId == userID
+                                                           select mc).FirstOrDefaultAsync();
+
+            // Transforming the sharedGrade to database Grade
+            var sharedGrade = new Grading_Administraton_Shared.Entities.Grade(gradeJSON);
+            Grade grade = new Grade(moduleContribution, sharedGrade.Time, sharedGrade.NumericalGrade, sharedGrade.LetterGrade, sharedGrade.Delimiter);
+
+            // Adding the grade to the database
+            moduleContribution.grades.Add(grade);
+            await this.GradingDBContext.SaveChangesAsync();
         }
 
 
