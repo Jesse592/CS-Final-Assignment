@@ -142,7 +142,7 @@ namespace GradingAdministration_server
                     this.handler = new StudentHandler(this.GradingDBContext, user, SendMessage);
                     break;
                 case UserType.TEACHER: 
-                    this.handler = new TeacherHandler(SendMessage); 
+                    this.handler = new TeacherHandler(this.GradingDBContext, user, SendMessage); 
                     break;
                 case UserType.ADMIN: 
                     this.handler = new AdminHandler(SendMessage); 
