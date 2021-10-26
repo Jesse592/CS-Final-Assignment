@@ -13,10 +13,10 @@ namespace Grading_Administraton_Shared.Entities
     {
         public Grade(JObject jObject)
         {
-            this.Time = jObject.GetValue("Time").Value<DateTime>();
-            this.NumericalGrade = jObject.GetValue("NumericalGrade").Value<Double>();
-            this.LetterGrade = jObject.GetValue("LetterGrade").Value<String>();
-            this.Delimiter = jObject.GetValue("Delimiter").Value<Double>();
+            this.Time = jObject.SelectToken("mcGrades.Time").Value<DateTime>();
+            this.NumericalGrade = jObject.SelectToken("mcGrades.NumericalGrade").Value<Double>();
+            this.LetterGrade = jObject.SelectToken("mcGrades.LetterGrade").Value<String>();
+            this.Delimiter = jObject.SelectToken("mcGrades.Delimiter").Value<Double>();
         }
         
         public Grade(DateTime time, double numericalGrade, string letterGrade, double delimiter)

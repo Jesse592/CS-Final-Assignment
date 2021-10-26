@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Diagnostics;
 
 namespace GradingAdmin_client.Handlers
 {
@@ -26,58 +27,30 @@ namespace GradingAdmin_client.Handlers
 
             this.currentUser = student;
 
-            GetAllGrades();
+            GetStudentData();
         }
 
-        public void GetModules(User u)
-        {
-            this.manager.SendCommand(
-                JObject.FromObject(
-                    JSONWrapper.WrapHeader("GetModules", JSONWrapper.WrapUser(u))
-                    ), ModulesCallback);
-        }
-
-        public void ModulesCallback(JObject jObject)
-        {
-            List<Module> modules = new List<Module>();
-
-            JArray array = (JArray)jObject.GetValue("data");
-            foreach (JObject o in array)
-            {
-                //modules.Add(new Module(o));
-            }
-
-            this.vm.Modules = modules;
-        }
-
-        public void GetGrade(Module m, User u)
-        {
-            // Sends the command to get all the grades from a given module and the current user
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetGrade", JSONWrapper.WrapModuleUser(m, u))), GradeCallback);
-        }
-
-        public void GradeCallback(JObject jObject)
-        {
-            
-        }
-
-        public void GetAllGrades()
+        public void GetStudentData()
         {
             this.manager.SendCommand(
                 JObject.FromObject(
                     JSONWrapper.WrapHeader("GetAllGrades", JSONWrapper.WrapUser(this.currentUser))
-                    ), AllGradesCallback);
+                    ), StudentDataCallback);
 
         }
 
-        public void AllGradesCallback(JObject jObject)
+        public void StudentDataCallback(JObject jObject)
         {
             List<Grade> grades = new List<Grade>();
+            List<Module> modules = new List<Module>();
 
-            JArray array = (JArray)jObject.GetValue("data");
+            JToken array = jObject.SelectToken("data");
+            Trace.WriteLine(array);
+
             foreach (JObject o in array)
             {
-                //grades.Add(new Grade(o));
+                grades.Add(new Grade(o));
+                modules.Add(new Module(o));
             }
 
             this.vm.Grades = grades;
