@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace GradingAdmin_client.ViewModels
 {
-    class TeacherViewModel : BaseViewModel, INotifyPropertyChanged
+    public class TeacherViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private User teacher;
         private TeacherHandlerVM handler;
@@ -74,6 +74,18 @@ namespace GradingAdmin_client.ViewModels
             {
                 _SelectedModule = value;
                 this.handler.GetStudentsPerModule(SelectedModule);
+            }
+        }
+
+        private User _SelectedStudent;
+        public User SelectedStudent
+        {
+            get { return _SelectedStudent; }
+            set
+            {
+                _SelectedStudent = value;
+                AddGradeWindow window = new AddGradeWindow(SelectedModule, SelectedStudent, this.handler);
+                window.Show();
             }
         }
     }

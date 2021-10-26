@@ -18,7 +18,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView Margin="1058,138,84,100" ItemsSource="{Binding Students}" SelectedItem="{Binding SelectedModule}">
+        <ListView Margin="1058,138,84,100" ItemsSource="{Binding Students}" SelectedItem="{Binding SelectedStudent}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="80">

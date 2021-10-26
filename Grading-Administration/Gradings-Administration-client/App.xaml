@@ -31,5 +31,9 @@
         <DataTemplate x:Name="PopUpModuleView" DataType="{x:Type viewmodelsone:ModulePopUpViewModel}">
             <viewsone:ModulePopUpView/>
         </DataTemplate>
+
+        <DataTemplate x:Name="AddGradeView" DataType="{x:Type viewmodelsone:AddGradeViewModel}">
+            <viewsone:AddGradeView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Gradings_Administration_client.ViewModels
 {
-    class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

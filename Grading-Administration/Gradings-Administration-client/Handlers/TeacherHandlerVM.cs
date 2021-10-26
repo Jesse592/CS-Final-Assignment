@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GradingAdmin_client.Handlers
 {
-    class TeacherHandlerVM
+    public class TeacherHandlerVM
     {
         private ConnectionManager manager;
         private TeacherViewModel vm;
@@ -25,10 +25,13 @@ namespace GradingAdmin_client.Handlers
 
         public void AddGrade(Module module, Grade grade, User student)
         {
-           
+            this.manager.SendCommand(
+                 JObject.FromObject(
+                     JSONWrapper.WrapHeader("AddGrade", JSONWrapper.WrapGradeModuleUser(grade, module, student))
+                     ), AddGradeCallback);
         }
 
-        public void AddGradeCallback()
+        public void AddGradeCallback(JObject jObject)
         {
 
         }
