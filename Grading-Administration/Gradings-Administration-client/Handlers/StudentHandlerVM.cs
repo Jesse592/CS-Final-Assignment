@@ -78,7 +78,7 @@ namespace GradingAdmin_client.Handlers
 
             foreach (JObject o in array)
             {
-                //grades.Add(new Grade(o));
+                grades.Add(new Grade(o));
             }
 
             this.vm.Grades = grades;
