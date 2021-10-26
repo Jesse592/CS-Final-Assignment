@@ -35,18 +35,25 @@ namespace GradingAdmin_client.Handlers
 
         public void LoginCallback(JObject Jobject)
        {
-            JToken UserID = Jobject.SelectToken("data.user.UserId");
-            JToken FirstName = Jobject.SelectToken("data.user.FirstName");
-            JToken LastName = Jobject.SelectToken("data.user.LastName");
-            JToken DateOfBirth = Jobject.SelectToken("data.user.DateOfBirth");
-            JToken Email = Jobject.SelectToken("data.user.Email");
-            JToken type = Jobject.SelectToken("data.user.UserType");
+            if (Jobject.SelectToken("data.message").ToString() == "Failed login")
+            {
+                this.vm.ShowError();
+            } 
+            else if (Jobject.SelectToken("data.message").ToString() == "Succesfull login") 
+            {
+                JToken UserID = Jobject.SelectToken("data.user.UserId");
+                JToken FirstName = Jobject.SelectToken("data.user.FirstName");
+                JToken LastName = Jobject.SelectToken("data.user.LastName");
+                JToken DateOfBirth = Jobject.SelectToken("data.user.DateOfBirth");
+                JToken Email = Jobject.SelectToken("data.user.Email");
+                JToken type = Jobject.SelectToken("data.user.UserType");
 
-            string stringtype = type.Value<String>();
+                string stringtype = type.Value<String>();
 
-            User u = new User(UserID.Value<Int32>(), FirstName.Value<String>(), LastName.Value<String>(), DateOfBirth.Value<DateTime>(), Email.Value<String>(), stringtype);
+                User u = new User(UserID.Value<Int32>(), FirstName.Value<String>(), LastName.Value<String>(), DateOfBirth.Value<DateTime>(), Email.Value<String>(), stringtype);
 
-            this.vm.UpdateViewModel(u);
+                this.vm.UpdateViewModel(u);
+            }
         }
     }
 }

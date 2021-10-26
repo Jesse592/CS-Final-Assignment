@@ -51,6 +51,11 @@ namespace GradingAdmin_client.ViewModels
             }
         }
 
+        public void ShowError()
+        {
+            MessageBox.Show("Verkeerde inloggegevens");
+        }
+
         private string _Password;
         public string Password
         {

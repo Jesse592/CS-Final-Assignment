@@ -74,7 +74,8 @@ namespace GradingAdmin_client.Handlers
         {
             List<Grade> grades = new List<Grade>();
 
-            JArray array = (JArray)jObject.GetValue("data");
+            JToken array = jObject.SelectToken("data");
+
             foreach (JObject o in array)
             {
                 //grades.Add(new Grade(o));
