@@ -74,20 +74,29 @@ namespace GradingAdministration_server
         /// </summary>
         private void HandleData(JObject data)
         {
-            // command value always gives the action 
-            JToken command;
+            // command and data value always gives in the action
+            // serial is optional
+            JToken commandJson;
+            JToken dataJson;
+            JToken serialJson;
 
-            bool correctCommand = data.TryGetValue("command", StringComparison.InvariantCulture, out command);
+            bool correctCommand = data.TryGetValue("command", StringComparison.InvariantCulture, out commandJson);
+            bool correctData = data.TryGetValue("data", StringComparison.InvariantCulture, out dataJson);
+            bool correctSerial = data.TryGetValue("serial", StringComparison.InvariantCulture, out serialJson);
 
             // returning when JSON has wron format
-            if (!correctCommand) return;
+            if (!correctCommand || !correctData) return;
+
+            int serial;
+            // Checking if serial is given, -1 if not
+            serial = correctSerial ? (int)serialJson : -1;
 
             // This class only handles login
-            if (command.ToString() == "login")
+            if (commandJson.ToString() == "login")
                 HandleLogin(data);
             
             // Sending this command to the handler, if client is not logged in handler will be null
-            this.handler?.Invoke(command.ToString(), data);
+            this.handler?.Invoke(commandJson.ToString(), dataJson as JObject, serial);
         }
 
         /// <summary>
@@ -130,13 +139,13 @@ namespace GradingAdministration_server
             switch (userType)
             {
                 case UserType.STUDENT: 
-                    this.handler = new StudentHandler(this.GradingDBContext);
+                    this.handler = new StudentHandler(this.GradingDBContext, user, SendMessage);
                     break;
                 case UserType.TEACHER: 
-                    this.handler = new TeacherHandler(); 
+                    this.handler = new TeacherHandler(SendMessage); 
                     break;
                 case UserType.ADMIN: 
-                    this.handler = new AdminHandler(); 
+                    this.handler = new AdminHandler(SendMessage); 
                     break;
             }
                  

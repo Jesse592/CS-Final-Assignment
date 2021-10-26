@@ -11,14 +11,19 @@ namespace Grading_Administration_Server.EntityFramework.models
     public class Grade
     {
         [Key]
-        [Column(Order = 1)]
+        [Required]
+        public int gradeID {get; set;}
+
+        [Required]
+        public int ContributionId { get; set; }
         public ModuleContribution Contribution { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
         public DateTime Time { get; set; }
 
         public double NumericalGrade { get; set; }
+
+        [MaxLength(100)]
+        [Column(TypeName = "varchar")]
         public string LetterGrade { get; set; }
 
         public double Delimiter { get; set; }
@@ -26,6 +31,10 @@ namespace Grading_Administration_Server.EntityFramework.models
         public bool IsPassing()
         {
             return NumericalGrade >= Delimiter;
+        }
+
+        public Grade()
+        {
         }
 
         public Grade(ModuleContribution contribution, DateTime time, double numericalGrade, string letterGrade, double delimiter)

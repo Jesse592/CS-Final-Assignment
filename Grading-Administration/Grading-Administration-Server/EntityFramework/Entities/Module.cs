@@ -10,15 +10,23 @@ namespace Grading_Administration_Server.EntityFramework.models
 {
     public class Module
     {
+        [Key]
+        [Required]
         public int ModuleId { get; set; }
+
+        [MaxLength(100)]
+        [Column(TypeName = "varchar")]
         public string Name { get; set; }
 
         public DateTime StartDate { get; set; }
+
         public DateTime EndDate { get; set; }
 
         public int ETC { get; set; }
+
         public bool IsNumerical { get; set; }
 
+        [Required]
         public ICollection<ModuleContribution> Participants { get; set; }
 
         public override string ToString()
@@ -26,9 +34,13 @@ namespace Grading_Administration_Server.EntityFramework.models
             return $"{ModuleId} - {Name}";
         }
 
-        public Module(int moduleId, string name, DateTime startDate, DateTime endDate, int eTC, bool isNumerical, ICollection<ModuleContribution> participants)
+        public Module()
         {
-            ModuleId = moduleId;
+            Participants = new List<ModuleContribution>();
+        }
+
+        public Module(string name, DateTime startDate, DateTime endDate, int eTC, bool isNumerical, ICollection<ModuleContribution> participants)
+        {
             Name = name;
             StartDate = startDate;
             EndDate = endDate;

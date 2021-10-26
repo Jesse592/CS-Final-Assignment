@@ -9,15 +9,16 @@ namespace Grading_Administration_Server.Handlers
 {
     abstract class Handler
     {
-        protected Dictionary<string, Action<JObject>> Actions;
-        protected Action<JObject> CurrentAction;
+        protected Dictionary<string, Action<JObject, int>> Actions;
+        protected Action<JObject> SendAction;
 
         /// <summary>
         /// Constructor for abstract Handler, calls the Init method
         /// </summary>
-        protected Handler()
+        protected Handler(Action<JObject> sendAction)
         {
-            this.Actions = new Dictionary<string, Action<JObject>>();
+            this.Actions = new Dictionary<string, Action<JObject, int>>();
+            this.SendAction = sendAction;
 
             Init();
         }
@@ -27,10 +28,10 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="command">The command that is called to the handler</param>
         /// <param name="data">The data given</param>
-        public void Invoke(string command, JObject data)
+        public void Invoke(string command, JObject data, int serial)
         {
             if (this.Actions.ContainsKey(command))
-                this.Actions[command].Invoke(data);
+                this.Actions[command].Invoke(data, serial);
         }
 
         /// <summary>

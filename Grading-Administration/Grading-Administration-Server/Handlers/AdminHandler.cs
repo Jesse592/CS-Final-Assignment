@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,10 @@ namespace Grading_Administration_Server.Handlers
 {
     class AdminHandler : Handler
     {
+        public AdminHandler(Action<JObject> sendAction) : base(sendAction)
+        {
+        }
+
         protected override void Init()
         {
             throw new NotImplementedException();
