@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace GradingAdmin_client.ViewModels
 {
@@ -16,6 +17,7 @@ namespace GradingAdmin_client.ViewModels
     {
         private User teacher;
         private TeacherHandlerVM handler;
+        private AddGradeWindow window;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -84,9 +86,15 @@ namespace GradingAdmin_client.ViewModels
             set
             {
                 _SelectedStudent = value;
-                AddGradeWindow window = new AddGradeWindow(SelectedModule, SelectedStudent, this.handler);
-                window.Show();
+                this.window = new AddGradeWindow(SelectedModule, SelectedStudent, this.handler);
+                this.window.Show();
             }
+        }
+
+        public void CloseWindow(string message)
+        {
+            this.window.Close();
+            MessageBox.Show(message);
         }
     }
 }

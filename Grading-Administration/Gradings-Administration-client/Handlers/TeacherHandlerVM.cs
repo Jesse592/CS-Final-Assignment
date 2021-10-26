@@ -33,7 +33,7 @@ namespace GradingAdmin_client.Handlers
 
         public void AddGradeCallback(JObject jObject)
         {
-
+            this.vm.CloseWindow("Cijfer succesvol opgeslagen");
         }
 
         public void GetModules()
