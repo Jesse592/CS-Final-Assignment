@@ -57,7 +57,7 @@ namespace Grading_Administration_Server.Handlers
                 moduleGradeList.Add(new
                 {
                     module = mc.Module.Name,
-                    grade = mc.grades.OrderByDescending(g => g.NumericalGrade).FirstOrDefault()?.ToSharedGrade()
+                    grade = mc.grades.OrderByDescending(grade => grade.NumericalGrade).FirstOrDefault()?.ToSharedGrade()
                 });
             }
 
@@ -90,9 +90,19 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The request object</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void GetModules(JObject data, int serial)
+        private async void GetModules(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting all the modules this teacher teaches
+            List<ModuleContribution> modules = await (from module in this.GradingDBContext.moduleContributions
+                                                      where module.User.UserId == this.user.UserId
+                                                      select module).ToListAsync();
+
+            // Transforming the list to a shared module list
+            var sharedModules = new List<Grading_Administraton_Shared.Entities.Module>();
+            modules.ForEach(mod => sharedModules.Add(mod.Module.ToSharedModule()));
+
+            // Sending the modules to the user
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllModules(sharedModules, serial)));
         }
 
         /// <summary>

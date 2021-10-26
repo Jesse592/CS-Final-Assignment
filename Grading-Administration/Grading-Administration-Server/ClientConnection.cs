@@ -125,7 +125,7 @@ namespace GradingAdministration_server
 
                 // TEST REMOVE PLEASE REMOVE
                 this.handler = new TeacherHandler(this.GradingDBContext, user, SendMessage);
-                this.handler?.Invoke("GetGradesFromStudent", JObject.FromObject(new { user = GradingDBContext.Users.Find(9).ToSharedUser() } ), 8);
+                this.handler?.Invoke("GetModules", JObject.FromObject(new { user = GradingDBContext.Users.Find(8).ToSharedUser() } ), 8);
             }
             else
                 // login failed
