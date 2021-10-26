@@ -5,9 +5,101 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GradingAdmin_client.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800">
+      d:DesignHeight="1080" d:DesignWidth="1920">
 
-    <Grid>
+    <Grid Background="White">
+        <Label Content="Toevoegen" HorizontalAlignment="Left" Margin="32,25,0,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold"/>
+
+        <!-- Toevoegen -->
+        <Label Content="Gebruiker" HorizontalAlignment="Left" Margin="32,112,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
+        <TextBox HorizontalAlignment="Left" Margin="38,192,0,0" Text="{Binding FirstName}" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="200"/>
+        <TextBox HorizontalAlignment="Left" Margin="274,192,0,0" Text="{Binding LastName}" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="200"/>
+        <Label Content="Voornaam" HorizontalAlignment="Left" Margin="32,160,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        <Label Content="Achternaam" HorizontalAlignment="Left" Margin="272,160,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        <Label Content="E-mail" HorizontalAlignment="Left" Margin="32,250,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Margin="38,284,0,0" Text="{Binding Mail}" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="438"/>
+        <DatePicker HorizontalAlignment="Left" Margin="38,378,0,0" VerticalAlignment="Top" Height="35" Width="200" SelectedDate="{Binding BirthDate}"/>
+        <Button Content="Gebruiker toevoegen" HorizontalAlignment="Left" Margin="170,436,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
+        <Label Content="Geboortedatum" HorizontalAlignment="Left" Margin="32,346,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        <Label Content="Type gebruiker" HorizontalAlignment="Left" Margin="272,346,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        <ComboBox HorizontalAlignment="Left" Margin="272,378,0,0" VerticalAlignment="Top" Height="30" Width="200" SelectedIndex="{Binding UserType}"/>
+
+
+        <!-- Module toevoegen -->
+        <Label Content="Module" HorizontalAlignment="Left" Margin="32,562,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
+        <TextBox HorizontalAlignment="Left" Margin="38,642,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="438"/>
+        <Label Content="Module-naam" HorizontalAlignment="Left" Margin="32,610,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        <Label Content="Startdatum" HorizontalAlignment="Left" Margin="32,700,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        <Label Content="Einddatum" HorizontalAlignment="Left" Margin="272,700,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        <Label Content="Type cijfer" HorizontalAlignment="Left" Margin="272,796,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        <DatePicker HorizontalAlignment="Left" Margin="38,734,0,0" Text="TextBox" VerticalAlignment="Top" Height="35" Width="200"/>
+        <DatePicker HorizontalAlignment="Left" Margin="272,734,0,0" Text="TextBox" VerticalAlignment="Top" Height="35" Width="200"/>
+        <TextBox HorizontalAlignment="Left" Margin="38,826,0,0" VerticalAlignment="Top" Height="35" Width="200"/>
+        <TextBox HorizontalAlignment="Left" Margin="272,826,0,0" VerticalAlignment="Top" Height="35" Width="200"/>
+        <Button Content="Student toevoegen" HorizontalAlignment="Left" Margin="170,882,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
+        <Label Content="Aantal ECT's" HorizontalAlignment="Left" Margin="32,796,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        <GridSplitter HorizontalAlignment="Left" Margin="552,122,0,0" VerticalAlignment="Top" Width="2" Height="850"/>
+
+        <Label Content="Verwijderen" HorizontalAlignment="Left" Margin="584,25,0,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold"/>
+
+        <!-- Gebruiker verwijderen -->
+        <Label Content="Gebruiker" HorizontalAlignment="Left" Margin="584,112,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
+        <ListView Width="600" Margin="586,166,734,662">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Docent verwijderen" HorizontalAlignment="Left" Margin="794,436,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
+
+        <!-- Mody verwijderen -->
+        <Label Content="Module" HorizontalAlignment="Left" Margin="584,562,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
+        <ListView Width="600" Margin="586,610,734,212">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Module verwijderen" HorizontalAlignment="Left" Margin="794,882,0,0" VerticalAlignment="Top" Height="36" Width="200" FontSize="15"/>
+
+        <GridSplitter HorizontalAlignment="Left" Margin="1220,122,0,0" VerticalAlignment="Top" Width="2" Height="850"/>
+
+        <Label Content="Gebruiker koppelen" HorizontalAlignment="Left" Margin="1252,25,0,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold"/>
+        <Label Content="Docent" HorizontalAlignment="Left" Margin="1252,112,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
+        <ListView Margin="1252,166,378,662">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Margin="1598,166,32,662">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Docent Koppelen" HorizontalAlignment="Left" Margin="1480,436,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
+
+        <Label Content="Student" HorizontalAlignment="Left" Margin="1252,562,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
+        <ListView Margin="1252,610,378,214">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Margin="1598,610,32,214">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Student koppelen" HorizontalAlignment="Left" Margin="1480,882,0,0" VerticalAlignment="Top" Height="36" Width="200" FontSize="15"/>
         
     </Grid>
 </UserControl>
