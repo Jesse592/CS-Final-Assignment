@@ -39,7 +39,7 @@ namespace Grading_Administration_Server.Handlers
         public async void GetAllGrades(JObject data, int serial)
         {
             // Getting the userID
-            int userID = JsonToUser(data);
+            int userID = JSONHelperServer.JsonToUser(data);
 
             // Ignoring if the userID is -1 and given user is not the correct user
             if (userID == -1 || userID != this.user?.UserId) return;
@@ -55,7 +55,7 @@ namespace Grading_Administration_Server.Handlers
             // filling the dictionary with the shared (save) version of the objects
             foreach(ModuleContribution mc in grades)
             {
-                var mcGrades = GradesToShared(mc.grades?.ToList());
+                var mcGrades = JSONHelperServer.GradesToShared(mc.grades?.ToList());
                 List<User> teachers = await GetTeachersWithModule(mc);
 
                 // transforming the list to shared users
@@ -70,11 +70,11 @@ namespace Grading_Administration_Server.Handlers
                     teachers = sharedTeachers,
                     mcGrades = mcGrades
                 }
-                ); ;
+                );
             }
 
             // Converting to json and sending to client
-            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllGrades(gradesList, serial)));
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GenericList("GetAllGrades", gradesList, serial)));
         }
         
         /// <summary>
@@ -86,7 +86,7 @@ namespace Grading_Administration_Server.Handlers
         public void GetModules(JObject data, int serial)
         {
             // Getting the userID
-            int userID = JsonToUser(data);
+            int userID = JSONHelperServer.JsonToUser(data);
 
             // Ignoring if the userID is -1 and given user is not the correct user
             if (userID == -1 || userID != this.user?.UserId) return;
@@ -113,39 +113,6 @@ namespace Grading_Administration_Server.Handlers
                           join m in this.GradingDBContext.moduleContributions on tc.UserId equals m.UserId
                           where tc.UserType == ((int)UserType.TEACHER).ToString() && m.ModuleId == module.ModuleId  
                           select tc).ToListAsync();            
-        }
-
-        /// <summary>
-        /// Converst a json object and retreives the userID
-        /// </summary>
-        /// <param name="json">The json object</param>
-        /// <returns>The user id in the json</returns>
-        private static int JsonToUser(JObject json)
-        {
-
-            //Try to get the userID value from the JObject
-            //Returns null when token not found
-            JToken userIDToken = json.SelectToken("user.UserId");
-
-            // Ignoring message when not correct format, -1 selected as false format
-            if (userIDToken == null) return -1;
-
-            return (int)userIDToken;
-        } 
-
-        /// <summary>
-        /// Transforms a list grades to a list of sharedGrades.
-        /// Sharedgrades are needed to prevent sending the client sensitive data
-        /// </summary>
-        /// <param name="grades">the grades to ben converted</param>
-        /// <returns>The list of shared grades</returns>
-        private static List<Grading_Administraton_Shared.Entities.Grade> GradesToShared(List<Grade> grades)
-        {
-            // converting the grades to shared and filling the list
-            var newGrades = new List<Grading_Administraton_Shared.Entities.Grade>();
-            grades.ForEach(g => newGrades.Add(g.ToSharedGrade()));
-
-            return newGrades;
         }
 
         /// <summary>

@@ -44,9 +44,9 @@ namespace Grading_Administration_Server.Helper
             }, serial);
         }
 
-        public static object GetAllGrades(List<object> data, int serial)
+        public static object GenericList(string command, List<object> data, int serial)
         {
-            return WrapHeader("GetAllGrades", data, serial);
+            return WrapHeader(command, data, serial);
         }
 
         public static object GetAllModules(List<Grading_Administraton_Shared.Entities.Module> data, int serial)
