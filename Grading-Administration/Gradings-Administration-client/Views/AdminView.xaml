@@ -18,11 +18,11 @@
         <Label Content="Achternaam" HorizontalAlignment="Left" Margin="272,160,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <Label Content="E-mail" HorizontalAlignment="Left" Margin="32,250,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <TextBox HorizontalAlignment="Left" Margin="38,284,0,0" Text="{Binding Mail}" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="438"/>
-        <DatePicker HorizontalAlignment="Left" Margin="38,378,0,0" VerticalAlignment="Top" Height="35" Width="200" SelectedDate="{Binding BirthDate}"/>
+        <DatePicker HorizontalAlignment="Left" Margin="38,378,0,0" VerticalAlignment="Top" Height="35" Width="200" SelectedDate="{Binding BirthDate}" DisplayDate="{Binding DateTime.Now}"/>
         <Button Content="Gebruiker toevoegen" HorizontalAlignment="Left" Margin="170,436,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
         <Label Content="Geboortedatum" HorizontalAlignment="Left" Margin="32,346,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <Label Content="Type gebruiker" HorizontalAlignment="Left" Margin="272,346,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
-        <ComboBox HorizontalAlignment="Left" Margin="272,378,0,0" VerticalAlignment="Top" Height="30" Width="200" SelectedIndex="{Binding UserType}"/>
+        <ComboBox HorizontalAlignment="Left" Margin="272,378,0,0" VerticalAlignment="Top" Height="30" Width="200" SelectedIndex="{Binding userType}" ItemsSource="{Binding userTypes}"/>
 
 
         <!-- Module toevoegen -->
