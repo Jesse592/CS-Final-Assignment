@@ -86,6 +86,21 @@ namespace GradingAdmin_client.ViewModels
             }
         }
 
-        
+        public void AddModule(Module module)
+        {
+            App.Current.Dispatcher?.Invoke(() =>
+            {
+                this.Modules.Add(module);
+            });
+            
+        }
+
+        public void AddGrade(Grade grade)
+        {
+            App.Current.Dispatcher?.Invoke(() =>
+            {
+                this.Grades.Add(grade);
+            });
+        }
     }
 }

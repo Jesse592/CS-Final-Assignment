@@ -33,15 +33,17 @@ namespace GradingAdmin_client.Handlers
 
         public void GetStudentData()
         {
-            /*
+            
             this.manager.SendCommand(
                 JObject.FromObject(
                     JSONWrapper.WrapHeader("GetAllGrades", JSONWrapper.WrapUser(this.currentUser))
                     ), StudentDataCallback);
-            */
+            
 
+            /*
             JObject j = JObject.Parse("{ \"command\": \"GetAllGrades\", \"data\": [ { \"module\": { \"ModuleId\": 10, \"Name\": \"OGP0\", \"StartDate\": \"2020-08-01T00:00:00\", \"EndDate\": \"2020-08-31T00:00:00\", \"ETC\": 2, \"IsNumerical\": true }, \"teachers\": [ { \"UserId\": 8, \"FirstName\": \"Johan\", \"LastName\": \"Talboom\", \"DateOfBirth\": \"1984-07-14T13:26:00\", \"Email\": \"JohanTalboom@avans.nl\", \"UserType\": \"1\" } ], \"mcGrades\": [ { \"Time\": \"2020-08-24T00:00:00\", \"NumericalGrade\": 4.2, \"LetterGrade\": \"O\", \"Delimiter\": 5.5 }, { \"Time\": \"2020-12-24T00:00:00\", \"NumericalGrade\": 9.6, \"LetterGrade\": \"G\", \"Delimiter\": 5.5 } ] }, { \"module\": { \"ModuleId\": 11, \"Name\": \"2DG\", \"StartDate\": \"2021-02-12T00:00:00\", \"EndDate\": \"2020-04-02T00:00:00\", \"ETC\": 6, \"IsNumerical\": true }, \"teachers\": [ { \"UserId\": 8, \"FirstName\": \"Johan\", \"LastName\": \"Talboom\", \"DateOfBirth\": \"1984-07-14T13:26:00\", \"Email\": \"JohanTalboom@avans.nl\", \"UserType\": \"1\" }, { \"UserId\": 10, \"FirstName\": \"Hans\", \"LastName\": \"Van der Linden\", \"DateOfBirth\": \"1972-07-14T13:26:00\", \"Email\": \"HJ.Linden@avans.nl\", \"UserType\": \"1\" } ], \"mcGrades\": [] } ], \"serial\": 1 }");
             StudentDataCallback(j);
+            */
         }
 
         public void StudentDataCallback(JObject jObject)
@@ -51,11 +53,11 @@ namespace GradingAdmin_client.Handlers
 
             foreach (JObject o in array)
             {
-                this.vm.Modules.Add(new Module(o.SelectToken("module") as JObject, o.SelectToken("teachers") as JArray));
+                this.vm.AddModule(new Module(o.SelectToken("module") as JObject, o.SelectToken("teachers") as JArray));
 
                 foreach(JObject g in o.SelectToken("mcGrades") as JArray)
                 {
-                    this.vm.Grades.Add(new Grade(g, o.SelectToken("module.Name")));
+                    this.vm.AddGrade(new Grade(g, o.SelectToken("module.Name")));
                 }
             }
 

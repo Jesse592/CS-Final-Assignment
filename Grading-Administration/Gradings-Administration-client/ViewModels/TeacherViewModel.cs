@@ -1,4 +1,6 @@
 ﻿using Grading_Administraton_Shared.Entities;
+using GradingAdmin_client.Handlers;
+using Gradings_Administration_client;
 using Gradings_Administration_client.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,14 +15,17 @@ namespace GradingAdmin_client.ViewModels
     class TeacherViewModel : BaseViewModel, INotifyPropertyChanged
     {
         private User teacher;
+        private TeacherHandlerVM handler;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public TeacherViewModel(User teacher)
         {
             this.teacher = teacher;
+            this.handler = new TeacherHandlerVM(this);
 
             this.Modules = new ObservableCollection<Module>();
+            this.Students = new ObservableCollection<User>();
         }
 
         private ObservableCollection<Module> _Modules;
@@ -31,6 +36,44 @@ namespace GradingAdmin_client.ViewModels
             {
                 _Modules = value;
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Modules"));
+            }
+        }
+
+        private ObservableCollection<User> _Students;
+        public ObservableCollection<User> Students
+        {
+            get { return _Students; }
+            set
+            {
+                _Students = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Students"));
+            }
+        }
+
+        internal void AddModule(Module module)
+        {
+            App.Current.Dispatcher?.Invoke(() =>
+            {
+                this.Modules.Add(module);
+            });
+        }
+
+        internal void AddStudent(User user)
+        {
+            App.Current.Dispatcher?.Invoke(() =>
+            {
+                this.Students.Add(user);
+            });
+        }
+
+        private Module _SelectedModule;
+        public Module SelectedModule
+        {
+            get { return _SelectedModule; }
+            set
+            {
+                _SelectedModule = value;
+                this.handler.GetStudentsPerModule(SelectedModule);
             }
         }
     }

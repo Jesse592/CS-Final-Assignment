@@ -8,21 +8,21 @@
       d:DesignHeight="1080" d:DesignWidth="1920">
 
     <Grid Background="White">
-        <ListView Margin="42,138,987,100" ItemsSource="{Binding Grades}" SelectedItem="{Binding SelectedGrade}">
+        <ListView Margin="42,138,987,100" ItemsSource="{Binding Modules}" SelectedItem="{Binding SelectedModule}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="80">
-                        
+                        <Label Content="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <ListView Margin="1058,138,84,100" ItemsSource="{Binding Modules}" SelectedItem="{Binding SelectedModule}">
+        <ListView Margin="1058,138,84,100" ItemsSource="{Binding Students}" SelectedItem="{Binding SelectedModule}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="80">
-                        
+                        <Label Content="{Binding FirstName}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

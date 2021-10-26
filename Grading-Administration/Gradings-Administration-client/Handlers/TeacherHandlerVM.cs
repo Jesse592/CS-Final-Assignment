@@ -47,7 +47,7 @@ namespace GradingAdmin_client.Handlers
 
             foreach(JObject j in ModulesArray)
             {
-                this.vm.Modules.Add(new Module(j));
+                this.vm.AddModule(new Module(j));
             }
 
             this.vm.Modules = new ObservableCollection<Module>(this.vm.Modules.OrderByDescending(module => module.Name).ToList());
@@ -55,12 +55,22 @@ namespace GradingAdmin_client.Handlers
 
         public void GetStudentsPerModule(Module module)
         {
-
+            this.manager.SendCommand(
+                JObject.FromObject(
+                    JSONWrapper.WrapHeader("GetDataFromModule", JSONWrapper.WrapModule(module))
+                    ), GetStudentsCallback);
         }
 
-        public void GetStudentsCallback()
+        public void GetStudentsCallback(JObject jObject)
         {
+            JToken StudentArray = jObject.SelectToken("data") as JArray;
 
+            foreach (JObject j in StudentArray)
+            {
+                this.vm.AddStudent(new User(j));
+            }
+
+            this.vm.Students = new ObservableCollection<User>(this.vm.Students.OrderByDescending(student => student.FirstName).ToList());
         }
     }
 }
