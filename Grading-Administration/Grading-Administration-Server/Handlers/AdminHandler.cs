@@ -26,15 +26,11 @@ namespace Grading_Administration_Server.Handlers
         /// Returns all the students
         /// </summary>
         /// <param name="serial">The ID-code from the client</param>
-        private async void GetStudents(int serial)
+        private async void GetUsers(int serial)
         {
-            // Getting all the students
-            List<User> students = await (from user in this.GradingDBContext.Users
-                                         where user.UserType == ((int)UserType.STUDENT).ToString()
-                                         select user).ToListAsync();
-
-            // transforming the list to shared users
-            var studentsShared = JSONHelperServer.UserToShared(students);
+ 
+            // transforming to shared users
+            var studentsShared = JSONHelperServer.UserToShared(await this.GradingDBContext.Users.ToListAsync());
 
             // Sending it to the client
             this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllUsers(studentsShared, serial)));
@@ -46,7 +42,11 @@ namespace Grading_Administration_Server.Handlers
         /// <param name="serial">The ID-code from the client</param>
         private void GetModules(int serial)
         {
-            throw new NotImplementedException();
+            // transforming to shared modules
+            var studentsShared = JSONHelperServer.UserToShared(await this.GradingDBContext.Modules.ToListAsync());
+
+            // Sending it to the client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllUsers(studentsShared, serial)));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Grading_Administration_Server.Handlers
         protected override void Init()
         {
             // Get actions
-            this.Actions.Add("GetStudents", (j, s) => GetStudents(s));
+            this.Actions.Add("GetUsers", (j, s) => GetUsers(s));
             this.Actions.Add("GetModules", (j,s) => GetModules(s));
 
             // Create actions
