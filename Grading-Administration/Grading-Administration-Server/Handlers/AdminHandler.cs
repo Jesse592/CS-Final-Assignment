@@ -139,9 +139,10 @@ namespace Grading_Administration_Server.Handlers
             int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
 
             // Chechking is they are valid (not -1)
-            if (userID == -1 || moduleID == -1) {
+            if (userID == -1 || moduleID == -1)
+            {
                 return;
-
+            }
             // Getting the objects from the database
             User user = await this.GradingDBContext.Users.FindAsync(userID);
             Module module = await this.GradingDBContext.Modules.FindAsync(moduleID);
