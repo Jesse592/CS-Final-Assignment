@@ -59,5 +59,15 @@ namespace GradingAdmin_client
                 grade
             };
         }
+
+        public static object WrapGradeModuleUser(Grade grade, Module module, User user)
+        {
+            return new
+            {
+                grade,
+                module,
+                user
+            };
+        }
     }
 }

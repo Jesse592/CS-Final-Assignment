@@ -51,11 +51,11 @@ namespace GradingAdmin_client.Handlers
 
             foreach (JObject o in array)
             {
-                this.vm.Modules.Add(new Module(o.SelectToken("module") as JObject, o.SelectToken("teachers") as JArray));
+                this.vm.AddModule(new Module(o.SelectToken("module") as JObject, o.SelectToken("teachers") as JArray));
 
                 foreach(JObject g in o.SelectToken("mcGrades") as JArray)
                 {
-                    this.vm.Grades.Add(new Grade(g, o.SelectToken("module.Name")));
+                    this.vm.AddGrade(new Grade(g, o.SelectToken("module.Name")));
                 }
             }
 
