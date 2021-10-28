@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Grading_Administration_Server.Helper
 {
-    static class JSONHelperServer
+    public static class JSONHelperServer
     {
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Grading_Administration_Server.Helper
             users.ForEach(u=> newUsers.Add(u.ToSharedUser()));
 
             return newUsers;
-        }
+        }   
 
 
         /// <summary>

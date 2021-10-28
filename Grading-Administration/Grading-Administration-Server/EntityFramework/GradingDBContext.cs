@@ -7,11 +7,11 @@ namespace Grading_Administration_Server.EntityFramework
     public class GradingDBContext : DbContext
     {
 
-        public DbSet<Module> Modules { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<LoginDetail> LoginDetails { get; set; }
-        public DbSet<ModuleContribution> moduleContributions { get; set; }
-        public DbSet<Grade> grades { get; set; }
+        public virtual DbSet<Module> Modules { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<LoginDetail> LoginDetails { get; set; }
+        public virtual DbSet<ModuleContribution> moduleContributions { get; set; }
+        public virtual DbSet<Grade> grades { get; set; }
 
         private const string connectionString = "Server=(localdb)\\mssqllocaldb;Database=EFCore;Trusted_Connection=True;";
 

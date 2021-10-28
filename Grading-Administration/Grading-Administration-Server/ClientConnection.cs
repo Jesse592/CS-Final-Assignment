@@ -3,7 +3,6 @@ using Grading_Administration_Server.EntityFramework.models;
 using Grading_Administration_Server.Handlers;
 using Grading_Administration_Shared.Communication;
 using Grading_Administration_Server.Helper;
-using Grading_Administration_Shared.Util;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -39,7 +38,10 @@ namespace GradingAdministration_server
 
             // Setting the onMessage and onError event
             this.TCPHandler.OnDataReceived += OnMessageReceived;
-            this.TCPHandler.OnConectionError += (s, d) => Console.WriteLine($"Error in the connection: {d}");
+            this.TCPHandler.OnConectionError += (s, d) => {
+                Console.WriteLine($"Error in the connection: {d}");
+                Stop();
+            };
 
             this.TCPHandler.SetRunning(true);
 

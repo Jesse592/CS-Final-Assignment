@@ -12,23 +12,18 @@ namespace Grading_Administration_Server
     {
         private bool running;
 
-        private string ip { get; set; }
-        private int port { get; set; }
-
         private TcpListener tcpListner;
         private List<ClientConnection> clients;
 
         public Server(string ip, int port)
         {
-            this.ip = ip;
-            this.port = port;
-            tcpListner = new TcpListener(System.Net.IPAddress.Any, port);
+            tcpListner = new TcpListener(System.Net.IPAddress.Parse(ip), port);
             clients = new List<ClientConnection>();
         }
 
         public void RunServer()
         {
-            running = true;
+            this.running = true;
 
             Console.WriteLine("Server: started listening for clients");
 
@@ -40,13 +35,12 @@ namespace Grading_Administration_Server
         {
             TcpClient tcpClient = tcpListner.EndAcceptTcpClient(result);
 
-            Console.WriteLine("NIEUWE CLIENT");
-
             ClientConnection client = new ClientConnection(tcpClient);
             clients.Add(client);
 
             //Start listening for clients again
-            tcpListner.BeginAcceptTcpClient(new AsyncCallback(HandleClient), null);
+            if(this.running)
+                tcpListner.BeginAcceptTcpClient(new AsyncCallback(HandleClient), null);
         }
 
         public void StopServer()
@@ -55,7 +49,6 @@ namespace Grading_Administration_Server
 
             foreach (ClientConnection client in clients)
                 client.Stop();
-
         }
     }
 }

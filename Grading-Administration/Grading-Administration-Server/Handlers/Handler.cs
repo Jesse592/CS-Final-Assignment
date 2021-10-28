@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Grading_Administration_Server.Handlers
 {
-    abstract class Handler
+    public abstract class Handler
     {
         public delegate Task CommandAction(JObject data, int identifier);
 
@@ -42,3 +42,4 @@ namespace Grading_Administration_Server.Handlers
         protected abstract void Init();
     }
 }
+    
