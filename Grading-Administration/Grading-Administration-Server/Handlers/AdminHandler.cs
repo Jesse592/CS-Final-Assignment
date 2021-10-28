@@ -184,7 +184,11 @@ namespace Grading_Administration_Server.Handlers
             int userID = JSONHelperServer.GetIDFromJSON(data, "StudentId");
 
             // Checking if the value is oke
-            if (userID == -1) return;
+            if (userID == -1)
+            {
+                this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
+                return;
+            }
 
             // Getting the user from the databse if exists
             User user = await this.GradingDBContext.Users.FindAsync(userID);
@@ -194,6 +198,9 @@ namespace Grading_Administration_Server.Handlers
             this.GradingDBContext.Users.Remove(user);
             
             await this.GradingDBContext.SaveChangesAsync();
+
+            // Sending acknowledgement of succes to client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeSucces(serial)));
         }
 
         /// <summary>
@@ -207,7 +214,11 @@ namespace Grading_Administration_Server.Handlers
             int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
 
             // Checking if the value is oke
-            if (moduleID == -1) return;
+            if (moduleID == -1)
+            {
+                this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
+                return;
+            }
 
             // Getting the module from the databse if exists
             Module module = await this.GradingDBContext.Modules.FindAsync(moduleID);
@@ -217,6 +228,9 @@ namespace Grading_Administration_Server.Handlers
             this.GradingDBContext.Modules.Remove(module);
 
             await this.GradingDBContext.SaveChangesAsync();
+
+            // Sending acknowledgement of succes to client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeSucces(serial)));
         }
 
         /// <summary>
