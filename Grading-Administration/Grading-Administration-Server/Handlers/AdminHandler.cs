@@ -56,14 +56,18 @@ namespace Grading_Administration_Server.Handlers
         private async void CreateNewUser(JObject data, int serial)
         {
             // Getting the values from the json data
-            string fname = data.SelectToken("FirstName")?.ToString();
-            string lname = data.SelectToken("LastName")?.ToString();
-            string email = data.SelectToken("Email")?.ToString();
-            string userType = data.SelectToken("UserType")?.ToString();
-            DateTime dob = DateTime.Parse(data.SelectToken("DateOfBirth")?.ToString());
+            string fname = data.SelectToken("user.FirstName")?.ToString();
+            string lname = data.SelectToken("user.LastName")?.ToString();
+            string email = data.SelectToken("user.Email")?.ToString();
+            string userType = data.SelectToken("user.UserType")?.ToString();
+            DateTime dob = DateTime.Parse(data.SelectToken("user.DateOfBirth")?.ToString());
+
+            //Getting the default username and password
+            string username = data.SelectToken("username")?.ToString();
+            string password = data.SelectToken("password")?.ToString();
 
             // Checking if all required data is retreived, send failed if not
-            if (fname == null || lname == null || email == null || userType == null)
+            if (fname == null || lname == null || email == null || userType == null || username == null || password == null)
             {
                 this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
                 return;
@@ -78,7 +82,16 @@ namespace Grading_Administration_Server.Handlers
                 DateOfBirth = dob
             };
 
+            LoginDetail loginDetail = new LoginDetail()
+            {
+                UserId = user.UserId,
+                User = user,
+                UserName = username,
+                Password = password
+            };
+
             this.GradingDBContext.Users.Add(user);
+            this.GradingDBContext.LoginDetails.Add(loginDetail);
 
             // Saving the user to the database
             await this.GradingDBContext.SaveChangesAsync();

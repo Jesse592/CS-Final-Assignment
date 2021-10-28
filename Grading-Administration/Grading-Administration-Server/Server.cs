@@ -22,7 +22,7 @@ namespace Grading_Administration_Server
         {
             this.ip = ip;
             this.port = port;
-            tcpListner = new TcpListener(System.Net.IPAddress.Parse(ip), port);
+            tcpListner = new TcpListener(System.Net.IPAddress.Any, port);
             clients = new List<ClientConnection>();
         }
 
