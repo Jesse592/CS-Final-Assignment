@@ -30,7 +30,10 @@ namespace GradingAdmin_client.Handlers
 
         public void Login(string username, string password)
         {
+            // Building and sending the login command to the server
             this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("login", JSONWrapper.WrapLogin(password, username))), LoginCallback);
+
+            // Checking if the user wants to save username
         }
 
         public void LoginCallback(JObject Jobject)

@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,6 +65,16 @@ namespace GradingAdmin_client.ViewModels
             {
                 _Password = value;
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Password"));
+            }
+        }
+
+        private bool _SavePassword;
+        public bool SavePassword
+        {
+            get { return _SavePassword; }
+            set
+            {
+                _SavePassword = value;
             }
         }
 

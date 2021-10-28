@@ -13,7 +13,9 @@
 
         <Label Content="Wachtwoord:" HorizontalAlignment="Left" Margin="115,0,0,0" VerticalAlignment="Center"/>
         <PasswordBox HorizontalAlignment="Left" Margin="119,115,0,0" VerticalAlignment="Top" Width="120" PasswordChanged="PassBox_OnPasswordChanged"/>
-        <Button Content="Login" HorizontalAlignment="Left" Margin="155,160,0,0" VerticalAlignment="Top" Command="{Binding SendLoginCommand}" CommandParameter="Login"/>
+        <CheckBox HorizontalAlignment="Left" Margin="99,150,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=SavePassword, Mode=TwoWay}"/>
+        <Label Content="Gebruikersnaam onthouden" HorizontalAlignment="Left" Margin="120,143,0,0" VerticalAlignment="Top"/>
+        <Button Content="Login" HorizontalAlignment="Left" Margin="155,180,0,0" VerticalAlignment="Top" Command="{Binding SendLoginCommand}" CommandParameter="Login"/>
 
     </Grid>
 </UserControl>
