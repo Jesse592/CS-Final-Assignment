@@ -72,7 +72,16 @@
 
         <Label Content="Gebruiker koppelen" HorizontalAlignment="Left" Margin="1252,25,0,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold"/>
         <Label Content="Docent" HorizontalAlignment="Left" Margin="1252,112,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
-        <ListView Margin="1252,166,378,662" ItemsSource="{Binding TeacherList}">
+        <ListView Margin="1252,166,378,576" ItemsSource="{Binding TeacherList}" SelectedItem="{Binding SelectedTeacher}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="60">
+                        <Label Height="50" Content="{Binding FirstName}" Margin="11" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView Margin="1598,166,32,582" ItemsSource="{Binding ModuleList}" SelectedItem="{Binding SelectedTeacherModule}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="60">
@@ -81,19 +90,19 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ListView Margin="1598,166,32,662" ItemsSource="{Binding ModuleList}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Height="60">
-                        <Label Height="50" Content="{Binding Name}" Margin="11" FontWeight="Bold"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Button Content="Docent Koppelen" HorizontalAlignment="Left" Margin="1480,486,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
+        <Button Content="Docent Koppelen" HorizontalAlignment="Left" Margin="1480,486,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15" Command="{Binding LinkTeacherCommand}"/>
 
         <Label Content="Student" HorizontalAlignment="Left" Margin="1252,562,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
-        <ListView Margin="1252,610,378,214" ItemsSource="{Binding StudentList}">
+        <ListView Margin="1252,610,378,157" ItemsSource="{Binding StudentList}" SelectedItem="{Binding SelectedStudent}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="60">
+                        <Label Height="50" Content="{Binding FirstName}" Margin="11" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView Margin="1598,610,32,157" ItemsSource="{Binding ModuleList}" SelectedItem="{Binding SelectedStudentModule}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="60">
@@ -102,16 +111,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ListView Margin="1598,610,32,214" ItemsSource="{Binding ModuleList}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Height="60">
-                        <Label Height="50" Content="{Binding Name}" Margin="11" FontWeight="Bold"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Button Content="Student koppelen" HorizontalAlignment="Left" Margin="1480,882,0,0" VerticalAlignment="Top" Height="36" Width="200" FontSize="15"/>
+        <Button Content="Student koppelen" HorizontalAlignment="Left" Margin="1480,882,0,0" VerticalAlignment="Top" Height="36" Width="200" FontSize="15" Command="{Binding LinkStudentCommand}"/>
         <Label Content="Gebruikersnaam" HorizontalAlignment="Left" Margin="32,310,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <TextBox HorizontalAlignment="Left" Margin="38,344,0,0" Text="{Binding UserName}" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="200"/>
         <TextBox HorizontalAlignment="Left" Margin="274,344,0,0" Text="{Binding Password}" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="200"/>
@@ -122,6 +122,12 @@
         <Label Content="Gebruiker niet verwijderd" HorizontalAlignment="Left" Margin="694,118,0,0" VerticalAlignment="Top" Foreground="Red" Opacity="{Binding UserFailDeleteOpacity}" FontStyle="Italic"/>
         <Label Content="Module niet verwijderd" HorizontalAlignment="Left" Margin="694,569,0,0" VerticalAlignment="Top" Foreground="Red" Opacity="{Binding ModuleFailDeleteOpacity}" FontStyle="Italic"/>
         <Label Content="Module succesvol verwijderd" HorizontalAlignment="Left" Margin="694,569,0,0" VerticalAlignment="Top" Foreground="Green" Opacity="{Binding ModuleSuccesDeleteOpacity}" FontStyle="Italic"/>
+        <Label Content="Succesvol toegevoegd" HorizontalAlignment="Left" Margin="140,121,0,0" VerticalAlignment="Top" FontStyle="Italic" Foreground="Green" Opacity="{Binding UserSuccesOpacity}"/>
+        <Label Content="Niet toegevoegd" HorizontalAlignment="Left" Margin="140,121,0,0" VerticalAlignment="Top" FontStyle="Italic" Foreground="Red" Opacity="{Binding UserFailOpacity}"/>
+        <Label Content="Docent succesvol gekoppeld" HorizontalAlignment="Left" Margin="1340,118,0,0" VerticalAlignment="Top" Foreground="Green" Opacity="{Binding TeacherLinkOpacity}" FontStyle="Italic"/>
+        <Label Content="Docent niet gekoppeld" HorizontalAlignment="Left" Margin="1340,118,0,0" VerticalAlignment="Top" Foreground="Red" Opacity="{Binding TeacherLinkFailOpacity}" FontStyle="Italic"/>
+        <Label Content="Student succesvol gekoppeld" HorizontalAlignment="Left" Margin="1340,569,0,0" VerticalAlignment="Top" Foreground="Green" Opacity="{Binding StudentLinkOpacity}" FontStyle="Italic"/>
+        <Label Content="Student niet gekoppeld" HorizontalAlignment="Left" Margin="1340,569,0,0" VerticalAlignment="Top" Foreground="Red" Opacity="{Binding StudentLinkFailOpacity}" FontStyle="Italic"/>
 
     </Grid>
 </UserControl>

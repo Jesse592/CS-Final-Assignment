@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace GradingAdmin_client.Handlers
 {
@@ -28,12 +29,17 @@ namespace GradingAdmin_client.Handlers
 
         public void NewUSerCallback(JObject obj)
         {
-            this.view.UpdateStatus(obj);
+            this.view.UpdateUserStatus(obj);
         }
 
         public void NewModule(Module m)
         {
             this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("CreateNewModule", JSONWrapper.WrapModule(m))), NewModuleCallback);
+        }
+
+        public void NewModuleCallback(JObject obj)
+        {
+            this.view.UpdateModuleStatus(obj);
         }
 
         public void GetAllUsers()
@@ -99,11 +105,6 @@ namespace GradingAdmin_client.Handlers
             this.view.ModuleList = ModuleList;
         }
 
-        public void NewModuleCallback(JObject obj)
-        {
-            this.view.UpdateStatus(obj);
-        }
-
         public void DeleteUser(User u)
         {
             this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("DeleteUser", JSONWrapper.WrapUser(u))), DeleteUserCallback);
@@ -124,24 +125,24 @@ namespace GradingAdmin_client.Handlers
             this.view.UpdateDeleteModuleStatus(obj);
         }
 
-        public void AddTeacherToModule(User u)
+        public void AddTeacherToModule(User u, Module m)
         {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("AddTeacherToModule", JSONWrapper.WrapUser(u))), AddTeacherToModule);
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("AddUserToModule", JSONWrapper.WrapModuleUser(m, u))), AddTeacherToModule);
         }
 
         public void AddTeacherToModule(JObject obj)
         {
-            throw new NotImplementedException();
+            this.view.UpdateTeacherLinkStatus(obj);
         }
 
-        public void AddStudentToModule(User u)
+        public void AddStudentToModule(User u, Module m)
         {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("AddStudentToModule", JSONWrapper.WrapUser(u))), AddStudentCallback);
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("AddUserToModule", JSONWrapper.WrapModuleUser(m, u))), AddStudentCallback);
         }
 
         public void AddStudentCallback(JObject obj)
         {
-            throw new NotImplementedException();
+            this.view.UpdateStudentLinkStatus(obj);
         }
     }
 }

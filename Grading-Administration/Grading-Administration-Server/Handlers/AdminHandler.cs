@@ -150,12 +150,13 @@ namespace Grading_Administration_Server.Handlers
         private async Task AddUserToModule(JObject data, int serial)    
         {
             // Getting the module and user IDs
-            int userID = JSONHelperServer.GetIDFromJSON(data, "UserId");
-            int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
+            int userID = JSONHelperServer.GetIDFromJSON(data, "user.UserId");
+            int moduleID = JSONHelperServer.GetIDFromJSON(data, "module.ModuleId");
 
             // Chechking is they are valid (not -1)
             if (userID == -1 || moduleID == -1)
             {
+                this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
                 return;
             }
             // Getting the objects from the database
@@ -171,6 +172,8 @@ namespace Grading_Administration_Server.Handlers
             this.GradingDBContext.moduleContributions.Add(contribution);
 
             await this.GradingDBContext.SaveChangesAsync();
+
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeSucces(serial)));
         }
 
         /// <summary>

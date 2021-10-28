@@ -49,6 +49,7 @@ namespace GradingAdmin_client.ViewModels
             set
             {
                 _FirstName = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FirstName"));
             }
         }
 
@@ -59,6 +60,7 @@ namespace GradingAdmin_client.ViewModels
             set
             {
                 _LastName = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LastName"));
             }
         }
 
@@ -69,6 +71,7 @@ namespace GradingAdmin_client.ViewModels
             set
             {
                 _Mail = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Mail"));
             }
         }
 
@@ -79,6 +82,7 @@ namespace GradingAdmin_client.ViewModels
             set
             {
                 _UserName = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserName"));
             }
         }
 
@@ -89,6 +93,7 @@ namespace GradingAdmin_client.ViewModels
             set
             {
                 _Password = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Password"));
             }
         }
 
@@ -119,6 +124,28 @@ namespace GradingAdmin_client.ViewModels
             set
             {
                 _userType = value;
+            }
+        }
+
+        private int _UserSuccesOpacity;
+        public int UserSuccesOpacity
+        {
+            get { return _UserSuccesOpacity; }
+            set
+            {
+                _UserSuccesOpacity = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserSuccesOpacity"));
+            }
+        }
+
+        private int _UserFailOpacity;
+        public int UserFailOpacity
+        {
+            get { return _UserFailOpacity; }
+            set
+            {
+                _UserFailOpacity = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserFailOpacity"));
             }
         }
 
@@ -157,6 +184,30 @@ namespace GradingAdmin_client.ViewModels
             }
         }
 
+        internal void UpdateUserStatus(JObject obj)
+        {
+            JToken message = obj.SelectToken("data");
+
+            if (message.ToString() == "Succes")
+            {
+                this.UserFailOpacity = 0;
+                this.UserSuccesOpacity = 100;
+                this.handler.GetAllUsers();
+
+                this.FirstName = "";
+                this.LastName = "";
+                this.UserName = "";
+                this.Password = "";
+                this.ECTAmount = "";
+                this.Mail = "";
+            }
+            else
+            {
+                this.UserFailOpacity = 100;
+                this.UserSuccesOpacity = 0;
+            }
+        }
+
         #endregion
 
         #region AddModule
@@ -168,6 +219,7 @@ namespace GradingAdmin_client.ViewModels
             set
             {
                 _ModuleName = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ModuleName"));
             }
         }
 
@@ -198,6 +250,7 @@ namespace GradingAdmin_client.ViewModels
             set
             {
                 _ECTAmount = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ECTAmount"));
             }
         }
 
@@ -270,7 +323,7 @@ namespace GradingAdmin_client.ViewModels
             }
         }
 
-        internal void UpdateStatus(JObject obj)
+        internal void UpdateModuleStatus(JObject obj)
         {
             JToken message = obj.SelectToken("data");
 
@@ -278,6 +331,10 @@ namespace GradingAdmin_client.ViewModels
             {
                 this.ModuleFailOpacity = 0;
                 this.ModuleSuccesOpacity = 100;
+                this.handler.GetAllModules();
+
+                this.ModuleName = "";
+                this.ECTAmount = "";
             }
             else
             {
@@ -456,6 +513,8 @@ namespace GradingAdmin_client.ViewModels
 
         #endregion
 
+        #region LinkTeacher
+
         private List<User> _TeacherList;
         public List<User> TeacherList
         {
@@ -467,6 +526,89 @@ namespace GradingAdmin_client.ViewModels
             }
         }
 
+        private User _SelectedTeacher;
+        public User SelectedTeacher
+        {
+            get { return _SelectedTeacher; }
+            set
+            {
+                _SelectedTeacher = value;
+            }
+        }
+
+        private Module _SelectedTeacherModule;
+        public Module SelectedTeacherModule
+        {
+            get { return _SelectedTeacherModule; }
+            set
+            {
+                _SelectedTeacherModule = value;
+            }
+        }
+
+        private int _TeacherLinkOpacity;
+        public int TeacherLinkOpacity
+        {
+            get { return _TeacherLinkOpacity; }
+            set
+            {
+                _TeacherLinkOpacity = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("TeacherLinkOpacity"));
+            }
+        }
+
+        private int _TeacherLinkFailOpacity;
+        public int TeacherLinkFailOpacity
+        {
+            get { return _TeacherLinkFailOpacity; }
+            set
+            {
+                _TeacherLinkFailOpacity = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("TeacherLinkFailOpacity"));
+            }
+        }
+
+        private ICommand _LinkTeacherCommand;
+        public ICommand LinkTeacherCommand
+        {
+            get
+            {
+                if (_LinkTeacherCommand == null)
+                {
+                    _LinkTeacherCommand = new GeneralCommand(
+                        param => LinkTeacher()
+                        );
+                }
+                return _LinkTeacherCommand;
+            }
+        }
+
+        private void LinkTeacher()
+        {
+            if (SelectedTeacher != null && SelectedTeacherModule != null)
+            {
+                this.handler.AddTeacherToModule(SelectedTeacher, SelectedTeacherModule);
+            }
+        }
+
+        internal void UpdateTeacherLinkStatus(JObject obj)
+        {
+            JToken message = obj.SelectToken("data");
+
+            if (message.ToString() == "Succes")
+            {
+                this.TeacherLinkFailOpacity = 0;
+                this.TeacherLinkOpacity = 100;
+            }
+            else
+            {
+                this.TeacherLinkFailOpacity = 100;
+                this.TeacherLinkOpacity = 0;
+            }
+        }
+
+        #endregion
+
         private List<User> _StudentList;
         public List<User> StudentList
         {
@@ -475,6 +617,87 @@ namespace GradingAdmin_client.ViewModels
             {
                 _StudentList = value;
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StudentList"));
+            }
+        }
+
+        private User _SelectedStudent;
+        public User SelectedStudent
+        {
+            get { return _SelectedStudent; }
+            set
+            {
+                _SelectedStudent = value;
+            }
+        }
+
+        private Module _SelectedStudentModule;
+        public Module SelectedStudentModule
+        {
+            get { return _SelectedStudentModule; }
+            set
+            {
+                _SelectedStudentModule = value;
+            }
+        }
+
+        private int _StudentLinkOpacity;
+        public int StudentLinkOpacity
+        {
+            get { return _StudentLinkOpacity; }
+            set
+            {
+                _StudentLinkOpacity = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StudentLinkOpacity"));
+            }
+        }
+
+        private int _StudentLinkFailOpacity;
+        public int StudentLinkFailOpacity
+        {
+            get { return _StudentLinkFailOpacity; }
+            set
+            {
+                _StudentLinkFailOpacity = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StudentLinkFailOpacity"));
+            }
+        }
+
+        private ICommand _LinkStudentCommand;
+        public ICommand LinkStudentCommand
+        {
+            get
+            {
+                if (_LinkStudentCommand == null)
+                {
+                    _LinkStudentCommand = new GeneralCommand(
+                        param => LinkStudent()
+                        );
+                }
+                return _LinkStudentCommand;
+            }
+        }
+
+        private void LinkStudent()
+        {
+            if (SelectedStudent != null && SelectedStudentModule != null)
+            {
+                this.handler.AddStudentToModule(SelectedStudent, SelectedStudentModule);
+            }
+        }
+
+        internal void UpdateStudentLinkStatus(JObject obj)
+        {
+            JToken message = obj.SelectToken("data");
+
+            if (message.ToString() == "Succes")
+            {
+                this.StudentLinkFailOpacity = 0;
+                this.StudentLinkOpacity = 100;
+            }
+            else
+            {
+                this.StudentLinkFailOpacity = 100;
+                this.StudentLinkOpacity = 0;
             }
         }
     }
