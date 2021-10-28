@@ -16,7 +16,9 @@ namespace Gradings_Administration_client.FileIO
             // Getting the path
             string path = Path.Combine(DirectoryPath, "saved.usn");
 
-            // Creates new file if it doesnt exists, else overrides existing file
+            // Checking if file exists
+            if (!File.Exists(path)) return "";
+
             string text = await File.ReadAllTextAsync(path);
 
             return text;
@@ -27,9 +29,7 @@ namespace Gradings_Administration_client.FileIO
             // Getting the path
             string path = Path.Combine(DirectoryPath, "saved.usn");
 
-            // Checking if the file exists
-            if (!File.Exists(path)) return false;
-
+            // Creates new file if it doesnt exists, else overrides existing file
             await File.WriteAllTextAsync(path, username);
 
             return true;

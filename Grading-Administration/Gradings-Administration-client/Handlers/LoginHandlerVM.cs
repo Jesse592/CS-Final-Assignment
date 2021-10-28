@@ -2,6 +2,7 @@
 using Grading_Administraton_Shared.Entities;
 using GradingAdmin_client.ViewModels;
 using Gradings_Administration_client.Commands;
+using Gradings_Administration_client.FileIO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -26,14 +27,33 @@ namespace GradingAdmin_client.Handlers
             this.vm = view;
             UpdateViewCommand = new UpdateViewCommand(view);
             this.manager = ConnectionManager.GetConnectionManager();
+
+            LoadUsername();
         }
 
-        public void Login(string username, string password)
+        private async void LoadUsername()
+        {
+            string username = await FileReadWriter.ReadUsernameAsync();
+
+            // Checking if username is valid
+            if (username == null || username == "Not Saved") return;
+
+            this.vm.UserName = username;
+        }
+
+        public async void Login(string username, string password)
         {
             // Building and sending the login command to the server
             this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("login", JSONWrapper.WrapLogin(password, username))), LoginCallback);
 
             // Checking if the user wants to save username
+            string usernameToSave = this.vm.SavePassword ? username : "Not Saved";
+            
+            bool saveSuccesfull = await FileReadWriter.SaveUserNameAsync(usernameToSave);
+            
+            if (!saveSuccesfull)
+                Console.WriteLine("Username not saved correctly");
+
         }
 
         public void LoginCallback(JObject Jobject)
