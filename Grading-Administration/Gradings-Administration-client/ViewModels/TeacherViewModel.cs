@@ -93,7 +93,10 @@ namespace GradingAdmin_client.ViewModels
 
         public void CloseWindow(string message)
         {
-            this.window.Close();
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                this.window.Close();
+            });
             MessageBox.Show(message);
         }
     }

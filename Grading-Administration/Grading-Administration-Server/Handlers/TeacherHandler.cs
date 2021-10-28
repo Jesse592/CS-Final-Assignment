@@ -139,10 +139,10 @@ namespace Grading_Administration_Server.Handlers
         private async Task AddGrade(JObject data, int serial)
         {
             // Getting the ID's
-            int userID = JSONHelperServer.GetIDFromJSON(data, "StudentId");
-            int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
+            int userID = JSONHelperServer.GetIDFromJSON(data, "user.UserId");
+            int moduleID = JSONHelperServer.GetIDFromJSON(data, "module.ModuleId");
 
-            JObject gradeJSON = data.SelectToken("Grade") as JObject;
+            JObject gradeJSON = data.SelectToken("grade") as JObject;
 
             // Chechking is they are valid (not -1)
             if (userID == -1 || moduleID == -1 || gradeJSON == null)
