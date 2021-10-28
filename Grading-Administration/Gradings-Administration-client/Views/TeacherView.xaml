@@ -29,5 +29,6 @@
         </ListView>
         <Label Content="Modules" HorizontalAlignment="Left" Margin="48,72,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
         <Label Content="Student bij modules" HorizontalAlignment="Left" Margin="1065,72,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
+        <Label Content="{Binding WelcomMessage}" HorizontalAlignment="Left" Margin="48,25,0,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" FontStyle="Italic"/>
     </Grid>
 </UserControl>

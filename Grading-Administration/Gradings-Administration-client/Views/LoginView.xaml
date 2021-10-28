@@ -12,7 +12,7 @@
         <TextBox HorizontalAlignment="Left" Margin="119,69,0,0" Text="{Binding UserName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
         <Label Content="Wachtwoord:" HorizontalAlignment="Left" Margin="115,0,0,0" VerticalAlignment="Center"/>
-        <TextBox HorizontalAlignment="Left" Margin="119,115,0,0" Text="{Binding Password}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <PasswordBox HorizontalAlignment="Left" Margin="119,115,0,0" VerticalAlignment="Top" Width="120" PasswordChanged="PassBox_OnPasswordChanged"/>
         <Button Content="Login" HorizontalAlignment="Left" Margin="155,160,0,0" VerticalAlignment="Top" Command="{Binding SendLoginCommand}" CommandParameter="Login"/>
 
     </Grid>

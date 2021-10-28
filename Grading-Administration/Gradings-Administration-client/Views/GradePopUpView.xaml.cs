@@ -1,5 +1,4 @@
-﻿using GradingAdmin_client.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,22 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GradingAdmin_client.Views
+namespace Gradings_Administration_client.Views
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for GradePopUpView.xaml
     /// </summary>
-    public partial class LoginView : UserControl
+    public partial class GradePopUpView : Page
     {
-        public LoginView()
+        public GradePopUpView()
         {
             InitializeComponent();
-        }
-
-        private void PassBox_OnPasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (this.DataContext != null)
-            { ((LoginViewModel)this.DataContext).Password = ((PasswordBox)sender).Password; }
         }
     }
 }

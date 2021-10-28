@@ -25,13 +25,14 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="80">
                         <TextBlock Text="{Binding Name}" Padding="15" Width="50" Height="50"/>
-                        
+
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <Label Content="Cijfers" HorizontalAlignment="Left" Margin="48,72,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
         <Label Content="Modules" HorizontalAlignment="Left" Margin="1065,72,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
+        <Label Content="{Binding WelcomMessage}" HorizontalAlignment="Left" Margin="46,13,0,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" FontStyle="Italic"/>
 
 
 

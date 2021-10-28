@@ -35,6 +35,14 @@ namespace GradingAdmin_client.ViewModels
             get { return this.student.FirstName + " " + this.student.LastName; }
         }
 
+        public string WelcomMessage
+        {
+            get
+            {
+                return "Goedendag, " + StudentName;
+            }
+        }
+
         public int StudentID
         {
             get { return this.student.UserId; }

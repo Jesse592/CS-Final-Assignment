@@ -30,6 +30,19 @@ namespace GradingAdmin_client.ViewModels
             this.Students = new ObservableCollection<User>();
         }
 
+        public string TeacherName
+        {
+            get { return this.teacher.FirstName + " " + this.teacher.LastName; }
+        }
+
+        public string WelcomMessage
+        {
+            get
+            {
+                return "Goedendag, " + TeacherName;
+            }
+        }
+
         private ObservableCollection<Module> _Modules;
         public ObservableCollection<Module> Modules
         {
