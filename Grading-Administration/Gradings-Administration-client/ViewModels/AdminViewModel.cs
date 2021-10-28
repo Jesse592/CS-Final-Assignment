@@ -23,6 +23,7 @@ namespace GradingAdmin_client.ViewModels
             this.handler = new AdminHandlerVM(this);
 
             this.UserList = new List<User>();
+            this.ModuleList = new List<Module>();
 
             this.userTypes = new List<string>();
             this.userTypes.Add(UserType.STUDENT.ToString());
@@ -36,6 +37,7 @@ namespace GradingAdmin_client.ViewModels
             this.UserSuccesDeleteOpacity = 0;
 
             this.handler.GetAllUsers();
+            this.handler.GetAllModules();
         }
 
         #region AddUser
@@ -297,6 +299,19 @@ namespace GradingAdmin_client.ViewModels
             }
         }
 
+        private List<Module> _ModuleList;
+        public List<Module> ModuleList
+        {
+            get { return _ModuleList; }
+            set
+            {
+                _ModuleList = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ModuleList"));
+            }
+        }
+
+        #region DeleteUser
+
         private User _SelectedDeleteUser;
         public User SelectedDeleteUser
         {
@@ -337,6 +352,7 @@ namespace GradingAdmin_client.ViewModels
             {
                 this.UserSuccesDeleteOpacity = 100;
                 this.UserFailDeleteOpacity = 0;
+                this.handler.GetAllUsers();
             }
             else
             {
@@ -363,7 +379,103 @@ namespace GradingAdmin_client.ViewModels
         private void DeleteUser()
         {
             this.handler.DeleteUser(SelectedDeleteUser);
-            this.handler.GetAllUsers();
+        }
+
+        #endregion
+
+        #region DeleteModule
+
+        private Module _SelectedDeleteModule;
+        public Module SelectedDeleteModule
+        {
+            get { return _SelectedDeleteModule; }
+            set
+            {
+                _SelectedDeleteModule = value;
+            }
+        }
+
+        private int _ModuleSuccesDeleteOpacity;
+        public int ModuleSuccesDeleteOpacity
+        {
+            get { return _ModuleSuccesDeleteOpacity; }
+            set
+            {
+                _ModuleSuccesDeleteOpacity = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ModuleSuccesDeleteOpacity"));
+            }
+        }
+
+        private int _ModuleFailDeleteOpacity;
+        public int ModuleFailDeleteOpacity
+        {
+            get { return _ModuleFailDeleteOpacity; }
+            set
+            {
+                _ModuleFailDeleteOpacity = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ModuleFailDeleteOpacity"));
+            }
+        }
+
+        private ICommand _DeleteModuleCommand;
+        public ICommand DeleteModuleCommand
+        {
+            get
+            {
+                if (_DeleteModuleCommand == null)
+                {
+                    _DeleteModuleCommand = new GeneralCommand(
+                        param => DeleteModule()
+                        );
+                }
+                return _DeleteModuleCommand;
+            }
+        }
+
+        private void DeleteModule()
+        {
+            this.handler.DeleteModule(SelectedDeleteModule);
+        }
+
+        internal void UpdateDeleteModuleStatus(JObject obj)
+        {
+            JToken message = obj.SelectToken("data");
+
+            if (message.ToString() == "Succes")
+            {
+                this.ModuleSuccesDeleteOpacity = 100;
+                this.ModuleFailDeleteOpacity = 0;
+                this.handler.GetAllModules();
+            }
+            else
+            {
+                this.ModuleFailDeleteOpacity = 100;
+                this.ModuleSuccesDeleteOpacity = 0;
+            }
+        }
+
+        #endregion
+
+        private List<User> _TeacherList;
+        public List<User> TeacherList
+        {
+            get { return _TeacherList; }
+            set
+            {
+                _TeacherList = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("TeacherList"));
+            }
+        }
+
+        private List<User> _StudentList;
+        public List<User> StudentList
+        {
+            get { return _StudentList; }
+            set
+            {
+                _StudentList = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StudentList"));
+            }
         }
     }
 }

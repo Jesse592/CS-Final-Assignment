@@ -44,6 +44,9 @@ namespace GradingAdmin_client.Handlers
         public void GetAllUsersCallback(JObject obj)
         {
             List<User> UserList = new List<User>();
+            List<User> TeacherList = new List<User>();
+            List<User> StudentList = new List<User>();
+
             JToken UserArray = obj.SelectToken("data") as JArray;
 
             foreach (JObject j in UserArray)
@@ -56,7 +59,44 @@ namespace GradingAdmin_client.Handlers
                     j.SelectToken("UserType").Value<string>()));
             }
 
+            foreach (User u in UserList)
+            {
+                if (u.UserType == "0")
+                {
+                    StudentList.Add(u);
+                }
+                else if (u.UserType == "1")
+                {
+                    TeacherList.Add(u);
+                }
+            }
+
             this.view.UserList = UserList;
+            this.view.TeacherList = TeacherList;
+            this.view.StudentList = StudentList;
+        }
+
+        public void GetAllModules()
+        {
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetModules", new JObject())), GetAllModulesCallback);
+        }
+
+        public void GetAllModulesCallback(JObject obj)
+        {
+            List<Module> ModuleList = new List<Module>();
+            JToken ModuleArray = obj.SelectToken("data") as JArray;
+
+            foreach (JObject j in ModuleArray)
+            {
+                ModuleList.Add(new Module(j.SelectToken("ModuleId").Value<int>(), 
+                    j.SelectToken("Name").Value<string>(), 
+                    j.SelectToken("StartDate").Value<DateTime>(), 
+                    j.SelectToken("EndDate").Value<DateTime>(), 
+                    j.SelectToken("ETC").Value<int>(), 
+                    j.SelectToken("IsNumerical").Value<bool>()));
+            }
+
+            this.view.ModuleList = ModuleList;
         }
 
         public void NewModuleCallback(JObject obj)
@@ -81,7 +121,7 @@ namespace GradingAdmin_client.Handlers
 
         public void DeleteModuleCallback(JObject obj)
         {
-            throw new NotImplementedException();
+            this.view.UpdateDeleteModuleStatus(obj);
         }
 
         public void AddTeacherToModule(User u)
