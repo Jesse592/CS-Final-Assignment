@@ -22,6 +22,8 @@ namespace GradingAdmin_client.ViewModels
         {
             this.handler = new AdminHandlerVM(this);
 
+            this.UserList = new List<User>();
+
             this.userTypes = new List<string>();
             this.userTypes.Add(UserType.STUDENT.ToString());
             this.userTypes.Add(UserType.TEACHER.ToString());
@@ -29,6 +31,11 @@ namespace GradingAdmin_client.ViewModels
 
             this.ModuleSuccesOpacity = 0;
             this.ModuleFailOpacity = 0;
+
+            this.UserFailDeleteOpacity = 0;
+            this.UserSuccesDeleteOpacity = 0;
+
+            this.handler.GetAllUsers();
         }
 
         #region AddUser
@@ -149,6 +156,8 @@ namespace GradingAdmin_client.ViewModels
         }
 
         #endregion
+
+        #region AddModule
 
         private string _ModuleName;
         public string ModuleName
@@ -275,5 +284,71 @@ namespace GradingAdmin_client.ViewModels
             }
         }
 
+        #endregion
+
+        private List<User> _UserList;
+        public List<User> UserList
+        {
+            get { return _UserList; }
+            set
+            {
+                _UserList = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserList"));
+            }
+        }
+
+        private User _SelectedDeleteUser;
+        public User SelectedDeleteUser
+        {
+            get { return _SelectedDeleteUser; }
+            set
+            {
+                _SelectedDeleteUser = value;
+                DeleteUser();
+            }
+        }
+
+        private void DeleteUser()
+        {
+            this.handler.DeleteUser(SelectedDeleteUser);
+        }
+
+        private int _UserSuccesDeleteOpacity;
+        public int UserSuccesDeleteOpacity
+        {
+            get { return _UserSuccesDeleteOpacity; }
+            set
+            {
+                _UserSuccesDeleteOpacity = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserSuccesDeleteOpacity"));
+            }
+        }
+
+        private int _UserFailDeleteOpacity;
+        public int UserFailDeleteOpacity
+        {
+            get { return _UserFailDeleteOpacity; }
+            set
+            {
+                _UserFailDeleteOpacity = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("UserFailDeleteOpacity"));
+            }
+        }
+
+        internal void UpdateDeleteUserStatus(JObject obj)
+        {
+            JToken message = obj.SelectToken("data");
+
+            if (message.ToString() == "Succes")
+            {
+                this.UserSuccesDeleteOpacity = 100;
+                this.UserFailDeleteOpacity = 0;
+            }
+            else
+            {
+                this.UserFailDeleteOpacity = 100;
+                this.UserSuccesDeleteOpacity = 0;
+            }
+        }
     }
 }

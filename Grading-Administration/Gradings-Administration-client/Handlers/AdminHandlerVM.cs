@@ -36,6 +36,29 @@ namespace GradingAdmin_client.Handlers
             this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("CreateNewModule", JSONWrapper.WrapModule(m))), NewModuleCallback);
         }
 
+        public void GetAllUsers()
+        {
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetUsers", new JObject())), GetAllUsersCallback);
+        }
+
+        public void GetAllUsersCallback(JObject obj)
+        {
+            List<User> UserList = new List<User>();
+            JToken UserArray = obj.SelectToken("data") as JArray;
+
+            foreach (JObject j in UserArray)
+            {
+                UserList.Add(new User(j.SelectToken("UserId").Value<int>(),
+                    j.SelectToken("FirstName").Value<string>(),
+                    j.SelectToken("LastName").Value<string>(),
+                    j.SelectToken("DateOfBirth").Value<DateTime>(),
+                    j.SelectToken("Email").Value<string>(),
+                    j.SelectToken("UserType").Value<string>()));
+            }
+
+            this.view.UserList = UserList;
+        }
+
         public void NewModuleCallback(JObject obj)
         {
             throw new NotImplementedException();
@@ -48,7 +71,7 @@ namespace GradingAdmin_client.Handlers
 
         public void DeleteUserCallback(JObject obj)
         {
-            throw new NotImplementedException();
+            this.view.UpdateDeleteUserStatus(obj);
         }
 
         public void DeleteModule(Module m)

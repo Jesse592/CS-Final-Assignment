@@ -44,14 +44,16 @@
 
         <!-- Gebruiker verwijderen -->
         <Label Content="Gebruiker" HorizontalAlignment="Left" Margin="584,112,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
-        <ListView Width="600" Margin="586,166,734,662">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
+        <ListView Width="600" Margin="586,166,734,680" ItemsSource="{Binding UserList}" SelectedItem="{Binding SelectedDeleteUser}" Height="270">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="60">
+                        <Label Height="50" Content="{Binding FirstName}" Margin="11" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-        <Button Content="Docent verwijderen" HorizontalAlignment="Left" Margin="794,436,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
+        <Button Content="Docent verwijderen" HorizontalAlignment="Left" Margin="794,468,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
 
         <!-- Mody verwijderen -->
         <Label Content="Module" HorizontalAlignment="Left" Margin="584,562,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
@@ -106,6 +108,8 @@
         <Label Content="Wachtwoord" HorizontalAlignment="Left" Margin="276,310,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <Label Content="Succesvol toegevoegd" HorizontalAlignment="Left" Margin="118,568,0,0" VerticalAlignment="Top" FontStyle="Italic" Foreground="LightGreen" Opacity="{Binding ModuleSuccesOpacity}"/>
         <Label Content="Niet toegevoegd" HorizontalAlignment="Left" Margin="118,568,0,0" VerticalAlignment="Top" FontStyle="Italic" Foreground="Red" Opacity="{Binding ModuleFailOpacity}"/>
+        <Label Content="Gebruiker succesvol verwijderd" HorizontalAlignment="Left" Margin="694,118,0,0" VerticalAlignment="Top" Foreground="LightGreen" Opacity="{Binding UserSuccesDeleteOpacity}" FontStyle="Italic"/>
+        <Label Content="Gebruiker niet verwijderd" HorizontalAlignment="Left" Margin="694,118,0,0" VerticalAlignment="Top" Foreground="Red" Opacity="{Binding UserFailDeleteOpacity}" FontStyle="Italic"/>
 
     </Grid>
 </UserControl>
