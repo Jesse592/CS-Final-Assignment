@@ -59,5 +59,20 @@ namespace Grading_Administration_Server.Helper
 
             return newGrades;
         }
+
+        /// <summary>
+        /// Transforms a list modules to a list of sharedModues.
+        /// Sharedmodules are needed to prevent sending the client sensitive data
+        /// </summary>
+        /// <param name="modules">the modules to ben converted</param>
+        /// <returns>The list of shared grades</returns>
+        public static List<Grading_Administraton_Shared.Entities.Module> ModulesToShared(List<Module> modules)
+        {
+            // converting the grades to shared and filling the list
+            var newModules = new List<Grading_Administraton_Shared.Entities.Module>();
+            modules.ForEach(m => newModules.Add(m.ToSharedModule()));
+
+            return newModules;
+        }
     }
 }

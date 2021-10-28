@@ -26,15 +26,10 @@ namespace Grading_Administration_Server.Handlers
         /// Returns all the students
         /// </summary>
         /// <param name="serial">The ID-code from the client</param>
-        private async void GetStudents(int serial)
+        private async void GetUsers(int serial)
         {
-            // Getting all the students
-            List<User> students = await (from user in this.GradingDBContext.Users
-                                         where user.UserType == ((int)UserType.STUDENT).ToString()
-                                         select user).ToListAsync();
-
-            // transforming the list to shared users
-            var studentsShared = JSONHelperServer.UserToShared(students);
+            // transforming to shared users
+            var studentsShared = JSONHelperServer.UserToShared(await this.GradingDBContext.Users.ToListAsync());
 
             // Sending it to the client
             this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllUsers(studentsShared, serial)));
@@ -44,9 +39,13 @@ namespace Grading_Administration_Server.Handlers
         /// Returns all the modules that are saved in the database
         /// </summary>
         /// <param name="serial">The ID-code from the client</param>
-        private void GetModules(int serial)
+        private async void GetModules(int serial)
         {
-            throw new NotImplementedException();
+            // transforming to shared modules
+            var studentsShared = JSONHelperServer.ModulesToShared(await this.GradingDBContext.Modules.ToListAsync());
+
+            // Sending it to the client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllModules(studentsShared, serial)));
         }
 
         /// <summary>
@@ -54,9 +53,38 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The data for the new user, shared.User</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void CreateNewUser(JObject data, int serial)
+        private async void CreateNewUser(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting the values from the json data
+            string fname = data.SelectToken("FirstName")?.ToString();
+            string lname = data.SelectToken("LastName")?.ToString();
+            string email = data.SelectToken("Email")?.ToString();
+            string userType = data.SelectToken("UserType")?.ToString();
+            DateTime dob = DateTime.Parse(data.SelectToken("DateOfBirth")?.ToString());
+
+            // Checking if all required data is retreived, send failed if not
+            if (fname == null || lname == null || email == null || userType == null)
+            {
+                this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
+                return;
+            }
+
+            User user = new User()
+            {
+                FirstName = fname,
+                LastName = lname,
+                Email = email,
+                UserType = userType,
+                DateOfBirth = dob
+            };
+
+            this.GradingDBContext.Users.Add(user);
+
+            // Saving the user to the database
+            await this.GradingDBContext.SaveChangesAsync();
+
+            // Sending acknowledgement of succes to client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeSucces(serial)));
         }
 
         /// <summary>
@@ -64,9 +92,39 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data"></param>
         /// <param name="serial">The ID-code from the client</param>
-        private void CreateNewModule(JObject data, int serial)
+        private async void CreateNewModule(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting the values from the json data
+            string name = data.SelectToken("Name")?.ToString();
+            DateTime startDate = DateTime.Parse(data.SelectToken("StartDate")?.ToString());
+            DateTime endDate = DateTime.Parse(data.SelectToken("EndDate")?.ToString());
+
+            int etc = data.SelectToken("ETC").ToObject<int>();
+            bool numerical = bool.Parse(data.SelectToken("IsNumerical").ToString());
+
+            // Checking if all required data is retreived
+            if (name == null)
+            {
+                this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
+                return;
+            }
+
+            Module module = new Module()
+            {
+                Name = name,
+                StartDate = startDate,
+                EndDate = endDate,
+                ETC = etc,
+                IsNumerical = numerical
+            };
+
+            this.GradingDBContext.Modules.Add(module);
+
+            // Saving the user to the database
+            await this.GradingDBContext.SaveChangesAsync();
+
+            // Sending acknowledgement of succes to client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeSucces(serial)));
         }
 
         /// <summary>
@@ -74,9 +132,30 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The data for he module and user</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void AddUserToModule(JObject data, int serial)
+        private async void AddUserToModule(JObject data, int serial)    
         {
-            throw new NotImplementedException();
+            // Getting the module and user IDs
+            int userID = JSONHelperServer.GetIDFromJSON(data, "UserId");
+            int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
+
+            // Chechking is they are valid (not -1)
+            if (userID == -1 || moduleID == -1)
+            {
+                return;
+            }
+            // Getting the objects from the database
+            User user = await this.GradingDBContext.Users.FindAsync(userID);
+            Module module = await this.GradingDBContext.Modules.FindAsync(moduleID);
+
+            // Checking if the objects can be found
+            if (user == null || module == null) return;
+
+            // Creating the contribution object
+            ModuleContribution contribution = new ModuleContribution(user, module, new List<Grade>());
+
+            this.GradingDBContext.moduleContributions.Add(contribution);
+
+            await this.GradingDBContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -84,9 +163,22 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The user ID to be deleted</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void DeleteUser(JObject data, int serial)
+        private async  void DeleteUser(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting the userID
+            int userID = JSONHelperServer.GetIDFromJSON(data, "StudentId");
+
+            // Checking if the value is oke
+            if (userID == -1) return;
+
+            // Getting the user from the databse if exists
+            User user = await this.GradingDBContext.Users.FindAsync(userID);
+
+            if (user == null) return;
+
+            this.GradingDBContext.Users.Remove(user);
+            
+            await this.GradingDBContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -94,9 +186,22 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The module data to be deleted</param>
         /// <param name="serial">The ID-code from the client</param>
-        private void DeleteModule(JObject data, int serial)
+        private async void DeleteModule(JObject data, int serial)
         {
-            throw new NotImplementedException();
+            // Getting the moduleID
+            int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
+
+            // Checking if the value is oke
+            if (moduleID == -1) return;
+
+            // Getting the module from the databse if exists
+            Module module = await this.GradingDBContext.Modules.FindAsync(moduleID);
+
+            if (module == null) return;
+
+            this.GradingDBContext.Modules.Remove(module);
+
+            await this.GradingDBContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -105,7 +210,7 @@ namespace Grading_Administration_Server.Handlers
         protected override void Init()
         {
             // Get actions
-            this.Actions.Add("GetStudents", (j, s) => GetStudents(s));
+            this.Actions.Add("GetUsers", (j, s) => GetUsers(s));
             this.Actions.Add("GetModules", (j,s) => GetModules(s));
 
             // Create actions
