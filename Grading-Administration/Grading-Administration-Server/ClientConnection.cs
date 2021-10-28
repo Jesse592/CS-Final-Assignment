@@ -112,7 +112,7 @@ namespace GradingAdministration_server
 
             int serial = loginDetails.SelectToken("serial").ToObject<int>();
 
-            // query for user that mathes the username and password
+            // query for user that mathes the username and passwor
             User user = await (from dt in this.GradingDBContext.LoginDetails
                          where dt.UserName == userName && dt.Password == passWord
                          select dt.User).FirstOrDefaultAsync();
@@ -122,10 +122,6 @@ namespace GradingAdministration_server
                 // login succes
                 SetupLoginHandler(user);
                 SendMessage(JObject.FromObject(JSONWrapperServer.LoginCorrect(user.ToSharedUser(), serial)));
-
-                // TEST REMOVE PLEASE REMOVE, forcing creating teacher handler + command
-                this.handler = new AdminHandler(this.GradingDBContext, user, SendMessage);
-                this.handler?.Invoke("AddUserToModule", JObject.FromObject( new { ModuleId = 10, UserId = 7}), 8);
             }
             else
                 // login failed

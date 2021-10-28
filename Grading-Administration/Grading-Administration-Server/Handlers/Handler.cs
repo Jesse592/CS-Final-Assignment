@@ -31,7 +31,7 @@ namespace Grading_Administration_Server.Handlers
         public void Invoke(string command, JObject data, int serial)
         {
             if (this.Actions.ContainsKey(command))
-                this.Actions[command].Invoke(data, serial);
+                 this.Actions[command].Invoke(data, serial);
         }
 
         /// <summary>

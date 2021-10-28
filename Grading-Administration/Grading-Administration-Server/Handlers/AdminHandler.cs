@@ -26,10 +26,12 @@ namespace Grading_Administration_Server.Handlers
         /// Returns all the students
         /// </summary>
         /// <param name="serial">The ID-code from the client</param>
-        private async void GetUsers(int serial)
+        private void GetUsers(int serial)
         {
             // transforming to shared users
-            var studentsShared = JSONHelperServer.UserToShared(await this.GradingDBContext.Users.ToListAsync());
+            List<User> users = this.GradingDBContext.Users.ToList();
+
+            var studentsShared = JSONHelperServer.UserToShared(users);
 
             // Sending it to the client
             this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllUsers(studentsShared, serial)));
@@ -56,14 +58,18 @@ namespace Grading_Administration_Server.Handlers
         private async void CreateNewUser(JObject data, int serial)
         {
             // Getting the values from the json data
-            string fname = data.SelectToken("FirstName")?.ToString();
-            string lname = data.SelectToken("LastName")?.ToString();
-            string email = data.SelectToken("Email")?.ToString();
-            string userType = data.SelectToken("UserType")?.ToString();
-            DateTime dob = DateTime.Parse(data.SelectToken("DateOfBirth")?.ToString());
+            string fname = data.SelectToken("user.FirstName")?.ToString();
+            string lname = data.SelectToken("user.LastName")?.ToString();
+            string email = data.SelectToken("user.Email")?.ToString();
+            string userType = data.SelectToken("user.UserType")?.ToString();
+            DateTime dob = DateTime.Parse(data.SelectToken("user.DateOfBirth")?.ToString());
+
+            //Getting the default username and password
+            string username = data.SelectToken("username")?.ToString();
+            string password = data.SelectToken("password")?.ToString();
 
             // Checking if all required data is retreived, send failed if not
-            if (fname == null || lname == null || email == null || userType == null)
+            if (fname == null || lname == null || email == null || userType == null || username == null || password == null)
             {
                 this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
                 return;
@@ -78,7 +84,16 @@ namespace Grading_Administration_Server.Handlers
                 DateOfBirth = dob
             };
 
+            LoginDetail loginDetail = new LoginDetail()
+            {
+                UserId = user.UserId,
+                User = user,
+                UserName = username,
+                Password = password
+            };
+
             this.GradingDBContext.Users.Add(user);
+            this.GradingDBContext.LoginDetails.Add(loginDetail);
 
             // Saving the user to the database
             await this.GradingDBContext.SaveChangesAsync();
@@ -95,12 +110,12 @@ namespace Grading_Administration_Server.Handlers
         private async void CreateNewModule(JObject data, int serial)
         {
             // Getting the values from the json data
-            string name = data.SelectToken("Name")?.ToString();
-            DateTime startDate = DateTime.Parse(data.SelectToken("StartDate")?.ToString());
-            DateTime endDate = DateTime.Parse(data.SelectToken("EndDate")?.ToString());
+            string name = data.SelectToken("module.Name")?.ToString();
+            DateTime startDate = DateTime.Parse(data.SelectToken("module.StartDate")?.ToString());
+            DateTime endDate = DateTime.Parse(data.SelectToken("module.EndDate")?.ToString());
 
-            int etc = data.SelectToken("ETC").ToObject<int>();
-            bool numerical = bool.Parse(data.SelectToken("IsNumerical").ToString());
+            int etc = data.SelectToken("module.ETC").ToObject<int>();
+            bool numerical = bool.Parse(data.SelectToken("module.IsNumerical").ToString());
 
             // Checking if all required data is retreived
             if (name == null)
@@ -169,7 +184,11 @@ namespace Grading_Administration_Server.Handlers
             int userID = JSONHelperServer.GetIDFromJSON(data, "StudentId");
 
             // Checking if the value is oke
-            if (userID == -1) return;
+            if (userID == -1)
+            {
+                this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
+                return;
+            }
 
             // Getting the user from the databse if exists
             User user = await this.GradingDBContext.Users.FindAsync(userID);
@@ -179,6 +198,9 @@ namespace Grading_Administration_Server.Handlers
             this.GradingDBContext.Users.Remove(user);
             
             await this.GradingDBContext.SaveChangesAsync();
+
+            // Sending acknowledgement of succes to client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeSucces(serial)));
         }
 
         /// <summary>
@@ -192,7 +214,11 @@ namespace Grading_Administration_Server.Handlers
             int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
 
             // Checking if the value is oke
-            if (moduleID == -1) return;
+            if (moduleID == -1)
+            {
+                this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeFailed(serial)));
+                return;
+            }
 
             // Getting the module from the databse if exists
             Module module = await this.GradingDBContext.Modules.FindAsync(moduleID);
@@ -202,6 +228,9 @@ namespace Grading_Administration_Server.Handlers
             this.GradingDBContext.Modules.Remove(module);
 
             await this.GradingDBContext.SaveChangesAsync();
+
+            // Sending acknowledgement of succes to client
+            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.AcknowledgeSucces(serial)));
         }
 
         /// <summary>
