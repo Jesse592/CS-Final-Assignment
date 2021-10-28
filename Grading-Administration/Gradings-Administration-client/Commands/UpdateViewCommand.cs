@@ -9,10 +9,17 @@ using System.Windows.Input;
 
 namespace Gradings_Administration_client.Commands
 {
+    /// <summary>
+    /// Command that is called when a databinded button is pressed
+    /// </summary>
     class UpdateViewCommand : ICommand
     {
         private LoginViewModel LginView;
 
+        /// <summary>
+        /// Constructor of the command
+        /// </summary>
+        /// <param name="loginModel">The login panel to switch to</param>
         public UpdateViewCommand(LoginViewModel loginModel)
         {
             this.LginView = loginModel;
@@ -20,31 +27,23 @@ namespace Gradings_Administration_client.Commands
 
         public event EventHandler CanExecuteChanged;
 
+        /// <summary>
+        /// Tells if the command can be executed
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns>If the command can execute</returns>
         public bool CanExecute(object parameter)
         {
             return true;
         }
 
+        /// <summary>
+        /// Executes the command
+        /// </summary>
+        /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            /*
-                switch (LginView.User.UserType)
-                {
-                    case "Student":
-                        this.LginView.SelectedViewModel = new StudentViewModel(LginView.User);
-                        break;
-                    case "Teacher":
-                        this.LginView.SelectedViewModel = new TeacherViewModel(LginView.User);
-                        break;
-                    case "Admin":
-                        this.LginView.SelectedViewModel = new AdminViewModel();
-                        break;
-                    default:
-                        this.LginView.SendError("Onjuiste gebruiker");
-                        break;
-                }
-            */
-
+            
         }
     }
 }
