@@ -122,10 +122,6 @@ namespace GradingAdministration_server
                 // login succes
                 SetupLoginHandler(user);
                 SendMessage(JObject.FromObject(JSONWrapperServer.LoginCorrect(user.ToSharedUser(), serial)));
-
-                // TEST REMOVE PLEASE REMOVE, forcing creating teacher handler + command
-                this.handler = new AdminHandler(this.GradingDBContext, user, SendMessage);
-                this.handler?.Invoke("AddUserToModule", JObject.FromObject( new { ModuleId = 10, UserId = 7}), 8);
             }
             else
                 // login failed
