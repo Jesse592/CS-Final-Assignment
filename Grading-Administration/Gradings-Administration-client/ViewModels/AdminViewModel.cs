@@ -57,6 +57,50 @@ namespace GradingAdmin_client.ViewModels
             }
         }
 
+        private string _UserName;
+        public string UserName
+        {
+            get { return _UserName; }
+            set
+            {
+                _UserName = value;
+            }
+        }
+
+        private string _Password;
+        public string Password
+        {
+            get { return _Password; }
+            set
+            {
+                _Password = value;
+            }
+        }
+
+        private ICommand _AddUserCommand;
+        public ICommand AddUserCommand
+        {
+            get
+            {
+                if (_AddUserCommand == null)
+                {
+                    _AddUserCommand = new GeneralCommand(
+                        param => AddUser()
+                        );
+                }
+                return _AddUserCommand;
+            }
+        }
+
+        private void AddUser()
+        {
+            if (this.FirstName != "" && this.LastName != "" && this.Mail != "" && this.UserName != "" && this.Password != "")
+            {
+                User u = new User(0, this.FirstName, this.LastName, this.BirthDate, this.Mail, this.userType);
+                this.handler.NewUser(u, this.UserName, this.Password);
+            }
+        }
+
         private DateTime _Birthdate;
         public DateTime BirthDate
         {
@@ -77,8 +121,8 @@ namespace GradingAdmin_client.ViewModels
             }
         }
 
-        private int _userType;
-        public int userType
+        private string _userType;
+        public string userType
         {
             get { return _userType; }
             set
@@ -95,33 +139,6 @@ namespace GradingAdmin_client.ViewModels
             {
                 _CurrentDate = value;
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentDate"));
-            }
-        }
-
-        private ICommand _AddUser;
-        public ICommand AddUser
-        {
-            get
-            {
-                if (_AddUser == null)
-                {
-                    _AddUser = new GeneralCommand(
-                        param => SendUser()
-                        ); ;
-                }
-                return _AddUser;
-            }
-
-        }
-
-        private void SendUser()
-        {
-            if (FirstName == "" || LastName == "" || Mail == "")
-            {
-
-            } else
-            {
-                User u = new User(0, FirstName, LastName, BirthDate, Mail, userType + "");
             }
         }
     }

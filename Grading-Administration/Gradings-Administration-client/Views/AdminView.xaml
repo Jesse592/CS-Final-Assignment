@@ -19,7 +19,7 @@
         <Label Content="E-mail" HorizontalAlignment="Left" Margin="32,236,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <TextBox HorizontalAlignment="Left" Margin="38,270,0,0" Text="{Binding Mail}" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="438"/>
         <DatePicker HorizontalAlignment="Left" Margin="38,410,0,0" VerticalAlignment="Top" Height="35" Width="200" SelectedDate="{Binding BirthDate}" DisplayDate="{Binding DateTime.Now}"/>
-        <Button Content="Gebruiker toevoegen" HorizontalAlignment="Left" Margin="170,468,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
+        <Button Content="Gebruiker toevoegen" HorizontalAlignment="Left" Margin="170,468,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15" Command="{Binding AddUserCommand}"/>
         <Label Content="Geboortedatum" HorizontalAlignment="Left" Margin="32,378,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <Label Content="Type gebruiker" HorizontalAlignment="Left" Margin="272,378,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <ComboBox HorizontalAlignment="Left" Margin="272,410,0,0" VerticalAlignment="Top" Height="30" Width="200" SelectedIndex="{Binding userType}" ItemsSource="{Binding userTypes}"/>

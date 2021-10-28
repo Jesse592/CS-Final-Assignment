@@ -18,9 +18,9 @@ namespace GradingAdmin_client.Handlers
             this.manager = ConnectionManager.GetConnectionManager();
         }
 
-        public void NewUser(User u)
+        public void NewUser(User u, string username, string password)
         {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("NewUser", JSONWrapper.WrapUser(u))), NewUSerCallback);
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("CreateNewUser", JSONWrapper.WrapNewUser(u, username, password))), NewUSerCallback);
         }
 
         public void NewUSerCallback(JObject obj)

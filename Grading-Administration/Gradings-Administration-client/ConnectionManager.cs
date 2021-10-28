@@ -29,7 +29,7 @@ namespace GradingAdmin_client
 
         private ConnectionManager()
         {
-            TcpClient connection = new TcpClient("127.0.0.1", 6969);
+            TcpClient connection = new TcpClient("145.49.56.142", 6969);
             this.TCPHandler = new TCPHandler(connection.GetStream());
             this.TCPHandler.SetRunning(true);
 

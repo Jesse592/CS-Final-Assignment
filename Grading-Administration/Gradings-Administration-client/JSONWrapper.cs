@@ -69,5 +69,15 @@ namespace GradingAdmin_client
                 user
             };
         }
+
+        public static object WrapNewUser(User u, string username, string password)
+        {
+            return new
+            {
+                user = u,
+                username =username,
+                password = password
+            };
+        }
     }
 }
