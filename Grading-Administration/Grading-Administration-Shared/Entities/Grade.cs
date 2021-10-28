@@ -10,8 +10,15 @@ using System.Threading.Tasks;
 
 namespace Grading_Administraton_Shared.Entities
 {
+    /// <summary>
+    /// Grade class that will be send over the network
+    /// </summary>
     public class Grade
     {
+        /// <summary>
+        /// Constructor that parses a Grade JSON object to a Grade object
+        /// </summary>
+        /// <param name="jObject">The json object to be parsed</param>
         public Grade(JObject jObject) {
             this.Time = jObject.SelectToken("Time").Value<DateTime>();
             this.NumericalGrade = jObject.SelectToken("NumericalGrade").Value<Double>();
@@ -20,6 +27,10 @@ namespace Grading_Administraton_Shared.Entities
             this.Name = "-";
         }
 
+        /// <summary>
+        /// Constructor that parses a Grade JSON object to a Grade object
+        /// </summary>
+        /// <param name="jObject">The json object to be parsed</param>
         public Grade(JObject jObject, JToken name)
         {
             this.Time = jObject.SelectToken("Time").Value<DateTime>();
@@ -29,6 +40,13 @@ namespace Grading_Administraton_Shared.Entities
             this.Name = name.Value<string>();
         }
         
+        /// <summary>
+        /// Grade constructor
+        /// </summary>
+        /// <param name="time">The time of the grade</param>
+        /// <param name="numericalGrade">Number grade</param>
+        /// <param name="letterGrade">Letter grade</param>
+        /// <param name="delimiter">The grade needed to pass</param>
         public Grade(DateTime time, double numericalGrade, string letterGrade, double delimiter)
         {
             Time = time;
