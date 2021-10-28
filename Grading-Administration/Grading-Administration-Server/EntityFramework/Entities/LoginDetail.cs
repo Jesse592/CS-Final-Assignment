@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Grading_Administration_Server.EntityFramework.models
 {
+    /// <summary>
+    /// Class that holds login details of a user
+    /// </summary>
     public class LoginDetail
     {
         [Required]

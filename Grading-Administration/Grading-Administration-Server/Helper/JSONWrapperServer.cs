@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Grading_Administration_Server.Helper
 {
+    /// <summary>
+    /// Class that holds wrapper methods for JSON object
+    /// </summary>
     public static class JSONWrapperServer
     {
         public static object WrapHeader(string command, object data, int serial)

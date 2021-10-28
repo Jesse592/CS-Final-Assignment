@@ -15,10 +15,14 @@ using System.Threading.Tasks;
 
 namespace GradingAdministration_server
 {
+    /// <summary>
+    /// Handles the connection between one client and the server
+    /// </summary>
     class ClientConnection
     {
         private readonly GradingDBContext GradingDBContext;
 
+        // Handler is null al long as the user in not correctly logged in
         private Handler handler;
 
         private readonly TcpClient client;

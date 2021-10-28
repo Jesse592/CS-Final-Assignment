@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Grading_Administration_Server.Handlers
 {
+    /// <summary>
+    /// Handler that handles the commands accesable to a teacher
+    /// </summary>
     class TeacherHandler : Handler
     {
         private readonly GradingDBContext GradingDBContext;

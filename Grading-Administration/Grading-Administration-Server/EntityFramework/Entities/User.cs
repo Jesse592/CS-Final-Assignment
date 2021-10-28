@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Grading_Administration_Server.EntityFramework.models
 {
+    /// <summary>
+    /// Class that represents a user in the database
+    /// </summary>
     public class User
     {
 
@@ -31,11 +34,18 @@ namespace Grading_Administration_Server.EntityFramework.models
 
         public virtual ICollection<ModuleContribution> Modules { get; set; }
 
+        /// <summary>
+        /// Empty constructor for user
+        /// </summary>
         public User()
         {
             Modules = new List<ModuleContribution>();
         }
 
+        /// <summary>
+        /// Transforms this user to a Shared user, save to send to clients
+        /// </summary>
+        /// <returns>The shared user</returns>
         public Grading_Administraton_Shared.Entities.User ToSharedUser()
         {
             return new Grading_Administraton_Shared.Entities.User(this.UserId, this.FirstName, this.LastName, this.DateOfBirth, this.Email, this.UserType);

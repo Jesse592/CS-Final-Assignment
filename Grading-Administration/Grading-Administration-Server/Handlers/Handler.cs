@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace Grading_Administration_Server.Handlers
 {
+    /// <summary>
+    /// Abstract class that holds all the commands that can be called at a given state
+    /// </summary>
     public abstract class Handler
     {
+        // delegate that is a action call from the client
         public delegate Task CommandAction(JObject data, int identifier);
 
         protected Dictionary<string, CommandAction> Actions;

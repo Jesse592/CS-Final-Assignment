@@ -3,7 +3,9 @@ using System.Data.Entity;
 
 namespace Grading_Administration_Server.EntityFramework
 {
-
+    /// <summary>
+    /// Context to acces the database with
+    /// </summary>
     public class GradingDBContext : DbContext
     {
 
@@ -15,6 +17,9 @@ namespace Grading_Administration_Server.EntityFramework
 
         private const string connectionString = "Server=(localdb)\\mssqllocaldb;Database=EFCore;Trusted_Connection=True;";
 
+        /// <summary>
+        /// Empty constructor for the grading context
+        /// </summary>
         public GradingDBContext() : base("GradingDB")
         {
         }

@@ -5,6 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Grading_Administration_Server.EntityFramework.models
 {
+    /// <summary>
+    /// Class that represents a contribution of a user to a module
+    /// </summary>
     public class ModuleContribution
     {
         [Key]
@@ -21,11 +24,20 @@ namespace Grading_Administration_Server.EntityFramework.models
         [Required]
         public virtual ICollection<Grade> grades { get; set; }
 
+        /// <summary>
+        /// Empty constructor for ModuleContribution
+        /// </summary>
         public ModuleContribution()
         {
             grades = new List<Grade>();
         }
 
+        /// <summary>
+        /// Normal constructor for ModuleContribution
+        /// </summary>
+        /// <param name="user">The user in the contribution</param>
+        /// <param name="module">The module in this contribution</param>
+        /// <param name="grades">the grades the user has in this module</param>
         public ModuleContribution(User user, Module module, ICollection<Grade> grades)
         {
             User = user;

@@ -11,11 +11,20 @@ using System.Threading.Tasks;
 
 namespace Grading_Administration_Server.Handlers
 {
+    /// <summary>
+    /// Handler that handles all command for a admin
+    /// </summary>
     class AdminHandler : Handler
     {
         private readonly GradingDBContext GradingDBContext;
         private User User;
 
+        /// <summary>
+        /// Constructor for the admin handler
+        /// </summary>
+        /// <param name="gradingDBContext">The context to acces the database</param>
+        /// <param name="user">The user that logged in as admin</param>
+        /// <param name="sendAction">The action called with the awnser of the action</param>
         public AdminHandler(GradingDBContext gradingDBContext, User user, Action<JObject> sendAction) : base(sendAction)
         {
             this.GradingDBContext = gradingDBContext;
