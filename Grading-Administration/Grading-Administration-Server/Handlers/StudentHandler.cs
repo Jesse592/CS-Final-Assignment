@@ -36,7 +36,7 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The json data that has the user</param>
         /// <param name="serial">The id-code given by the client</param>
-        public async void GetAllGrades(JObject data, int serial)
+        public async Task GetAllGrades(JObject data, int serial)
         {
             // Getting the userID
             int userID = JSONHelperServer.GetIDFromJSON(data, "user.UserId");
@@ -83,23 +83,25 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The json that contains the student</param>
         /// <param name="serial">The ID-code given by the client</param>
-        public void GetModules(JObject data, int serial)
+        public Task GetModules(JObject data, int serial)
         {
             // Getting the userID
             int userID = JSONHelperServer.GetIDFromJSON(data, "user.UserId");
 
             // Ignoring if the userID is -1 and given user is not the correct user
-            if (userID == -1 || userID != this.user?.UserId) return;
+            if (userID == -1 || userID != user?.UserId)
+                return Task.CompletedTask;
 
             // Create a list with shared Modules to be sent to the user
             var modules = new List<Grading_Administraton_Shared.Entities.Module>();
 
-            foreach(ModuleContribution m in this.user?.Modules)
+            foreach(ModuleContribution m in user?.Modules)
             {
                 modules.Add(m.Module.ToSharedModule());
             };
 
-            this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllModules(modules, serial)));
+            SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllModules(modules, serial)));
+            return Task.CompletedTask;
         }
 
         /// <summary>

@@ -9,7 +9,9 @@ namespace Grading_Administration_Server.Handlers
 {
     abstract class Handler
     {
-        protected Dictionary<string, Action<JObject, int>> Actions;
+        public delegate Task CommandAction(JObject data, int identifier);
+
+        protected Dictionary<string, CommandAction> Actions;
         protected Action<JObject> SendAction;
 
         /// <summary>
@@ -17,7 +19,7 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         protected Handler(Action<JObject> sendAction)
         {
-            this.Actions = new Dictionary<string, Action<JObject, int>>();
+            this.Actions = new Dictionary<string, CommandAction>();
             this.SendAction = sendAction;
 
             Init();
@@ -28,10 +30,10 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="command">The command that is called to the handler</param>
         /// <param name="data">The data given</param>
-        public void Invoke(string command, JObject data, int serial)
+        public async Task Invoke(string command, JObject data, int serial)
         {
             if (this.Actions.ContainsKey(command))
-                 this.Actions[command].Invoke(data, serial);
+                 await this.Actions[command].Invoke(data, serial);
         }
 
         /// <summary>

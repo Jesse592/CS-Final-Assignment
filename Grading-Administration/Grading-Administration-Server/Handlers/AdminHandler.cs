@@ -26,10 +26,10 @@ namespace Grading_Administration_Server.Handlers
         /// Returns all the students
         /// </summary>
         /// <param name="serial">The ID-code from the client</param>
-        private void GetUsers(int serial)
+        private async Task GetUsers(int serial)
         {
             // transforming to shared users
-            List<User> users = this.GradingDBContext.Users.ToList();
+            List<User> users = await this.GradingDBContext.Users.ToListAsync();
 
             var studentsShared = JSONHelperServer.UserToShared(users);
 
@@ -41,7 +41,7 @@ namespace Grading_Administration_Server.Handlers
         /// Returns all the modules that are saved in the database
         /// </summary>
         /// <param name="serial">The ID-code from the client</param>
-        private async void GetModules(int serial)
+        private async Task GetModules(int serial)
         {
             // transforming to shared modules
             var studentsShared = JSONHelperServer.ModulesToShared(await this.GradingDBContext.Modules.ToListAsync());
@@ -55,7 +55,7 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The data for the new user, shared.User</param>
         /// <param name="serial">The ID-code from the client</param>
-        private async void CreateNewUser(JObject data, int serial)
+        private async Task CreateNewUser(JObject data, int serial)
         {
             // Getting the values from the json data
             string fname = data.SelectToken("user.FirstName")?.ToString();
@@ -107,7 +107,7 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data"></param>
         /// <param name="serial">The ID-code from the client</param>
-        private async void CreateNewModule(JObject data, int serial)
+        private async Task CreateNewModule(JObject data, int serial)
         {
             // Getting the values from the json data
             string name = data.SelectToken("module.Name")?.ToString();
@@ -147,7 +147,7 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The data for he module and user</param>
         /// <param name="serial">The ID-code from the client</param>
-        private async void AddUserToModule(JObject data, int serial)    
+        private async Task AddUserToModule(JObject data, int serial)    
         {
             // Getting the module and user IDs
             int userID = JSONHelperServer.GetIDFromJSON(data, "UserId");
@@ -178,7 +178,7 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The user ID to be deleted</param>
         /// <param name="serial">The ID-code from the client</param>
-        private async  void DeleteUser(JObject data, int serial)
+        private async Task DeleteUser(JObject data, int serial)
         {
             // Getting the userID
             int userID = JSONHelperServer.GetIDFromJSON(data, "user.UserId");
@@ -208,10 +208,10 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The module data to be deleted</param>
         /// <param name="serial">The ID-code from the client</param>
-        private async void DeleteModule(JObject data, int serial)
+        private async Task DeleteModule(JObject data, int serial)
         {
             // Getting the moduleID
-            int moduleID = JSONHelperServer.GetIDFromJSON(data, "ModuleId");
+            int moduleID = JSONHelperServer.GetIDFromJSON(data, "module.ModuleId");
 
             // Checking if the value is oke
             if (moduleID == -1)
@@ -239,8 +239,8 @@ namespace Grading_Administration_Server.Handlers
         protected override void Init()
         {
             // Get actions
-            this.Actions.Add("GetUsers", (j, s) => GetUsers(s));
-            this.Actions.Add("GetModules", (j,s) => GetModules(s));
+            this.Actions.Add("GetUsers", async (j, s) => await GetUsers(s));
+            this.Actions.Add("GetModules", async (j,s) => await GetModules(s));
 
             // Create actions
             this.Actions.Add("CreateNewUser", CreateNewUser);
