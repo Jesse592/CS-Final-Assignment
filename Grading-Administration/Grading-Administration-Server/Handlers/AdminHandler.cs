@@ -163,8 +163,14 @@ namespace Grading_Administration_Server.Handlers
             User user = await this.GradingDBContext.Users.FindAsync(userID);
             Module module = await this.GradingDBContext.Modules.FindAsync(moduleID);
 
+            // Checking if the connection already exists
+            ModuleContribution contrubutionCheck = await (from cn in this.GradingDBContext.moduleContributions
+                                                          where cn.UserId == user.UserId &&
+                                                          cn.ModuleId == module.ModuleId
+                                                          select cn).FirstOrDefaultAsync();
+
             // Checking if the objects can be found
-            if (user == null || module == null) return;
+            if (user == null || module == null  || contrubutionCheck != null) return;
 
             // Creating the contribution object
             ModuleContribution contribution = new ModuleContribution(user, module, new List<Grade>());
