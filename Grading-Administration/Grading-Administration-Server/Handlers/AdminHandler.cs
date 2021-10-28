@@ -26,10 +26,12 @@ namespace Grading_Administration_Server.Handlers
         /// Returns all the students
         /// </summary>
         /// <param name="serial">The ID-code from the client</param>
-        private async void GetUsers(int serial)
+        private void GetUsers(int serial)
         {
             // transforming to shared users
-            var studentsShared = JSONHelperServer.UserToShared(await this.GradingDBContext.Users.ToListAsync());
+            List<User> users = this.GradingDBContext.Users.ToList();
+
+            var studentsShared = JSONHelperServer.UserToShared(users);
 
             // Sending it to the client
             this.SendAction?.Invoke(JObject.FromObject(JSONWrapperServer.GetAllUsers(studentsShared, serial)));
