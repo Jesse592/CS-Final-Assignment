@@ -14,7 +14,7 @@ namespace Grading_Administration_Server.Handlers
     /// <summary>
     /// Class that extends Handler. It handles all the command for the STUDENT usertype
     /// </summary>
-    class StudentHandler : Handler
+    public class StudentHandler : Handler
     {
         private readonly GradingDBContext GradingDBContext;
         private User user;

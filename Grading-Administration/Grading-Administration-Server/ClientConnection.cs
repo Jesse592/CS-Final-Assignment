@@ -38,7 +38,10 @@ namespace GradingAdministration_server
 
             // Setting the onMessage and onError event
             this.TCPHandler.OnDataReceived += OnMessageReceived;
-            this.TCPHandler.OnConectionError += (s, d) => Console.WriteLine($"Error in the connection: {d}");
+            this.TCPHandler.OnConectionError += (s, d) => {
+                Console.WriteLine($"Error in the connection: {d}");
+                Stop();
+            };
 
             this.TCPHandler.SetRunning(true);
 

@@ -42,7 +42,7 @@ namespace Grading_Administration_Server.Helper
             users.ForEach(u=> newUsers.Add(u.ToSharedUser()));
 
             return newUsers;
-        }
+        }   
 
 
         /// <summary>
