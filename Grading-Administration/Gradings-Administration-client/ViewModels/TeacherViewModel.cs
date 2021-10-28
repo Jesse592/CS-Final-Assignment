@@ -65,7 +65,7 @@ namespace GradingAdmin_client.ViewModels
             }
         }
 
-        internal void AddModule(Module module)
+        public void AddModule(Module module)
         {
             App.Current.Dispatcher?.Invoke(() =>
             {
@@ -73,7 +73,7 @@ namespace GradingAdmin_client.ViewModels
             });
         }
 
-        internal void AddStudent(User user)
+        public void AddStudent(User user)
         {
             App.Current.Dispatcher?.Invoke(() =>
             {
@@ -82,6 +82,15 @@ namespace GradingAdmin_client.ViewModels
         }
 
         private Module _SelectedModule;
+
+        public void ClearStudent()
+        {
+            App.Current.Dispatcher?.Invoke(() =>
+            {
+                this.Students.Clear();
+            });
+        }
+
         public Module SelectedModule
         {
             get { return _SelectedModule; }

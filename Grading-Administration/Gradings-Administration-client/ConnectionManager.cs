@@ -28,12 +28,20 @@ namespace GradingAdmin_client
 
         private ConnectionManager()
         {
-            TcpClient connection = new TcpClient("127.0.0.1", 6969);
-            this.TCPHandler = new TCPHandler(connection.GetStream());
-            this.TCPHandler.SetRunning(true);
+            try
+            {
+                TcpClient connection = new TcpClient("127.0.0.1", 6969);
+
+                this.TCPHandler = new TCPHandler(connection.GetStream());
+                this.TCPHandler.OnDataReceived += OnMessageReceived;
+            } catch(Exception e)
+            {
+                Console.WriteLine("Error in connection setup");
+            }
+            
+            this.TCPHandler?.SetRunning(true);
 
             this.SerialCodes = new Dictionary<int, Action<JObject>>();
-            this.TCPHandler.OnDataReceived += OnMessageReceived;
         }
 
         public void OnMessageReceived(object sender, string data)
@@ -64,7 +72,7 @@ namespace GradingAdmin_client
 
         public void SendCommand(JObject jObject)
         {
-            this.TCPHandler.SendMessage(jObject.ToString());
+            this.TCPHandler?.SendMessage(jObject.ToString());
         }
 
         public void SendCommand(JObject jObject, Action<JObject> callback)

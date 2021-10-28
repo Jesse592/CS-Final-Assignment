@@ -68,6 +68,12 @@ namespace GradingAdmin_client.Handlers
         {
             JToken StudentArray = jObject.SelectToken("data") as JArray;
 
+            // Checking if the array has been parse
+            if (StudentArray == null) return;
+
+            // Clearing the list
+            this.vm.ClearStudent();
+
             foreach (JObject j in StudentArray)
             {
                 this.vm.AddStudent(new User(j));
