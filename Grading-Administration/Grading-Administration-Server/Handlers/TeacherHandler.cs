@@ -33,7 +33,7 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The student to get the grades from</param>
         /// <param name="serial">The ID-code from the client</param>
-        private async void GetGradesFromStudent(JObject data, int serial)
+        private async Task GetGradesFromStudent(JObject data, int serial)
         {
             Console.WriteLine(data);
 
@@ -70,7 +70,7 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The module to get the students from</param>
         /// <param name="serial">The ID-code from the client</param>
-        private async void GetDataFromModule(JObject data, int serial)
+        private async Task GetDataFromModule(JObject data, int serial)
         {
             // Getting the moduleID from the data
             int moduleID = JSONHelperServer.GetIDFromJSON(data, "module.ModuleId");
@@ -97,7 +97,7 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The request object</param>
         /// <param name="serial">The ID-code from the client</param>
-        private async void GetStudents(JObject data, int serial)
+        private async Task GetStudents(JObject data, int serial)
         {
             // Getting all the students
             List<User> students = await (from user in this.GradingDBContext.Users
@@ -116,7 +116,7 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The request object</param>
         /// <param name="serial">The ID-code from the client</param>
-        private async void GetModules(JObject data, int serial)
+        private async Task GetModules(JObject data, int serial)
         {
             // Getting all the modules this teacher teaches
             List<ModuleContribution> modules = await (from module in this.GradingDBContext.moduleContributions
@@ -136,7 +136,7 @@ namespace Grading_Administration_Server.Handlers
         /// </summary>
         /// <param name="data">The object that contains: the user, module and grade</param>
         /// <param name="serial">The ID-code from the client</param>
-        private async void AddGrade(JObject data, int serial)
+        private async Task AddGrade(JObject data, int serial)
         {
             // Getting the ID's
             int userID = JSONHelperServer.GetIDFromJSON(data, "StudentId");
