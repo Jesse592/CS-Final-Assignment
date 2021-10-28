@@ -66,18 +66,9 @@ namespace GradingAdmin_client.Handlers
             }
 
             this.vm.Grades = new ObservableCollection<Grade>(this.vm.Grades.OrderByDescending(grade => grade.Time).ToList());
-            this.vm.Modules = new ObservableCollection<Module>(this.vm.Modules.OrderBy(module => module.Name));
+            this.vm.Modules = new ObservableCollection<Module>(this.vm.Modules.OrderBy(module => module.EndDate));
             this.vm.Combined = new Dictionary<Module, List<Grade>>(GradesCombined);
         }
 
-        public void GetTeachersFromModule(Module m)
-        {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("GetTeachers", JSONWrapper.WrapModule(m))), TeachersCallback);
-        }
-
-        public void TeachersCallback(JObject jObject)
-        {
-
-        }
     }
 }

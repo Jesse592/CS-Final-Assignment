@@ -16,6 +16,10 @@
     <ProjectReference Include="..\Grading-Administration-Server\Grading-Administration-Server.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="FileIO\" />
+  </ItemGroup>
+
   <Import Project="..\Grading-Administration-Shared\Grading-Administration-Shared.projitems" Label="Shared" />
 
 </Project>
