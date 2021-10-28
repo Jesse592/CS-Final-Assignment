@@ -108,12 +108,12 @@ namespace Grading_Administration_Server.Handlers
         private async void CreateNewModule(JObject data, int serial)
         {
             // Getting the values from the json data
-            string name = data.SelectToken("Name")?.ToString();
-            DateTime startDate = DateTime.Parse(data.SelectToken("StartDate")?.ToString());
-            DateTime endDate = DateTime.Parse(data.SelectToken("EndDate")?.ToString());
+            string name = data.SelectToken("module.Name")?.ToString();
+            DateTime startDate = DateTime.Parse(data.SelectToken("module.StartDate")?.ToString());
+            DateTime endDate = DateTime.Parse(data.SelectToken("module.EndDate")?.ToString());
 
-            int etc = data.SelectToken("ETC").ToObject<int>();
-            bool numerical = bool.Parse(data.SelectToken("IsNumerical").ToString());
+            int etc = data.SelectToken("module.ETC").ToObject<int>();
+            bool numerical = bool.Parse(data.SelectToken("module.IsNumerical").ToString());
 
             // Checking if all required data is retreived
             if (name == null)
