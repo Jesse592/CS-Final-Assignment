@@ -73,35 +73,43 @@
         <Label Content="Gebruiker koppelen" HorizontalAlignment="Left" Margin="1252,25,0,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold"/>
         <Label Content="Docent" HorizontalAlignment="Left" Margin="1252,112,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
         <ListView Margin="1252,166,378,662" ItemsSource="{Binding TeacherList}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="60">
+                        <Label Height="50" Content="{Binding Name}" Margin="11" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-        <ListView Margin="1598,166,32,662">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
+        <ListView Margin="1598,166,32,662" ItemsSource="{Binding ModuleList}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="60">
+                        <Label Height="50" Content="{Binding Name}" Margin="11" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-        <Button Content="Docent Koppelen" HorizontalAlignment="Left" Margin="1480,436,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
+        <Button Content="Docent Koppelen" HorizontalAlignment="Left" Margin="1480,486,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
 
         <Label Content="Student" HorizontalAlignment="Left" Margin="1252,562,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
-        <ListView Margin="1252,610,378,214">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
+        <ListView Margin="1252,610,378,214" ItemsSource="{Binding StudentList}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="60">
+                        <Label Height="50" Content="{Binding Name}" Margin="11" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-        <ListView Margin="1598,610,32,214">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
+        <ListView Margin="1598,610,32,214" ItemsSource="{Binding ModuleList}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="60">
+                        <Label Height="50" Content="{Binding Name}" Margin="11" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <Button Content="Student koppelen" HorizontalAlignment="Left" Margin="1480,882,0,0" VerticalAlignment="Top" Height="36" Width="200" FontSize="15"/>
         <Label Content="Gebruikersnaam" HorizontalAlignment="Left" Margin="32,310,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
