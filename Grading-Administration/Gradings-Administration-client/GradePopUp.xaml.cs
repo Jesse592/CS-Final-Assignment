@@ -24,7 +24,7 @@ namespace Gradings_Administration_client
         public GradePopUp(Grade grade)
         {
             InitializeComponent();
-            this.Content = new PopUpViewModel(grade);
+            this.Content = new GradePopUpViewModel(grade);
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
     }

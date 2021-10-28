@@ -49,18 +49,25 @@ namespace GradingAdmin_client.Handlers
             JToken array = jObject.SelectToken("data") as JArray;
             Trace.WriteLine(array);
 
+            Dictionary<Module, List<Grade>> GradesCombined = new Dictionary<Module, List<Grade>>();
+
             foreach (JObject o in array)
             {
                 this.vm.AddModule(new Module(o.SelectToken("module") as JObject, o.SelectToken("teachers") as JArray));
+                List<Grade> gradeWithKey = new List<Grade>();
 
                 foreach(JObject g in o.SelectToken("mcGrades") as JArray)
                 {
                     this.vm.AddGrade(new Grade(g, o.SelectToken("module.Name")));
+                    gradeWithKey.Add(new Grade(g, o.SelectToken("module.Name")));
                 }
+
+                GradesCombined.Add(new Module(o.SelectToken("module") as JObject, o.SelectToken("teachers") as JArray), gradeWithKey);
             }
 
             this.vm.Grades = new ObservableCollection<Grade>(this.vm.Grades.OrderByDescending(grade => grade.Time).ToList());
             this.vm.Modules = new ObservableCollection<Module>(this.vm.Modules.OrderBy(module => module.Name));
+            this.vm.Combined = new Dictionary<Module, List<Grade>>(GradesCombined);
         }
 
         public void GetTeachersFromModule(Module m)

@@ -33,6 +33,7 @@
         <Label Content="Cijfers" HorizontalAlignment="Left" Margin="48,72,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
         <Label Content="Modules" HorizontalAlignment="Left" Margin="1065,72,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="36"/>
         <Label Content="{Binding WelcomMessage}" HorizontalAlignment="Left" Margin="46,13,0,0" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" FontStyle="Italic"/>
+        <Button Content="Download cijferlijst" HorizontalAlignment="Left" Margin="44,999,0,0" VerticalAlignment="Top" Width="100" Height="30" Command="{Binding DownloadListCommand}"/>
 
 
 
