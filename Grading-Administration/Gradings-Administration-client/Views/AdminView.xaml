@@ -27,16 +27,16 @@
 
         <!-- Module toevoegen -->
         <Label Content="Module" HorizontalAlignment="Left" Margin="32,562,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
-        <TextBox HorizontalAlignment="Left" Margin="38,642,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="438"/>
+        <TextBox HorizontalAlignment="Left" Margin="38,642,0,0" Text="{Binding ModuleName}" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="438"/>
         <Label Content="Module-naam" HorizontalAlignment="Left" Margin="32,610,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <Label Content="Startdatum" HorizontalAlignment="Left" Margin="32,700,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <Label Content="Einddatum" HorizontalAlignment="Left" Margin="272,700,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <Label Content="Type cijfer" HorizontalAlignment="Left" Margin="272,796,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
-        <DatePicker HorizontalAlignment="Left" Margin="38,734,0,0" Text="TextBox" VerticalAlignment="Top" Height="35" Width="200"/>
-        <DatePicker HorizontalAlignment="Left" Margin="272,734,0,0" Text="TextBox" VerticalAlignment="Top" Height="35" Width="200"/>
-        <TextBox HorizontalAlignment="Left" Margin="38,826,0,0" VerticalAlignment="Top" Height="35" Width="200"/>
-        <TextBox HorizontalAlignment="Left" Margin="272,826,0,0" VerticalAlignment="Top" Height="35" Width="200"/>
-        <Button Content="Student toevoegen" HorizontalAlignment="Left" Margin="170,882,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
+        <DatePicker HorizontalAlignment="Left" Margin="38,734,0,0" Text="TextBox" VerticalAlignment="Top" Height="35" Width="200" DisplayDate="{Binding DateTime.Now}" SelectedDate="{Binding StartDate}"/>
+        <DatePicker HorizontalAlignment="Left" Margin="272,734,0,0" Text="TextBox" VerticalAlignment="Top" Height="35" Width="200" DisplayDate="{Binding DateTime.Now}" SelectedDate="{Binding EndDate}"/>
+        <TextBox HorizontalAlignment="Left" Margin="38,826,0,0" VerticalAlignment="Top" Height="35" Width="200" Text="{Binding ECTAmount}"/>
+        <ComboBox HorizontalAlignment="Left" Margin="272,826,0,0" VerticalAlignment="Top" Height="35" Width="200" SelectedValue="{Binding GradeType}" ItemsSource="{Binding GradeTypes}"/>
+        <Button Content="Student toevoegen" HorizontalAlignment="Left" Margin="170,882,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15" Command="{Binding AddModuleCommand}"/>
         <Label Content="Aantal ECT's" HorizontalAlignment="Left" Margin="32,796,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
         <GridSplitter HorizontalAlignment="Left" Margin="552,122,0,0" VerticalAlignment="Top" Width="2" Height="850"/>
 
@@ -104,6 +104,8 @@
         <TextBox HorizontalAlignment="Left" Margin="38,344,0,0" Text="{Binding UserName}" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="200"/>
         <TextBox HorizontalAlignment="Left" Margin="274,344,0,0" Text="{Binding Password}" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="200"/>
         <Label Content="Wachtwoord" HorizontalAlignment="Left" Margin="276,310,0,0" VerticalAlignment="Top" FontSize="15" FontWeight="Bold"/>
+        <Label Content="Succesvol toegevoegd" HorizontalAlignment="Left" Margin="118,568,0,0" VerticalAlignment="Top" FontStyle="Italic" Foreground="LightGreen" Opacity="{Binding ModuleSuccesOpacity}"/>
+        <Label Content="Niet toegevoegd" HorizontalAlignment="Left" Margin="118,568,0,0" VerticalAlignment="Top" FontStyle="Italic" Foreground="Red" Opacity="{Binding ModuleFailOpacity}"/>
 
     </Grid>
 </UserControl>

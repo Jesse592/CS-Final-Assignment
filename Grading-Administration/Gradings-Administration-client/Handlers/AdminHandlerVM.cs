@@ -1,5 +1,6 @@
 ﻿
 using Grading_Administraton_Shared.Entities;
+using GradingAdmin_client.ViewModels;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace GradingAdmin_client.Handlers
     class AdminHandlerVM
     {
         private ConnectionManager manager;
+        private AdminViewModel view;
 
-        public AdminHandlerVM()
+        public AdminHandlerVM(AdminViewModel view)
         {
             this.manager = ConnectionManager.GetConnectionManager();
+            this.view = view;
         }
 
         public void NewUser(User u, string username, string password)
@@ -25,12 +28,12 @@ namespace GradingAdmin_client.Handlers
 
         public void NewUSerCallback(JObject obj)
         {
-            
+            this.view.UpdateStatus(obj);
         }
 
         public void NewModule(Module m)
         {
-            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("NewModule", JSONWrapper.WrapModule(m))), NewModuleCallback);
+            this.manager.SendCommand(JObject.FromObject(JSONWrapper.WrapHeader("CreateNewModule", JSONWrapper.WrapModule(m))), NewModuleCallback);
         }
 
         public void NewModuleCallback(JObject obj)
