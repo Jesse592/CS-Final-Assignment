@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Grading_Administration_Server.Helper
 {
-    static class JSONHelperServer
+    public static class JSONHelperServer
     {
 
         /// <summary>

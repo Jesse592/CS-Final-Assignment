@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Grading_Administration_Shared.Util
+namespace Grading_Administration_Server.Helper
 {
     public static class JSONUtil
     {
@@ -27,7 +27,8 @@ namespace Grading_Administration_Shared.Util
             {
                 parsedObject = JsonConvert.DeserializeObject(message) as JObject;
                 return true;
-            } catch (JsonSerializationException e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine("Error in parsing json, not valid");
                 return false;

@@ -3,7 +3,6 @@ using Grading_Administration_Server.EntityFramework.models;
 using Grading_Administration_Server.Handlers;
 using Grading_Administration_Shared.Communication;
 using Grading_Administration_Server.Helper;
-using Grading_Administration_Shared.Util;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
