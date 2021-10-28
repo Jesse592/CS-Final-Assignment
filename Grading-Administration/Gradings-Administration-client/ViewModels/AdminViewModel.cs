@@ -304,13 +304,7 @@ namespace GradingAdmin_client.ViewModels
             set
             {
                 _SelectedDeleteUser = value;
-                DeleteUser();
             }
-        }
-
-        private void DeleteUser()
-        {
-            this.handler.DeleteUser(SelectedDeleteUser);
         }
 
         private int _UserSuccesDeleteOpacity;
@@ -349,6 +343,27 @@ namespace GradingAdmin_client.ViewModels
                 this.UserFailDeleteOpacity = 100;
                 this.UserSuccesDeleteOpacity = 0;
             }
+        }
+
+        private ICommand _DeleteUserCommand;
+        public ICommand DeleteUserCommand
+        {
+            get
+            {
+                if (_DeleteUserCommand == null)
+                {
+                    _DeleteUserCommand = new GeneralCommand(
+                        param => DeleteUser()
+                        );
+                }
+                return _DeleteUserCommand;
+            }
+        }
+
+        private void DeleteUser()
+        {
+            this.handler.DeleteUser(SelectedDeleteUser);
+            this.handler.GetAllUsers();
         }
     }
 }

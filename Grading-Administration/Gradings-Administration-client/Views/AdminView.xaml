@@ -44,7 +44,7 @@
 
         <!-- Gebruiker verwijderen -->
         <Label Content="Gebruiker" HorizontalAlignment="Left" Margin="584,112,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>
-        <ListView Width="600" Margin="586,166,734,680" ItemsSource="{Binding UserList}" SelectedItem="{Binding SelectedDeleteUser}" Height="270">
+        <ListView Width="600" Margin="586,166,734,638" ItemsSource="{Binding UserList}" SelectedItem="{Binding SelectedDeleteUser}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="60">
@@ -53,7 +53,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Content="Docent verwijderen" HorizontalAlignment="Left" Margin="794,468,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15"/>
+        <Button Content="Docent verwijderen" HorizontalAlignment="Left" Margin="794,468,0,0" VerticalAlignment="Top" Height="35" Width="200" FontSize="15" Command="{Binding DeleteUserCommand}"/>
 
         <!-- Mody verwijderen -->
         <Label Content="Module" HorizontalAlignment="Left" Margin="584,562,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontStyle="Italic"/>

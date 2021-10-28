@@ -61,7 +61,7 @@ namespace GradingAdmin_client.Handlers
 
         public void NewModuleCallback(JObject obj)
         {
-            throw new NotImplementedException();
+            this.view.UpdateStatus(obj);
         }
 
         public void DeleteUser(User u)

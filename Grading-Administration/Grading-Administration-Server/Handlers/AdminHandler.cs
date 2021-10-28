@@ -181,7 +181,7 @@ namespace Grading_Administration_Server.Handlers
         private async  void DeleteUser(JObject data, int serial)
         {
             // Getting the userID
-            int userID = JSONHelperServer.GetIDFromJSON(data, "StudentId");
+            int userID = JSONHelperServer.GetIDFromJSON(data, "user.UserId");
 
             // Checking if the value is oke
             if (userID == -1)
