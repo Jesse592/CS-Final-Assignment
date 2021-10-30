@@ -17,6 +17,9 @@ using System.Drawing;
 
 namespace GradingAdmin_client.Handlers
 {
+    /// <summary>
+    /// Handles all the communication and data for the student viewmodel
+    /// </summary>
     class StudentHandlerVM
     {
         private ConnectionManager manager;
@@ -24,41 +27,53 @@ namespace GradingAdmin_client.Handlers
 
         private User currentUser;
 
+        /// <summary>
+        /// Constructor for the student handler
+        /// </summary>
+        /// <param name="student">The student the user is logged in as</param>
+        /// <param name="view">The view this handler handles</param>
         public StudentHandlerVM(User student, StudentViewModel view)
         {
+            // Getting the manager to the server that is active
             this.manager = ConnectionManager.GetConnectionManager();
             this.vm = view;
 
             this.currentUser = student;
 
+            // Requesting all the needed grading data on startup
             GetStudentData();
         }
 
+        /// <summary>
+        /// Asks the server for all the grades in for this user
+        /// </summary>
         public void GetStudentData()
         {
             
+            // Building the command and sending to the server
             this.manager.SendCommand(
                 JObject.FromObject(
                     JSONWrapper.WrapHeader("GetAllGrades", JSONWrapper.WrapUser(this.currentUser))
                     ), StudentDataCallback);
-            
-
-            /*JObject j = JObject.Parse("{ \"command\": \"GetAllGrades\", \"data\": [ { \"module\": { \"ModuleId\": 10, \"Name\": \"OGP0\", \"StartDate\": \"2020-08-01T00:00:00\", \"EndDate\": \"2020-08-31T00:00:00\", \"ETC\": 2, \"IsNumerical\": true }, \"teachers\": [ { \"UserId\": 8, \"FirstName\": \"Johan\", \"LastName\": \"Talboom\", \"DateOfBirth\": \"1984-07-14T13:26:00\", \"Email\": \"JohanTalboom@avans.nl\", \"UserType\": \"1\" } ], \"mcGrades\": [ { \"Time\": \"2020-08-24T00:00:00\", \"NumericalGrade\": 4.2, \"LetterGrade\": \"O\", \"Delimiter\": 5.5 }, { \"Time\": \"2020-12-24T00:00:00\", \"NumericalGrade\": 9.6, \"LetterGrade\": \"G\", \"Delimiter\": 5.5 } ] }, { \"module\": { \"ModuleId\": 11, \"Name\": \"2DG\", \"StartDate\": \"2021-02-12T00:00:00\", \"EndDate\": \"2020-04-02T00:00:00\", \"ETC\": 6, \"IsNumerical\": true }, \"teachers\": [ { \"UserId\": 8, \"FirstName\": \"Johan\", \"LastName\": \"Talboom\", \"DateOfBirth\": \"1984-07-14T13:26:00\", \"Email\": \"JohanTalboom@avans.nl\", \"UserType\": \"1\" }, { \"UserId\": 10, \"FirstName\": \"Hans\", \"LastName\": \"Van der Linden\", \"DateOfBirth\": \"1972-07-14T13:26:00\", \"Email\": \"HJ.Linden@avans.nl\", \"UserType\": \"1\" } ], \"mcGrades\": [] } ], \"serial\": 1 }");
-            StudentDataCallback(j);*/
         }
 
+        /// <summary>
+        /// Method that is called when the server responds to the getgrades command
+        /// </summary>
+        /// <param name="jObject">The response from the server</param>
         public void StudentDataCallback(JObject jObject)
         {
             JToken array = jObject.SelectToken("data") as JArray;
-            Trace.WriteLine(array);
 
             Dictionary<Module, List<Grade>> GradesCombined = new Dictionary<Module, List<Grade>>();
 
+            // Looping trough all the modules in the data
             foreach (JObject o in array)
             {
                 this.vm.AddModule(new Module(o.SelectToken("module") as JObject, o.SelectToken("teachers") as JArray));
                 List<Grade> gradeWithKey = new List<Grade>();
 
+                // Going to all the grades in this module
                 foreach(JObject g in o.SelectToken("mcGrades") as JArray)
                 {
                     this.vm.AddGrade(new Grade(g, o.SelectToken("module.Name")));
@@ -68,11 +83,17 @@ namespace GradingAdmin_client.Handlers
                 GradesCombined.Add(new Module(o.SelectToken("module") as JObject, o.SelectToken("teachers") as JArray), gradeWithKey);
             }
 
+            // Calling the VM to set the list
             this.vm.Grades = new ObservableCollection<Grade>(this.vm.Grades.OrderByDescending(grade => grade.Time).ToList());
             this.vm.Modules = new ObservableCollection<Module>(this.vm.Modules.OrderBy(module => module.EndDate));
             this.vm.Combined = new Dictionary<Module, List<Grade>>(GradesCombined);
         }
 
+        /// <summary>
+        /// Method that handles creating a pdf from a grading list and saving it to a file
+        /// </summary>
+        /// <param name="Combined">The list</param>
+        /// <param name="path"></param>
         public void DownloadList(Dictionary<Module, List<Grade>> Combined, string path)
         {
             int YIndex = 0;
