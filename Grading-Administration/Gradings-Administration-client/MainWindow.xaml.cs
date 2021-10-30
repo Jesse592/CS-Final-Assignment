@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GradingAdmin_client.ViewModels;
+using Gradings_Administration_client.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,8 @@ namespace Gradings_Administration_client
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
     }
 }

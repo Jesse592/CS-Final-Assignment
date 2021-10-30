@@ -3,16 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31605.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grading-Administration-Server", "Grading-Administration-Server\Grading-Administration-Server.csproj", "{0DC24BC0-C617-48E1-B5D5-E183259ECB18}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gradings-Administration-client", "Gradings-Administration-client\Gradings-Administration-client.csproj", "{8F87A378-1CA2-4699-A4A5-2F39E4001157}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grading-Administration-Server", "Grading-Administration-Server\Grading-Administration-Server.csproj", "{0DC24BC0-C617-48E1-B5D5-E183259ECB18}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Grading-Administration-Shared", "Grading-Administration-Shared\Grading-Administration-Shared.shproj", "{83999EFB-2594-47B2-886D-2770BAEBB31E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gradings-Admin-client", "Gradings-Administration-client\Gradings-Admin-client.csproj", "{BBA384A3-EAFA-42DB-A151-32030C5096F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test-Grading-Administration-Client", "Test-Grading-Administration-Client\Test-Grading-Administration-Client.csproj", "{FA4DA992-620D-4BB9-8AF2-674B353EAC1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test-Grading-Administration-Server", "Test-Grading-Administration-Server\Test-Grading-Administration-Server.csproj", "{ECA9F8F3-65B6-4DCD-BDD4-3FE3EB5D51D4}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Grading-Administration-Shared\Grading-Administration-Shared.projitems*{0dc24bc0-c617-48e1-b5d5-e183259ecb18}*SharedItemsImports = 5
 		Grading-Administration-Shared\Grading-Administration-Shared.projitems*{83999efb-2594-47b2-886d-2770baebb31e}*SharedItemsImports = 13
+		Grading-Administration-Shared\Grading-Administration-Shared.projitems*{bba384a3-eafa-42db-a151-32030c5096f9}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +28,18 @@ Global
 		{0DC24BC0-C617-48E1-B5D5-E183259ECB18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DC24BC0-C617-48E1-B5D5-E183259ECB18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DC24BC0-C617-48E1-B5D5-E183259ECB18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F87A378-1CA2-4699-A4A5-2F39E4001157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F87A378-1CA2-4699-A4A5-2F39E4001157}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F87A378-1CA2-4699-A4A5-2F39E4001157}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F87A378-1CA2-4699-A4A5-2F39E4001157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA384A3-EAFA-42DB-A151-32030C5096F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA384A3-EAFA-42DB-A151-32030C5096F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA384A3-EAFA-42DB-A151-32030C5096F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA384A3-EAFA-42DB-A151-32030C5096F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA4DA992-620D-4BB9-8AF2-674B353EAC1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4DA992-620D-4BB9-8AF2-674B353EAC1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4DA992-620D-4BB9-8AF2-674B353EAC1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4DA992-620D-4BB9-8AF2-674B353EAC1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECA9F8F3-65B6-4DCD-BDD4-3FE3EB5D51D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECA9F8F3-65B6-4DCD-BDD4-3FE3EB5D51D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECA9F8F3-65B6-4DCD-BDD4-3FE3EB5D51D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECA9F8F3-65B6-4DCD-BDD4-3FE3EB5D51D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

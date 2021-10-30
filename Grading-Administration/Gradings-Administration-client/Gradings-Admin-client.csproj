@@ -7,10 +7,15 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <Import Project="..\Grading-Administration-Shared\Grading-Administration-Shared.projitems" Label="Shared" />
-
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Syncfusion.Pdf.Wpf" Version="19.3.0.47" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Grading-Administration-Server\Grading-Administration-Server.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\Grading-Administration-Shared\Grading-Administration-Shared.projitems" Label="Shared" />
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using Grading_Administration_Server.EntityFramework.models;
+﻿using Grading_Administraton_Shared.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,23 +14,20 @@ namespace GradingAdmin_client
             return new
             {
                 command = command,
-                data = new
-                {
-                    data
-                }
+                data = data
             };
         }
 
-        public static object WrapLogin(string pasword, string username)
+        public static object WrapLogin(string password, string username)
         {
             return new
             {
                 username,
-                pasword
+                password
             };
         }
 
-        public static object WrapGetModules(User user)
+        public static object WrapUser(User user)
         {
             return new
             {
@@ -38,15 +35,7 @@ namespace GradingAdmin_client
             };
         }
 
-        public static object WrapGetAllGrade(User user)
-        {
-            return new
-            {
-                user
-            };
-        }
-
-        public static object WrapGetGrade(Module module, User user)
+        public static object WrapModuleUser(Module module, User user)
         {
             return new
             {
@@ -55,7 +44,7 @@ namespace GradingAdmin_client
             };
         }
 
-        public static object WrapTeachersFromModule(Module module)
+        public static object WrapModule(Module module)
         {
             return new
             {
@@ -63,11 +52,31 @@ namespace GradingAdmin_client
             };
         }
 
-        public static object WrapAddGrade(Grade grade)
+        public static object WrapGrade(Grade grade)
         {
             return new
             {
                 grade
+            };
+        }
+
+        public static object WrapGradeModuleUser(Grade grade, Module module, User user)
+        {
+            return new
+            {
+                grade,
+                module,
+                user
+            };
+        }
+
+        public static object WrapNewUser(User u, string username, string password)
+        {
+            return new
+            {
+                user = u,
+                username =username,
+                password = password
             };
         }
     }

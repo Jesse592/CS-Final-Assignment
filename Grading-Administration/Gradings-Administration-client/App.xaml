@@ -2,8 +2,39 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Gradings_Administration_client"
+             xmlns:viewmodels="clr-namespace:GradingAdmin_client.ViewModels"
+             xmlns:viewmodelsone="clr-namespace:Gradings_Administration_client.ViewModels"
+             xmlns:views="clr-namespace:GradingAdmin_client.Views"
+             xmlns:viewsone="clr-namespace:Gradings_Administration_client.Views"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <DataTemplate x:Name="StudentView" DataType="{x:Type viewmodels:StudentViewModel}">
+            <viewsone:StudentView/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="TeacherView" DataType="{x:Type viewmodels:TeacherViewModel}">
+            <views:TeacherView/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="AdminView" DataType="{x:Type viewmodels:AdminViewModel}">
+            <views:AdminView/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="LoginView" DataType="{x:Type viewmodels:LoginViewModel}">
+            <views:LoginView/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="PopUpGradeView" DataType="{x:Type viewmodelsone:GradePopUpViewModel}">
+            <viewsone:GradePopUpView/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="PopUpModuleView" DataType="{x:Type viewmodelsone:ModulePopUpViewModel}">
+            <viewsone:ModulePopUpView/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="AddGradeView" DataType="{x:Type viewmodelsone:AddGradeViewModel}">
+            <viewsone:AddGradeView/>
+        </DataTemplate>
+
     </Application.Resources>
 </Application>
