@@ -23,7 +23,6 @@ namespace GradingAdmin_client
 
         private TCPHandler TCPHandler;
         private Dictionary<int, Action<JObject>> SerialCodes;
-        private Action<JObject> HandleUnwantedData;
         private int Serialcode = 0;
 
         private ConnectionManager()

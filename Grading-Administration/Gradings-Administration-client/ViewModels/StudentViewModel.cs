@@ -1,6 +1,7 @@
 ﻿using Grading_Administraton_Shared.Entities;
 using GradingAdmin_client.Handlers;
 using Gradings_Administration_client;
+using Gradings_Administration_client.FileIO;
 using Gradings_Administration_client.ViewModels;
 using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
@@ -134,39 +135,20 @@ namespace GradingAdmin_client.ViewModels
                 if (_DownloadListCommand == null)
                 {
                     _DownloadListCommand = new GeneralCommand(
-                        param => DownloadList()
+                        (platform) => {
+                            IFileSelector FileSelector = Activator.CreateInstance(platform as Type) as IFileSelector;
+                            string fileName = FileSelector?.Start(null, "pdf|*.pdf");
+                            if (fileName != null)
+                            {
+                                this.handler?.DownloadList(this.Combined, fileName);
+                            }
+                            }
                         );
                 }
                 return _DownloadListCommand;
             }
         }
 
-        private void DownloadList()
-        {
-            int YIndex = 0;
-
-            using (PdfDocument document = new PdfDocument())
-            {
-                PdfPage page = document.Pages.Add();
-
-                PdfGraphics graphics = page.Graphics;
-
-                PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 12);
-
-                foreach (Module m in this.Combined.Keys)
-                {
-                    graphics.DrawString(m.Name, font, PdfBrushes.Black, new PointF(0, YIndex));
-                    YIndex += 15;
-
-                    foreach (Grade g in this.Combined[m])
-                    {
-                        graphics.DrawString("-" + g.Name + ": " + g.NumericalGrade, font, PdfBrushes.Black, new PointF(10, YIndex));
-                        YIndex += 15;
-                    }
-                }
-
-                document.Save("Cijferlijst.pdf");
-            }
-        }
+        
     }
 }

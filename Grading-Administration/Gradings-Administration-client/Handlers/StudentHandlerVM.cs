@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using System.Drawing;
 
 namespace GradingAdmin_client.Handlers
 {
@@ -68,6 +71,34 @@ namespace GradingAdmin_client.Handlers
             this.vm.Grades = new ObservableCollection<Grade>(this.vm.Grades.OrderByDescending(grade => grade.Time).ToList());
             this.vm.Modules = new ObservableCollection<Module>(this.vm.Modules.OrderBy(module => module.EndDate));
             this.vm.Combined = new Dictionary<Module, List<Grade>>(GradesCombined);
+        }
+
+        public void DownloadList(Dictionary<Module, List<Grade>> Combined, string path)
+        {
+            int YIndex = 0;
+
+            using (PdfDocument document = new PdfDocument())
+            {
+                PdfPage page = document.Pages.Add();
+
+                PdfGraphics graphics = page.Graphics;
+
+                PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 12);
+
+                foreach (Module m in Combined.Keys)
+                {
+                    graphics.DrawString(m.Name, font, PdfBrushes.Black, new PointF(0, YIndex));
+                    YIndex += 15;
+
+                    foreach (Grade g in Combined[m])
+                    {
+                        graphics.DrawString("-" + g.Name + ": " + g.NumericalGrade, font, PdfBrushes.Black, new PointF(10, YIndex));
+                        YIndex += 15;
+                    }
+                }
+
+                document.Save(path);
+            }
         }
 
     }
