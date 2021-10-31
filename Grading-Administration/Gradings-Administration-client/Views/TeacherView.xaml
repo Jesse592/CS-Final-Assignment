@@ -11,8 +11,8 @@
         <ListView Margin="42,138,987,100" ItemsSource="{Binding Modules}" SelectedItem="{Binding SelectedModule}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Height="80">
-                        <Label Content="{Binding Name}"/>
+                    <StackPanel Orientation="Horizontal" Height="40" VerticalAlignment="Center" Margin="15">
+                        <Label Content="{Binding Name}" FontWeight="Bold"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -21,8 +21,8 @@
         <ListView Margin="1058,138,84,100" ItemsSource="{Binding Students}" SelectedItem="{Binding SelectedStudent}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Height="80">
-                        <Label Content="{Binding FirstName}"/>
+                    <StackPanel Orientation="Horizontal" Height="40" VerticalAlignment="Center" Margin="15">
+                        <Label Content="{Binding FirstName}" FontWeight="Bold"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
