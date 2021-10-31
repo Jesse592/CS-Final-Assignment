@@ -7,19 +7,43 @@ using System.Threading.Tasks;
 
 namespace Grading_Administration_Server.Handlers
 {
-    abstract class Handler
+    /// <summary>
+    /// Abstract class that holds all the commands that can be called at a given state
+    /// </summary>
+    public abstract class Handler
     {
-        private Dictionary<string, Action<JObject>> Actions;
-        private Action<JObject> CurrentAction;
+        // delegate that is a action call from the client
+        public delegate Task CommandAction(JObject data, int identifier);
 
-        protected Handler()
+        protected Dictionary<string, CommandAction> Actions;
+        protected Action<JObject> SendAction;
+
+        /// <summary>
+        /// Constructor for abstract Handler, calls the Init method
+        /// </summary>
+        protected Handler(Action<JObject> sendAction)
         {
+            this.Actions = new Dictionary<string, CommandAction>();
+            this.SendAction = sendAction;
+
             Init();
         }
 
-        private void Init()
+        /// <summary>
+        /// Method checks if this handles has the command, if so the action is performed
+        /// </summary>
+        /// <param name="command">The command that is called to the handler</param>
+        /// <param name="data">The data given</param>
+        public async Task Invoke(string command, JObject data, int serial)
         {
-            //Fill the actions dicitionary
+            if (this.Actions.ContainsKey(command))
+                 await this.Actions[command].Invoke(data, serial);
         }
+
+        /// <summary>
+        /// Init method inserts all the commands in the handler
+        /// </summary>
+        protected abstract void Init();
     }
 }
+    

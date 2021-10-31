@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GradingAdmin_client.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,17 @@ namespace GradingAdmin_client.Views
     /// <summary>
     /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class LoginView : Page
+    public partial class LoginView : UserControl
     {
         public LoginView()
         {
             InitializeComponent();
+        }
+
+        private void PassBox_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            { ((LoginViewModel)this.DataContext).Password = ((PasswordBox)sender).Password; }
         }
     }
 }
